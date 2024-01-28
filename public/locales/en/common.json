@@ -1,5 +1,7 @@
 {
   "dashboardTabLabel": "Dashboard",
+  "ToolsTabLabel": "Tools",
+  "MyCollectionsTabLabel": "My Collections",
   "organizationSettingsTabLabel": "Organization",
   "settingsTabLabel": "Settings",
   "profileSettingsTabLabel": "Profile",

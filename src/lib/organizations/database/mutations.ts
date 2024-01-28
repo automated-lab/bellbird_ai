@@ -51,26 +51,15 @@ export async function updateOrganization(
  * @name setOrganizationSubscriptionData
  * @description Adds or updates a subscription to an Organization
  */
-export async function setOrganizationSubscriptionData(
+export function setOrganizationSubscriptionData(
   client: Client,
   props: {
-    organizationUid: string;
+    organizationId: number;
     customerId: string;
     subscriptionId: string;
   },
 ) {
-  const { customerId, organizationUid, subscriptionId } = props;
-
-  const { data: organization, error } = await getOrganizationByUid(
-    client,
-    organizationUid,
-  );
-
-  if (error || !organization) {
-    throw error;
-  }
-
-  const organizationId = organization.id;
+  const { customerId, organizationId, subscriptionId } = props;
 
   return client
     .from(ORGANIZATIONS_SUBSCRIPTIONS_TABLE)

@@ -1,5 +1,7 @@
 import {
   CreditCardIcon,
+  FolderIcon,
+  Square3Stack3DIcon,
   Squares2X2Icon,
   UserGroupIcon,
   UserIcon,
@@ -31,7 +33,7 @@ type NavigationConfig = {
   items: NavigationItem[];
 };
 
-const paths = configuration.paths.settings;
+const paths = configuration.paths;
 
 const NAVIGATION_CONFIG = (organization: string): NavigationConfig => ({
   items: [
@@ -44,26 +46,42 @@ const NAVIGATION_CONFIG = (organization: string): NavigationConfig => ({
       end: true,
     },
     {
+      label: 'common:ToolsTabLabel',
+      path: getPath(organization, paths.tools),
+      Icon: ({ className }: { className: string }) => {
+        return <Square3Stack3DIcon className={className} />;
+      },
+      end: true,
+    },
+    {
+      label: 'common:MyCollectionsTabLabel',
+      path: getPath(organization, paths.collections),
+      Icon: ({ className }: { className: string }) => {
+        return <FolderIcon className={className} />;
+      },
+      end: true,
+    },
+    {
       label: 'common:settingsTabLabel',
       collapsible: false,
       children: [
         {
           label: 'common:profileSettingsTabLabel',
-          path: getPath(organization, paths.profile),
+          path: getPath(organization, paths.settings.profile),
           Icon: ({ className }: { className: string }) => {
             return <UserIcon className={className} />;
           },
         },
         {
           label: 'common:organizationSettingsTabLabel',
-          path: getPath(organization, paths.organization),
+          path: getPath(organization, paths.settings.organization),
           Icon: ({ className }: { className: string }) => {
             return <UserGroupIcon className={className} />;
           },
         },
         {
           label: 'common:subscriptionSettingsTabLabel',
-          path: getPath(organization, paths.subscription),
+          path: getPath(organization, paths.settings.subscription),
           Icon: ({ className }: { className: string }) => {
             return <CreditCardIcon className={className} />;
           },
@@ -75,7 +93,7 @@ const NAVIGATION_CONFIG = (organization: string): NavigationConfig => ({
 
 export default NAVIGATION_CONFIG;
 
-function getPath(organizationId: string, path: string) {
+export function getPath(organizationId: string, path: string) {
   const appPrefix = configuration.paths.appPrefix;
 
   return [appPrefix, organizationId, path].filter(Boolean).join('/');

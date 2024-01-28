@@ -34,6 +34,94 @@ export interface Database {
   }
   public: {
     Tables: {
+      fields: {
+        Row: {
+          created_at: string
+          default_value: string | null
+          description: string | null
+          field_tag: string
+          id: number
+          is_required: boolean | null
+          name: string
+          options: string[] | null
+          placeholder: string | null
+          type: string
+        }
+        Insert: {
+          created_at?: string
+          default_value?: string | null
+          description?: string | null
+          field_tag?: string
+          id?: number
+          is_required?: boolean | null
+          name?: string
+          options?: string[] | null
+          placeholder?: string | null
+          type?: string
+        }
+        Update: {
+          created_at?: string
+          default_value?: string | null
+          description?: string | null
+          field_tag?: string
+          id?: number
+          is_required?: boolean | null
+          name?: string
+          options?: string[] | null
+          placeholder?: string | null
+          type?: string
+        }
+        Relationships: []
+      }
+      generations_copies: {
+        Row: {
+          collection_id: number
+          content: string
+          created_at: string
+          openai_id: string
+          template_id: number
+          user_id: string
+        }
+        Insert: {
+          collection_id: number
+          content: string
+          created_at?: string
+          openai_id: string
+          template_id: number
+          user_id?: string
+        }
+        Update: {
+          collection_id?: number
+          content?: string
+          created_at?: string
+          openai_id?: string
+          template_id?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "generations_copies_collection_id_fkey"
+            columns: ["collection_id"]
+            isOneToOne: false
+            referencedRelation: "user_collections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "generations_copies_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "templates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "generations_copies_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       memberships: {
         Row: {
           code: string | null
@@ -181,6 +269,101 @@ export interface Database {
         }
         Relationships: []
       }
+      template_fields: {
+        Row: {
+          created_at: string
+          field_id: number
+          template_id: number
+        }
+        Insert: {
+          created_at?: string
+          field_id?: number
+          template_id?: number
+        }
+        Update: {
+          created_at?: string
+          field_id?: number
+          template_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "template_fields_field_id_fkey"
+            columns: ["field_id"]
+            isOneToOne: false
+            referencedRelation: "fields"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "template_fields_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "templates"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      templates: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          id: number
+          image: string | null
+          isNew: boolean | null
+          prompt: string
+          title: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: number
+          image?: string | null
+          isNew?: boolean | null
+          prompt?: string
+          title: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: number
+          image?: string | null
+          isNew?: boolean | null
+          prompt?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      user_collections: {
+        Row: {
+          created_at: string
+          id: number
+          name: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          name?: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          name?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_collections_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       users: {
         Row: {
           created_at: string
@@ -271,10 +454,6 @@ export interface Database {
           membership_id: number
         }
         Returns: number
-      }
-      install_extensions: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
       }
       transfer_organization: {
         Args: {
