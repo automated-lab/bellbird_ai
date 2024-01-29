@@ -93,8 +93,8 @@ const NAVIGATION_CONFIG = (organization: string): NavigationConfig => ({
 
 export default NAVIGATION_CONFIG;
 
-export function getPath(organizationId: string, path: string) {
+export function getPath(organizationUid: string, path: string) {
   const appPrefix = configuration.paths.appPrefix;
 
-  return [appPrefix, organizationId, path].filter(Boolean).join('/');
+  return [appPrefix, organizationUid, path].filter(Boolean).join('/');
 }

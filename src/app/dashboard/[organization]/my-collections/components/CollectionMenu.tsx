@@ -10,9 +10,15 @@ import {
   DropdownMenuTrigger,
 } from '~/core/ui/Dropdown';
 import IconButton from '~/core/ui/IconButton';
+
+import useCurrentOrganization from '~/lib/organizations/hooks/use-current-organization';
+
 import configuration from '~/configuration';
+import { getPath } from '~/navigation.config';
 
 const CollectionMenu = ({ collection_id }: { collection_id: number }) => {
+  const organizationUid = useCurrentOrganization().uuid;
+
   return (
     <>
       <DropdownMenu>
@@ -30,7 +36,7 @@ const CollectionMenu = ({ collection_id }: { collection_id: number }) => {
             className="text-red-500 hover:bg-red-50 dark:hover:bg-red-500/5"
           >
             <Link
-              href={`${configuration.paths.collections}/${collection_id}/delete`}
+              href={`${getPath(organizationUid, configuration.paths.collections)}/${collection_id}/delete`}
             >
               Delete Collection
             </Link>

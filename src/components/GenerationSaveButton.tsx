@@ -32,6 +32,7 @@ import { getGenerationCollectionsByAiId } from '~/lib/generations/queries';
 import type { IGenerationCopy } from '~/lib/generations/types';
 import type { IUserCollection } from '~/lib/user_collections/types';
 import { getKeyIf, queryKeys } from '~/lib/query-keys';
+import { useCurrentOrganizationId } from '~/lib/organizations/hooks/use-current-organization-id';
 
 type GenerationSaveButtonProps = {
   generationCopy: IGenerationCopy;
@@ -40,6 +41,7 @@ type GenerationSaveButtonProps = {
 function GenerationSaveButton({ generationCopy }: GenerationSaveButtonProps) {
   const client = useSupabase();
   const userId = useUserId();
+  const organizationId = useCurrentOrganizationId();
 
   // Fetch current user collections
   const userCollectionsKey = getKeyIf(
@@ -49,7 +51,7 @@ function GenerationSaveButton({ generationCopy }: GenerationSaveButtonProps) {
   const userCollections = useSWR<IUserCollection[]>(
     userCollectionsKey,
     async () =>
-      await getUserCollections(client, userId)
+      await getUserCollections(client, userId, organizationId)
         .throwOnError()
         .then(({ data }) => data as IUserCollection[]),
   );
@@ -71,6 +73,7 @@ function GenerationSaveButton({ generationCopy }: GenerationSaveButtonProps) {
   const createNewCollection = async (name: string) => {
     const { data, error } = await createUserCollection(client, {
       name,
+      organization_id: organizationId,
       user_id: userId,
     });
 
@@ -85,7 +88,7 @@ function GenerationSaveButton({ generationCopy }: GenerationSaveButtonProps) {
   };
 
   // Save copy to a collection
-  const saveToCollection = async (collectionId: string) => {
+  const saveToCollection = async (collectionId: number) => {
     const { id, openai_id, template_id, ...generationCopyData } =
       generationCopy;
 
@@ -107,7 +110,7 @@ function GenerationSaveButton({ generationCopy }: GenerationSaveButtonProps) {
     copyCollections.mutate();
   };
 
-  const removeFromCollection = async (collection_id: string) => {
+  const removeFromCollection = async (collection_id: number) => {
     const { error } = await deleteCopyFromCollection(
       client,
       generationCopy.openai_id,

@@ -9,14 +9,14 @@ import ToolBar from './components/ToolBar';
 import Playground from './components/Playground';
 
 import useSupabase from '~/core/hooks/use-supabase';
+import { useUpgradeModal } from '~/core/hooks/use-upgrade-modal';
 import { getTemplateById } from '~/lib/templates/queries';
-
-import type { IGenerationCopy } from '~/lib/generations/types';
+import { useCurrentOrganizationId } from '~/lib/organizations/hooks/use-current-organization-id';
 import { useGenerateCopy } from '~/lib/generations/hooks/use-generate-copy';
 import { getKeyIf, queryKeys } from '~/lib/query-keys';
-import { useUpgradeModal } from '~/core/hooks/use-upgrade-modal';
-import useCurrentOrganization from '~/lib/organizations/hooks/use-current-organization';
-import { ToolFormData } from './types';
+
+import type { IGenerationCopy } from '~/lib/generations/types';
+import type { ToolFormData } from './types';
 
 type ToolPageProps = {
   params: {
@@ -31,7 +31,7 @@ function ToolPage({ params }: ToolPageProps) {
 
   const client = useSupabase();
   const upgradeModal = useUpgradeModal();
-  const organization = useCurrentOrganization();
+  const organizationId = useCurrentOrganizationId();
 
   const template_id = Number(params.tool_id);
 
@@ -61,7 +61,7 @@ function ToolPage({ params }: ToolPageProps) {
     const body = {
       values,
       template_id,
-      organization_id: organization.id,
+      organization_id: organizationId,
     };
 
     Array.from({ length: qty }).forEach((_) => {

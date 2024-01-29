@@ -9,7 +9,7 @@ export interface IUserCollection {
 }
 
 export interface IUserCollectionDraft {
-  organization_id: string;
+  organization_id: number;
   user_id: string;
   name: string;
 }

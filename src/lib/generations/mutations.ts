@@ -20,7 +20,7 @@ export async function createGenerationCopy(
 export function deleteCopyFromCollection(
   client: Client,
   openai_id: string,
-  collection_id: string,
+  collection_id: number,
 ) {
   return client
     .from(GENERATIONS_TABLE)

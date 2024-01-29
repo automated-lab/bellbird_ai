@@ -32,6 +32,8 @@ const buttonVariants = cva(
         link: 'text-primary underline-offset-4 hover:underline',
         transparent: 'hover:bg-accent hover:text-accent-foreground',
         flat: 'bg-primary/5 text-primary hover:bg-primary/10',
+        premium:
+          'bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white border-0',
         custom: '',
       },
       size: {
@@ -57,6 +59,7 @@ export interface ButtonProps
   asChild?: boolean;
   block?: boolean;
   round?: boolean;
+  compact?: boolean;
   loading?: boolean;
   href?: Maybe<string>;
 }
@@ -68,7 +71,18 @@ const Button: React.FCC<ButtonProps> = forwardRef<
   React.ElementRef<'button'>,
   ButtonProps
 >(function ButtonComponent(
-  { children, color, size, variant, block, loading, href, round, ...props },
+  {
+    children,
+    color,
+    size,
+    variant,
+    block,
+    loading,
+    href,
+    round,
+    compact,
+    ...props
+  },
   ref,
 ) {
   const className = classNames(
@@ -79,6 +93,7 @@ const Button: React.FCC<ButtonProps> = forwardRef<
     block ? `w-full` : ``,
     loading ? `opacity-80` : ``,
     round ? 'rounded-full' : '',
+    compact ? '[&>*]:py-0 h-min' : '',
     props.className,
   );
 
