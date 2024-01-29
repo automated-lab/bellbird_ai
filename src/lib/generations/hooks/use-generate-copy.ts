@@ -4,7 +4,7 @@ import { IGenerationCopy } from '~/lib/generations/types';
 
 interface GenerateCopyBody {
   values: Record<string, string | string[]>;
-  template_id: number;
+  template_id: string;
   organization_id: number;
 }
 

@@ -52,7 +52,7 @@ export const createNewTemplateAction = withAdminSession(
 
 export const updateTemplateAction = withAdminSession(
   async (params: {
-    templateId: number;
+    templateId: string;
     templateUpdates: Partial<ITemplateDraft>;
     csrfToken: string;
   }) => {

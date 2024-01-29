@@ -17,6 +17,6 @@ export async function insertTemplateFields(
   return client.from(TEMPLATE_FIELDS).insert(templateFields);
 }
 
-export async function deleteTemplateFields(client: Client, templateId: number) {
+export async function deleteTemplateFields(client: Client, templateId: string) {
   return client.from(TEMPLATE_FIELDS).delete().eq('template_id', templateId);
 }

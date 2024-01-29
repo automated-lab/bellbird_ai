@@ -1,6 +1,6 @@
 export interface ITemplateFields {
   id: number;
-  template_id: number;
+  template_id: string;
   field_id: number;
 }
 

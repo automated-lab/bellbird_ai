@@ -1,7 +1,7 @@
 import { ITemplateField, TField } from '~/lib/fields/types';
 
 export interface ITemplate {
-  id: number;
+  id: string;
   title: string;
   description: string;
   image: string; // url
@@ -13,7 +13,7 @@ export interface ITemplate {
 
 export interface ITemplateDraft
   extends Omit<ITemplate, 'id' | 'image' | 'fields'> {
-  id?: number;
+  id?: string;
   image: string;
   fields: number[];
 }
@@ -21,5 +21,5 @@ export interface ITemplateDraft
 export interface ITemplateForm
   extends Omit<ITemplate, 'id' | 'image' | 'fields'> {
   image: string | File;
-  fields: { id: string; name: string; field_tag: string }[];
+  fields: { id: number; name: string; field_tag: string }[];
 }

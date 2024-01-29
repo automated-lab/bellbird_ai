@@ -54,7 +54,7 @@ export async function createTemplate(client: Client, template: ITemplateDraft) {
 
 export async function updateTemplate(
   client: Client,
-  templateId: number,
+  templateId: string,
   updates: Partial<ITemplateDraft>,
 ) {
   const { fields, ...templateUpdates } = updates;
@@ -92,7 +92,7 @@ export async function updateTemplate(
   return { data: template, error: null };
 }
 
-export async function deleteTemplateById(client: Client, template_id: number) {
+export async function deleteTemplateById(client: Client, template_id: string) {
   return await client.from(TEMPLATES_TABLE).delete().eq('id', template_id);
 }
 

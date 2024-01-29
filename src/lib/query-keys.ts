@@ -13,7 +13,7 @@ export const queryKeys = {
     nullIfUndefined(page),
     nullIfUndefined(perPage),
   ],
-  templateRetrieve: (template_id: number) => ['template', template_id],
+  templateRetrieve: (template_id: string) => ['template', template_id],
   userMe: ['user'],
   signUpWithEmailPassword: ['auth', 'sign-up-with-email-password'],
   resetPassword: ['auth', 'reset-password'],

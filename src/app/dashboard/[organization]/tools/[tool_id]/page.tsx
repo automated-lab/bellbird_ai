@@ -33,7 +33,7 @@ function ToolPage({ params }: ToolPageProps) {
   const upgradeModal = useUpgradeModal();
   const organizationId = useCurrentOrganizationId();
 
-  const template_id = Number(params.tool_id);
+  const template_id = params.tool_id;
 
   const key = getKeyIf(queryKeys.templateRetrieve(template_id), !!template_id);
   const { data, error, isLoading } = useSWR(

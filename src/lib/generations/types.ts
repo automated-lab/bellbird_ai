@@ -1,9 +1,9 @@
 export interface IGenerationCopy {
-  id?: string;
+  id?: number;
   openai_id: string;
   user_id: string;
   organization_id: number;
-  template_id: number;
+  template_id: string;
   content: string;
   collection_id: number;
   created_at?: string;

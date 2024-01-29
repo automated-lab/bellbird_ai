@@ -27,7 +27,7 @@ export function getPaginatedTemplates(
   return getTemplates(client).range(from, to);
 }
 
-export function getTemplateById(client: Client, templateId: number) {
+export function getTemplateById(client: Client, templateId: string) {
   return client
     .from(TEMPLATES_TABLE)
     .select('id, title, category, image, description, fields(*)')
@@ -36,7 +36,7 @@ export function getTemplateById(client: Client, templateId: number) {
     .single();
 }
 
-export function getTemplatePrompt(client: Client, templateId: number) {
+export function getTemplatePrompt(client: Client, templateId: string) {
   return client
     .from(TEMPLATES_TABLE)
     .select('id, prompt')
@@ -44,7 +44,7 @@ export function getTemplatePrompt(client: Client, templateId: number) {
     .single();
 }
 
-export function getTemplateWithPrompt(client: Client, templateId: number) {
+export function getTemplateWithPrompt(client: Client, templateId: string) {
   return client
     .from(TEMPLATES_TABLE)
     .select(

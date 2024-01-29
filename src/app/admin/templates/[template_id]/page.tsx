@@ -25,9 +25,7 @@ function CreateTemplatePage({ params }: CreateTemplatePageProps) {
   if (!isNew) {
     const client = getSupabaseServerComponentClient({ admin: true });
 
-    const { data, error } = use(
-      getTemplateWithPrompt(client, Number(template_id)),
-    );
+    const { data, error } = use(getTemplateWithPrompt(client, template_id));
 
     if (error) {
       throw error;

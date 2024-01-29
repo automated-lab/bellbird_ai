@@ -1,7 +1,7 @@
 export const templateFieldTypes = ['text', 'textarea', 'select'] as const;
 
 export interface ITemplateField {
-  id: string;
+  id: number;
   name: string;
   type: (typeof templateFieldTypes)[number];
   field_tag: string;
@@ -15,4 +15,4 @@ export interface ITemplateField {
 export interface ITemplateFieldForm extends Omit<ITemplateField, 'id'> {}
 
 // Field Representation in Select Input
-export type TField = { id: string; name: string; field_tag: string };
+export type TField = { id: number; name: string; field_tag: string };

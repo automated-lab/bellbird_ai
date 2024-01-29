@@ -117,27 +117,30 @@ export interface Database {
           collection_id: number
           content: string
           created_at: string
+          id: number
           openai_id: string
           organization_id: number
-          template_id: number
+          template_id: string | null
           user_id: string
         }
         Insert: {
           collection_id: number
           content: string
           created_at?: string
+          id?: number
           openai_id: string
           organization_id: number
-          template_id: number
+          template_id?: string | null
           user_id?: string
         }
         Update: {
           collection_id?: number
           content?: string
           created_at?: string
+          id?: number
           openai_id?: string
           organization_id?: number
-          template_id?: number
+          template_id?: string | null
           user_id?: string
         }
         Relationships: [
@@ -351,17 +354,17 @@ export interface Database {
         Row: {
           created_at: string
           field_id: number
-          template_id: number
+          template_id: string
         }
         Insert: {
           created_at?: string
           field_id?: number
-          template_id?: number
+          template_id: string
         }
         Update: {
           created_at?: string
           field_id?: number
-          template_id?: number
+          template_id?: string
         }
         Relationships: [
           {
@@ -385,7 +388,7 @@ export interface Database {
           category: string
           created_at: string
           description: string
-          id: number
+          id: string
           image: string
           isNew: boolean | null
           prompt: string
@@ -395,7 +398,7 @@ export interface Database {
           category?: string
           created_at?: string
           description?: string
-          id?: number
+          id?: string
           image?: string
           isNew?: boolean | null
           prompt?: string
@@ -405,7 +408,7 @@ export interface Database {
           category?: string
           created_at?: string
           description?: string
-          id?: number
+          id?: string
           image?: string
           isNew?: boolean | null
           prompt?: string
