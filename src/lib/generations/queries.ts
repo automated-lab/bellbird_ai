@@ -7,7 +7,7 @@ type Client = SupabaseClient<Database>;
 
 export function getGenerationsByCollectionId(
   client: Client,
-  collectionId: string,
+  collectionId: number,
 ) {
   return client
     .from(GENERATIONS_TABLE)

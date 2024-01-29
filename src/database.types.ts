@@ -34,6 +34,45 @@ export interface Database {
   }
   public: {
     Tables: {
+      copy_collections: {
+        Row: {
+          created_at: string
+          id: number
+          name: string
+          organization_id: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          name?: string
+          organization_id: number
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          name?: string
+          organization_id?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "copy_collections_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "copy_collections_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       fields: {
         Row: {
           created_at: string
@@ -79,6 +118,7 @@ export interface Database {
           content: string
           created_at: string
           openai_id: string
+          organization_id: number
           template_id: number
           user_id: string
         }
@@ -87,6 +127,7 @@ export interface Database {
           content: string
           created_at?: string
           openai_id: string
+          organization_id: number
           template_id: number
           user_id?: string
         }
@@ -95,6 +136,7 @@ export interface Database {
           content?: string
           created_at?: string
           openai_id?: string
+          organization_id?: number
           template_id?: number
           user_id?: string
         }
@@ -103,7 +145,14 @@ export interface Database {
             foreignKeyName: "generations_copies_collection_id_fkey"
             columns: ["collection_id"]
             isOneToOne: false
-            referencedRelation: "user_collections"
+            referencedRelation: "copy_collections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "generations_copies_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
           {
@@ -224,6 +273,35 @@ export interface Database {
           }
         ]
       }
+      organizations_usage: {
+        Row: {
+          created_at: string
+          organization_id: number
+          tokens_generated: number
+          tokens_limit: number
+        }
+        Insert: {
+          created_at?: string
+          organization_id: number
+          tokens_generated?: number
+          tokens_limit?: number
+        }
+        Update: {
+          created_at?: string
+          organization_id?: number
+          tokens_generated?: number
+          tokens_limit?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "organizations_usage_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: true
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       subscriptions: {
         Row: {
           cancel_at_period_end: boolean
@@ -304,65 +382,36 @@ export interface Database {
       }
       templates: {
         Row: {
-          category: string | null
+          category: string
           created_at: string
-          description: string | null
+          description: string
           id: number
-          image: string | null
+          image: string
           isNew: boolean | null
           prompt: string
           title: string
         }
         Insert: {
-          category?: string | null
+          category?: string
           created_at?: string
-          description?: string | null
+          description?: string
           id?: number
-          image?: string | null
+          image?: string
           isNew?: boolean | null
           prompt?: string
           title: string
         }
         Update: {
-          category?: string | null
+          category?: string
           created_at?: string
-          description?: string | null
+          description?: string
           id?: number
-          image?: string | null
+          image?: string
           isNew?: boolean | null
           prompt?: string
           title?: string
         }
         Relationships: []
-      }
-      user_collections: {
-        Row: {
-          created_at: string
-          id: number
-          name: string
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: number
-          name?: string
-          user_id?: string
-        }
-        Update: {
-          created_at?: string
-          id?: number
-          name?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "user_collections_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
       }
       users: {
         Row: {

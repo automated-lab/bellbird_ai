@@ -26,7 +26,7 @@ export async function createTemplate(client: Client, template: ITemplateDraft) {
     };
   }
 
-  const fieldsData = (fields as string[]).map((fieldId) => ({
+  const fieldsData = (fields as number[]).map((fieldId) => ({
     template_id: templateData.id,
     field_id: fieldId,
   }));
@@ -54,7 +54,7 @@ export async function createTemplate(client: Client, template: ITemplateDraft) {
 
 export async function updateTemplate(
   client: Client,
-  templateId: string,
+  templateId: number,
   updates: Partial<ITemplateDraft>,
 ) {
   const { fields, ...templateUpdates } = updates;
@@ -72,7 +72,7 @@ export async function updateTemplate(
   console.log(updates);
 
   if (fields) {
-    const fieldsData = fields.map((fieldId: string) => ({
+    const fieldsData = fields.map((fieldId: number) => ({
       template_id: templateId,
       field_id: fieldId,
     }));
@@ -92,7 +92,7 @@ export async function updateTemplate(
   return { data: template, error: null };
 }
 
-export async function deleteTemplateById(client: Client, template_id: string) {
+export async function deleteTemplateById(client: Client, template_id: number) {
   return await client.from(TEMPLATES_TABLE).delete().eq('id', template_id);
 }
 

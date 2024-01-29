@@ -1,7 +1,7 @@
 export interface ITemplateFields {
-  id: string;
-  template_id: string;
-  field_id: string;
+  id: number;
+  template_id: number;
+  field_id: number;
 }
 
 export interface ITemplateFieldsDraft extends Omit<ITemplateFields, 'id'> {}

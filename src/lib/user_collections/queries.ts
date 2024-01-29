@@ -16,6 +16,23 @@ export async function getUserCollectionById(
     .single();
 }
 
-export function getUserCollections(client: Client, user_id: string) {
-  return client.from(COLLECTIONS_TABLE).select(`*`).eq('user_id', user_id);
+export function getUserCollections(
+  client: Client,
+  userId: string,
+  organizationId: number,
+) {
+  return client
+    .from(COLLECTIONS_TABLE)
+    .select(`*`)
+    .match({ user_id: userId, organization_id: organizationId });
+}
+
+export function getOrganizationCollections(
+  client: Client,
+  organizationId: number,
+) {
+  return client
+    .from(COLLECTIONS_TABLE)
+    .select(`*`)
+    .eq('organization_id', organizationId);
 }

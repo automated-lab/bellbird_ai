@@ -23,7 +23,7 @@ export const queryKeys = {
     'copy-collections',
     openai_id,
   ],
-  collectionGenerationsRetrieve: (collection_id: string) => [
+  collectionGenerationsRetrieve: (collection_id: number) => [
     'collection-generations',
     collection_id,
   ],

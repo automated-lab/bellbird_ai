@@ -1,41 +1,32 @@
+'use client';
+
 import If from '~/core/ui/If';
 import Trans from '~/core/ui/Trans';
-import { SupabaseClient } from '@supabase/supabase-js';
+import SubscriptionCard from '~/app/dashboard/[organization]/settings/subscription/components/SubscriptionCard';
+import PlanSelectionForm from '~/app/dashboard/[organization]/settings/subscription/components/PlanSelectionForm';
+import BillingPortalRedirectButton from '~/app/dashboard/[organization]/settings/subscription/components/BillingRedirectButton';
 
-import PlanSelectionForm from '~/app/dashboard/settings/subscription/components/PlanSelectionForm';
-import BillingPortalRedirectButton from '~/app/dashboard/settings/subscription/components/BillingRedirectButton';
+import useCurrentOrganization from '~/lib/organizations/hooks/use-current-organization';
 
-import SubscriptionCard from '../app/dashboard/settings/subscription/components/SubscriptionCard';
-import { Subscription } from '~/lib/subscriptions/types';
-import { getUserById } from '~/lib/user/database/queries';
-import requireSession from '~/lib/user/require-session';
+const Plans = () => {
+  const organization = useCurrentOrganization();
 
-const Plans: React.FC<{ client: SupabaseClient }> = async ({ client }) => {
-  const { user } = await requireSession(client);
-  const userId = user?.id;
-
-  if (!userId) {
+  if (!organization) {
     return null;
   }
 
-  const { data: userData, error: userDataErr } = await getUserById(
-    client,
-    userId,
-  );
-
-  if (userDataErr || !userData) {
-    return null;
-  }
-
-  const { subscription, customerId } = userData;
+  const subscription = organization.subscription?.data;
+  const customerId = organization.subscription?.customerId;
 
   if (!subscription) {
-    return <PlanSelectionForm customerId={customerId} userId={userId} />;
+    return (
+      <PlanSelectionForm organization={organization} customerId={customerId} />
+    );
   }
 
   return (
     <div className={'flex flex-col space-y-4'}>
-      <SubscriptionCard subscription={subscription as Subscription} />
+      <SubscriptionCard subscription={subscription} />
 
       <If condition={customerId}>
         <div className={'flex flex-col space-y-2'}>

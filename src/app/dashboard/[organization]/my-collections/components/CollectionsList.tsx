@@ -14,15 +14,17 @@ import {
   CommandList,
 } from '~/core/ui/Command';
 import Loading from '~/components/Loading';
+import CollectionMenu from './CollectionMenu';
 
+import { getKeyIf, queryKeys } from '~/lib/query-keys';
+import useCurrentOrganization from '~/lib/organizations/hooks/use-current-organization';
 import useSupabase from '~/core/hooks/use-supabase';
 import { getUserCollections } from '~/lib/user_collections/queries';
-import { IUserCollection } from '~/lib/user_collections/types';
 import useUserId from '~/core/hooks/use-user-id';
 import If from '~/core/ui/If';
 import { cn } from '~/core/generic/shadcn-utils';
-import { getKeyIf, queryKeys } from '~/lib/query-keys';
-import CollectionMenu from './CollectionMenu';
+
+import type { IUserCollection } from '~/lib/user_collections/types';
 
 type CollectionsListProps = {
   className?: string;
@@ -38,12 +40,13 @@ const CollectionsList = ({
 
   const client = useSupabase();
   const userId = useUserId();
+  const organization = useCurrentOrganization();
 
   const key = getKeyIf(queryKeys.userCollectionsRetrieve(userId), !!userId);
   const { data, isLoading } = useSWR(
     key,
     async () =>
-      await getUserCollections(client, userId!)
+      await getUserCollections(client, userId, organization.id)
         .throwOnError()
         .then(({ data }) => data),
   );

@@ -2,10 +2,10 @@ export interface IGenerationCopy {
   id?: string;
   openai_id: string;
   user_id: string;
-  organization_id: string;
-  template_id: string;
+  organization_id: number;
+  template_id: number;
   content: string;
-  collection_id: string;
+  collection_id: number;
   created_at?: string;
 }
 

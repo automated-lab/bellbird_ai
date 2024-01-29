@@ -123,7 +123,7 @@ function CreateTemplateForm({
             imageUrl = image;
           } else if (image instanceof File) {
             const formData = new FormData();
-            formData.append('templateId', templateId);
+            formData.append('templateId', String(templateId));
             formData.append('image', image);
             formData.append('csrfToken', csrfToken);
             imageUrl = await uploadTemplateImageAction(formData);

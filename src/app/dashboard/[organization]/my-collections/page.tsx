@@ -9,20 +9,18 @@ import If from '~/core/ui/If';
 import CollectionsList from './components/CollectionsList';
 import GenerationCard from './components/GenerationCard';
 
-import type { IGenerationCopy } from '~/lib/generations/types';
-import type { IUserCollection } from '~/lib/user_collections/types';
-import { getGenerationsByCollectionId } from '~/lib/generations/queries';
 import useSupabase from '~/core/hooks/use-supabase';
+import { getGenerationsByCollectionId } from '~/lib/generations/queries';
 import { getKeyIf, queryKeys } from '~/lib/query-keys';
-import IconButton from '~/core/ui/IconButton';
-import { EllipsisHorizontalIcon, TrashIcon } from '@heroicons/react/24/outline';
+
+import type { IUserCollection } from '~/lib/user_collections/types';
 
 interface MyCollectionsPageProps {}
 
 function MyCollectionsPage({}: MyCollectionsPageProps) {
   const client = useSupabase();
 
-  const [selectedCollectionId, setSelectedCollectionId] = useState('');
+  const [selectedCollectionId, setSelectedCollectionId] = useState(NaN);
 
   const key = getKeyIf(
     queryKeys.collectionGenerationsRetrieve(selectedCollectionId),
