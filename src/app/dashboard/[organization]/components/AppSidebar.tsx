@@ -23,6 +23,7 @@ import SubscriptionStatusBadge from './organizations/SubscriptionStatusBadge';
 
 import configuration from '~/configuration';
 import OrganizationsSelector from './organizations/OrganizationsSelector';
+import { UsageCounter } from '~/components/UsageCounter';
 
 const AppSidebar: React.FC<{
   organizationUid: string;
@@ -107,6 +108,10 @@ function ProfileDropdownContainer(props: { collapsed: boolean }) {
 
   return (
     <div className={props.collapsed ? '' : 'w-full'}>
+      <div className="mb-4">
+        <UsageCounter />
+      </div>
+
       <StatusBadge />
 
       <ProfileDropdown

@@ -45,8 +45,8 @@ function GenerationSaveButton({ generationCopy }: GenerationSaveButtonProps) {
 
   // Fetch current user collections
   const userCollectionsKey = getKeyIf(
-    queryKeys.userCollectionsRetrieve(userId),
-    !!userId,
+    queryKeys.organizationCollectionsRetrieve(organizationId),
+    !!organizationId,
   );
   const userCollections = useSWR<IUserCollection[]>(
     userCollectionsKey,

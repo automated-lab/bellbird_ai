@@ -1,34 +1,28 @@
-import useSWR from 'swr';
+'use client';
+
 import { useRouter } from 'next/navigation';
 
 import { BoltIcon } from '@heroicons/react/24/outline';
-
 import { Card, CardContent } from '~/core/ui/Card';
 import Button from '~/core/ui/Button';
-import { Progress } from '~/core/ui/progress';
-import Loading from '~/components/Loading';
-
-import useUserId from '~/core/hooks/use-user-id';
-import { getUserUsageById } from '~/lib/user_usage/queries';
-import useSupabase from '~/core/hooks/use-supabase';
-import useCollapsible from '~/core/hooks/use-sidebar-state';
-import { useSidebarContext } from '~/core/hooks/use-sidebar-context';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/core/ui/Tooltip';
-import { getKeyIf, queryKeys } from '~/lib/query-keys';
-import useUserSession from '~/core/hooks/use-user-session';
-import { isActiveSubscription } from '~/lib/stripe/utils';
 import If from '~/core/ui/If';
 import UsageProgress from './UsageProgress';
+
+import { useSidebarContext } from '~/core/hooks/use-sidebar-context';
+import { isActiveSubscription } from '~/lib/stripe/utils';
+import useCurrentOrganization from '~/lib/organizations/hooks/use-current-organization';
 
 export const UsageCounter = () => {
   const { collapsed: isSidebarCollapsed } = useSidebarContext();
 
-  const router = useRouter();
+  console.log(isSidebarCollapsed);
 
-  const user = useUserSession();
+  const router = useRouter();
+  const organization = useCurrentOrganization();
 
   const hasActiveSubscription = isActiveSubscription(
-    user?.data?.subscription?.status,
+    organization.subscription?.data.status,
   );
 
   const handleUpgrade = () => {

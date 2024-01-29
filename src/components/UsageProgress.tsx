@@ -4,24 +4,27 @@ import React from 'react';
 import useSWR from 'swr';
 
 import useSupabase from '~/core/hooks/use-supabase';
-import useUserId from '~/core/hooks/use-user-id';
 import { Progress } from '~/core/ui/progress';
+import { useCurrentOrganizationId } from '~/lib/organizations/hooks/use-current-organization-id';
 
 import { getKeyIf, queryKeys } from '~/lib/query-keys';
-import { getUserUsageById } from '~/lib/user_usage/queries';
+import { getOrganizationUsageById } from '~/lib/user_usage/queries';
 
 type Props = {};
 
 const UsageProgress = (props: Props) => {
   const client = useSupabase();
 
-  const userId = useUserId();
+  const organizationId = useCurrentOrganizationId();
 
-  const key = getKeyIf(queryKeys.userUsageRetrieve(userId), !!userId);
+  const key = getKeyIf(
+    queryKeys.organizationUsageRetrieve(organizationId),
+    !!organizationId,
+  );
   const { data, isLoading, error } = useSWR(
     key,
     async () =>
-      await getUserUsageById(client, userId)
+      await getOrganizationUsageById(client, organizationId)
         .throwOnError()
         .then((res) => res.data),
   );

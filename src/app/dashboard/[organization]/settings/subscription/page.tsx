@@ -4,6 +4,9 @@ import Plans from './components/Plans';
 import PlansStatusAlertContainer from './components/PlanStatusAlertContainer';
 import { withI18n } from '~/i18n/with-i18n';
 import Heading from '~/core/ui/Heading';
+import { UsageCounter } from '~/components/UsageCounter';
+import UsageProgress from '~/components/UsageProgress';
+import { Card } from '~/core/ui/Card';
 
 export const metadata = {
   title: 'Subscription',
@@ -22,9 +25,17 @@ const SubscriptionSettingsPage = () => {
         </span>
       </div>
 
-      <PlansStatusAlertContainer />
+      <div className="!mb-4">
+        <PlansStatusAlertContainer />
 
-      <Plans />
+        <Plans />
+      </div>
+
+      <Card className="p-4 space-y-4">
+        <Heading type={5}>Token Usage</Heading>
+
+        <UsageProgress />
+      </Card>
     </div>
   );
 };

@@ -17,8 +17,14 @@ export const queryKeys = {
   userMe: ['user'],
   signUpWithEmailPassword: ['auth', 'sign-up-with-email-password'],
   resetPassword: ['auth', 'reset-password'],
-  userUsageRetrieve: (userId: string) => ['user-usage', userId],
-  userCollectionsRetrieve: (userId: string) => ['user-collections', userId],
+  organizationUsageRetrieve: (organizationId: number) => [
+    'organization-usage',
+    organizationId,
+  ],
+  organizationCollectionsRetrieve: (organizationId: number) => [
+    'organization-collections',
+    organizationId,
+  ],
   copyCollectionsRetrieve: (openai_id: string) => [
     'copy-collections',
     openai_id,

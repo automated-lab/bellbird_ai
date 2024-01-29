@@ -19,10 +19,9 @@ import CollectionMenu from './CollectionMenu';
 
 import { cn } from '~/core/generic/shadcn-utils';
 import useSupabase from '~/core/hooks/use-supabase';
-import useUserId from '~/core/hooks/use-user-id';
 import { useCurrentOrganizationId } from '~/lib/organizations/hooks/use-current-organization-id';
-import { getKeyIf, queryKeys } from '~/lib/query-keys';
 import { getOrganizationCollections } from '~/lib/user_collections/queries';
+import { getKeyIf, queryKeys } from '~/lib/query-keys';
 
 import type { IUserCollection } from '~/lib/user_collections/types';
 
@@ -39,10 +38,12 @@ const CollectionsList = ({
     useState<IUserCollection | null>(null);
 
   const client = useSupabase();
-  const userId = useUserId();
   const organizationId = useCurrentOrganizationId();
 
-  const key = getKeyIf(queryKeys.userCollectionsRetrieve(userId), !!userId);
+  const key = getKeyIf(
+    queryKeys.organizationCollectionsRetrieve(organizationId),
+    !!organizationId,
+  );
   const { data, isLoading } = useSWR(
     key,
     async () =>
