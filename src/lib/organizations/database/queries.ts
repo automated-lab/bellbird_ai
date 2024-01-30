@@ -88,6 +88,7 @@ export async function getOrganizationInvitedMembers(
       role,
       invitedEmail: invited_email
     `,
+      { count: 'exact' },
     )
     .eq('organization_id', organizationId)
     .not('code', 'is', null)

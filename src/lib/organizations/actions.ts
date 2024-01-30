@@ -15,7 +15,11 @@ import { getUserDataById } from '~/lib/server/queries';
 import { transferOwnership } from '~/lib/memberships/mutations';
 import inviteMembers from '~/lib/server/organizations/invite-members';
 import MembershipRole from '~/lib/organizations/types/membership-role';
-import { getOrganizationByUid } from '~/lib/organizations/database/queries';
+import {
+  getOrganizationByUid,
+  getOrganizationInvitedMembers,
+  getOrganizationMembers,
+} from '~/lib/organizations/database/queries';
 
 import configuration from '~/configuration';
 import removeMembership from '~/lib/server/organizations/remove-membership';
@@ -219,8 +223,37 @@ export const inviteMembersToOrganizationAction = withSession(
     const session = await requireSession(client);
     const inviterId = session.user.id;
 
-    // throw an error when we cannot retrieve the inviter's id or the organization id
+    const { data: organization, error: organizationErr } =
+      await getOrganizationByUid(client, organizationUid);
+
+    if (organizationErr || !organization) {
+      throw new Error(`Organization not found`);
+    }
+
+    const { count: membersCount, error: membersErr } =
+      await getOrganizationMembers(client, organization.id);
+
+    const { count: invitedMembersCount, error: invitedMembersErr } =
+      await getOrganizationInvitedMembers(client, organization.id);
+
+    if (
+      membersErr ||
+      invitedMembersErr ||
+      typeof membersCount !== 'number' ||
+      typeof invitedMembersCount !== 'number'
+    ) {
+      throw new Error(`Error retrieving organization members`);
+    }
+
+    if (
+      membersCount + invitedMembersCount <
+      organization.subscription.data.max_users
+    ) {
+      throw new Error(`Organization has reached the maximum number of users`);
+    }
+
     if (!inviterId) {
+      // throw an error when we cannot retrieve the inviter's id or the organization id
       throw new Error(`User is not logged in or does not exist`);
     }
 
