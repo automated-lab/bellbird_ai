@@ -313,6 +313,7 @@ export interface Database {
           id: string
           interval: string | null
           interval_count: number | null
+          max_users: number
           period_ends_at: string | null
           period_starts_at: string | null
           price_id: string
@@ -327,6 +328,7 @@ export interface Database {
           id: string
           interval?: string | null
           interval_count?: number | null
+          max_users?: number
           period_ends_at?: string | null
           period_starts_at?: string | null
           price_id: string
@@ -341,6 +343,7 @@ export interface Database {
           id?: string
           interval?: string | null
           interval_count?: number | null
+          max_users?: number
           period_ends_at?: string | null
           period_starts_at?: string | null
           price_id?: string

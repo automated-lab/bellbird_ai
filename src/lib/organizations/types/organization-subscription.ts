@@ -17,4 +17,6 @@ export interface OrganizationSubscription {
   periodEndsAt: string;
   trialStartsAt: string | null;
   trialEndsAt: string | null;
+
+  max_users: number;
 }

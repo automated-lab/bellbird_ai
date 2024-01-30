@@ -1,3 +1,5 @@
+import { PLANS_LIST } from '../user_usage/utils';
+
 enum StripeSubscriptionStatus {
   Active = 'active',
   PastDue = 'past_due',
@@ -13,7 +15,7 @@ const ACTIVE_SUBSCRIPTION_STATUSES = [
   StripeSubscriptionStatus.Trialing,
 ];
 
-// Check if a subscription update is a renewal
+/** Check if a subscription update is a renewal */
 export const isRenewal = (
   previousAttributes:
     | {
@@ -32,11 +34,19 @@ export const isRenewal = (
   return false;
 };
 
-// Check if a subscription is active
+/** 
+  Check if a subscription is active 
+*/
 export const isActiveSubscription = (status?: string) => {
   if (!status) return false;
 
   return ACTIVE_SUBSCRIPTION_STATUSES.includes(
     status as StripeSubscriptionStatus,
   );
+};
+
+export const getPlanByPriceId = (priceId: string) => {
+  if (!priceId) return;
+
+  return PLANS_LIST.find((p) => p.stripePriceId === priceId);
 };

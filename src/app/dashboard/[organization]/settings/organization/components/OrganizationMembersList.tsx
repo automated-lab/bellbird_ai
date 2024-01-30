@@ -2,7 +2,10 @@
 
 import type { User } from '@supabase/gotrue-js';
 import { useMemo, useState } from 'react';
-import { UserPlusIcon } from '@heroicons/react/24/outline';
+import {
+  InformationCircleIcon,
+  UserPlusIcon,
+} from '@heroicons/react/24/outline';
 
 import If from '~/core/ui/If';
 import Badge from '~/core/ui/Badge';
@@ -19,9 +22,11 @@ import ProfileAvatar from '~/components/ProfileAvatar';
 import useUserId from '~/core/hooks/use-user-id';
 import useUserCanInviteUsers from '~/lib/organizations/hooks/use-user-can-invite-users';
 import { useTranslation } from 'react-i18next';
+import { Tooltip, TooltipContent, TooltipTrigger } from '~/core/ui/Tooltip';
 
 function OrganizationMembersList({
   members,
+  canInviteMore,
 }: React.PropsWithChildren<{
   members: Array<{
     role: MembershipRole;
@@ -29,6 +34,7 @@ function OrganizationMembersList({
     auth: User;
     data: UserData;
   }>;
+  canInviteMore: boolean;
 }>) {
   const currentUserId = useUserId();
   const [search, setSearch] = useState('');
@@ -64,7 +70,18 @@ function OrganizationMembersList({
         />
 
         <div className={'w-full flex justify-end lg:w-auto lg:min-w-[200px]'}>
-          <InviteMembersLinkButton href={'members/invite'} />
+          {canInviteMore ? (
+            <InviteMembersLinkButton href={'members/invite'} />
+          ) : (
+            <Tooltip>
+              <TooltipTrigger className="mr-auto">
+                <InformationCircleIcon className="w-6 h-6" />
+              </TooltipTrigger>
+              <TooltipContent>
+                You&apos;ve reached your invitations limit
+              </TooltipContent>
+            </Tooltip>
+          )}
         </div>
       </div>
 

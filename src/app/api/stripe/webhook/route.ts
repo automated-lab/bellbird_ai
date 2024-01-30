@@ -23,6 +23,7 @@ import getSupabaseRouteHandlerClient from '~/core/supabase/route-handler-client'
 import { setOrganizationSubscriptionData } from '~/lib/organizations/database/mutations';
 import { createOrganizationUsageByPriceId } from '~/lib/user_usage/utils';
 import { getOrganizationByUid } from '~/lib/organizations/database/queries';
+import { getPlanByPriceId } from '~/lib/stripe/utils';
 
 const STRIPE_SIGNATURE_HEADER = 'stripe-signature';
 
@@ -131,13 +132,17 @@ async function onCheckoutCompleted(
   const organizationUid = getOrganizationUidFromClientReference(session);
   const customerId = session.customer as string;
 
+  const max_users = getPlanByPriceId(
+    subscription.items.data[0].price.id,
+  )?.max_users;
+
   // build organization subscription and set on the organization document
   // we add just enough data in the DB, so we do not query
   // Stripe for every bit of data
   // if you need your DB record to contain further data
   // add it to {@link buildOrganizationSubscription}
   const { error: addSubscriptionErr, data: addSubscriptionData } =
-    await addSubscription(client, subscription);
+    await addSubscription(client, subscription, max_users);
 
   if (addSubscriptionErr) {
     logger.error(

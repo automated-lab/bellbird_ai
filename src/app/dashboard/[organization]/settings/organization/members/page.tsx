@@ -34,6 +34,9 @@ const OrganizationMembersPage: React.FC<{
 }> = ({ params }) => {
   const data = use(loadMembers(params.organization));
 
+  const canInviteMore =
+    (data?.invitedMembers?.length ?? 0) + data.members.length < data.maxUsers;
+
   return (
     <>
       <div className="flex flex-1 flex-col space-y-6">
@@ -41,7 +44,10 @@ const OrganizationMembersPage: React.FC<{
           heading={<Trans i18nKey={'organization:membersTabLabel'} />}
           subHeading={<Trans i18nKey={'organization:membersTabSubheading'} />}
         >
-          <OrganizationMembersList members={data.members} />
+          <OrganizationMembersList
+            members={data.members}
+            canInviteMore={canInviteMore}
+          />
         </SettingsTile>
 
         <SettingsTile
@@ -159,6 +165,9 @@ async function loadMembers(organizationUid: string) {
     return redirect(configuration.paths.appHome);
   }
 
+  const maxUsers =
+    organizationResponse.organization?.subscription.data.max_users!;
+
   const [members, invitedMembers] = await Promise.all([
     fetchOrganizationMembers({ adminClient, client, organizationId }).catch(
       (error) => {
@@ -175,5 +184,6 @@ async function loadMembers(organizationUid: string) {
   return {
     members,
     invitedMembers,
+    maxUsers,
   };
 }

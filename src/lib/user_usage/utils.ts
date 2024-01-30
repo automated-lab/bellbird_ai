@@ -4,6 +4,7 @@ import { createOrganizationUsage } from './mutations';
 
 import { Database } from '~/database.types';
 import configuration from '~/configuration';
+import { getPlanByPriceId } from '~/lib/stripe/utils';
 
 type Client = SupabaseClient<Database>;
 
@@ -20,17 +21,11 @@ export const createOrganizationUsageByPriceId = async (
 ) => {
   let tokensLimit = null;
 
-  tokensLimit = getTokenLimitByPriceId(priceId) ?? 0;
+  tokensLimit = getPlanByPriceId(priceId)?.tokens_limit ?? 0;
 
   return await createOrganizationUsage(client, {
     organization_id: organizationId,
     tokens_generated: 0,
     tokens_limit: tokensLimit,
   });
-};
-
-const getTokenLimitByPriceId = (priceId: string) => {
-  if (!priceId) return;
-
-  return PLANS_LIST.find((p) => p.stripePriceId === priceId)?.tokens_limit;
 };

@@ -34,7 +34,8 @@ const FETCH_ORGANIZATION_QUERY = `
       periodStartsAt: period_starts_at,
       periodEndsAt: period_ends_at,
       trialStartsAt: trial_starts_at,
-      trialEndsAt: trial_ends_at
+      trialEndsAt: trial_ends_at,
+      max_users
     )
   )
 `;
@@ -42,7 +43,7 @@ const FETCH_ORGANIZATION_QUERY = `
 export type UserOrganizationData = {
   role: MembershipRole;
   organization: Organization & {
-    subscription?: {
+    subscription: {
       customerId: Maybe<string>;
       data: OrganizationSubscription;
     };
