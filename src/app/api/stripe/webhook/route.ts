@@ -23,7 +23,8 @@ import getSupabaseRouteHandlerClient from '~/core/supabase/route-handler-client'
 import { setOrganizationSubscriptionData } from '~/lib/organizations/database/mutations';
 import { createOrganizationUsageByPriceId } from '~/lib/user_usage/utils';
 import { getOrganizationByUid } from '~/lib/organizations/database/queries';
-import { getPlanByPriceId } from '~/lib/stripe/utils';
+import { getPlanByPriceId, isRenewal } from '~/lib/stripe/utils';
+import { deleteOrganizationUsage } from '~/lib/user_usage/mutations';
 
 const STRIPE_SIGNATURE_HEADER = 'stripe-signature';
 
@@ -75,6 +76,19 @@ export async function POST(request: Request) {
 
     const session = event.data.object as Stripe.Checkout.Session;
 
+    const organizationUid = getOrganizationUidFromClientReference(session);
+
+    const { data: organization, error: organizationErr } =
+      await getOrganizationByUid(client, organizationUid);
+
+    if (!organization || organizationErr) {
+      return Promise.reject(
+        `Failed to get organization by uid: ${organizationErr?.message}`,
+      );
+    }
+
+    const organizationId = organization.id;
+
     switch (event.type) {
       case StripeWebhooks.Completed: {
         const subscriptionId = session.subscription as string;
@@ -84,7 +98,12 @@ export async function POST(request: Request) {
 
         console.log(event);
 
-        await onCheckoutCompleted(client, session, subscription);
+        await onCheckoutCompleted(
+          client,
+          session,
+          subscription,
+          organizationId,
+        );
 
         break;
       }
@@ -92,7 +111,7 @@ export async function POST(request: Request) {
       case StripeWebhooks.SubscriptionDeleted: {
         const subscription = event.data.object as Stripe.Subscription;
 
-        await deleteSubscription(client, subscription.id);
+        await onSubscriptionDeleted(client, subscription, organizationId);
 
         break;
       }
@@ -101,6 +120,12 @@ export async function POST(request: Request) {
         const subscription = event.data.object as Stripe.Subscription;
 
         await updateSubscriptionById(client, subscription);
+
+        const renewed = isRenewal(event.data.previous_attributes);
+
+        if (renewed) {
+          await onSubscriptionRenwed(client, event, organizationId);
+        }
 
         break;
       }
@@ -128,8 +153,8 @@ async function onCheckoutCompleted(
   client: SupabaseClient,
   session: Stripe.Checkout.Session,
   subscription: Stripe.Subscription,
+  organizationId: number,
 ) {
-  const organizationUid = getOrganizationUidFromClientReference(session);
   const customerId = session.customer as string;
 
   const max_users = getPlanByPriceId(
@@ -159,17 +184,6 @@ async function onCheckoutCompleted(
     'Subscription added successfully to the database',
     subscription.id,
   );
-
-  const { data: organization, error: organizationErr } =
-    await getOrganizationByUid(client, organizationUid);
-
-  if (!organization || organizationErr) {
-    return Promise.reject(
-      `Failed to get organization by uid: ${organizationErr?.message}`,
-    );
-  }
-
-  const organizationId = organization.id;
 
   const { error: setOrganizationSubscriptionErr } =
     await setOrganizationSubscriptionData(client, {
@@ -211,6 +225,69 @@ async function onCheckoutCompleted(
 
   return;
 }
+
+const onSubscriptionDeleted = async (
+  client: SupabaseClient,
+  subscription: Stripe.Subscription,
+  organizationId: number,
+) => {
+  const logger = getLogger();
+
+  const { error: deleteSubscriptionErr } = await deleteSubscription(
+    client,
+    subscription.id,
+  );
+
+  if (deleteSubscriptionErr) {
+    return Promise.reject(
+      `Failed to delete subscription from the database: ${deleteSubscriptionErr}`,
+    );
+  }
+
+  logger.info(
+    { organizationId: organizationId, subscriptionId: subscription.id },
+    `Subscription deleted successfully from the database`,
+  );
+
+  const { error: deleteOrganizationUsageErr } = await deleteOrganizationUsage(
+    client,
+    organizationId,
+  );
+
+  if (deleteOrganizationUsageErr) {
+    return Promise.reject(
+      `Failed to delete organization usage from the database : ${deleteOrganizationUsageErr}`,
+    );
+  }
+
+  logger.info(
+    { organizationId: organizationId, subscriptionId: subscription.id },
+    `Organization Usage deleted from the database successfully`,
+  );
+
+  return subscription;
+};
+
+const onSubscriptionRenwed = async (
+  client: SupabaseClient,
+  event: Stripe.CustomerSubscriptionUpdatedEvent,
+  organizationId: number,
+) => {
+  const logger = getLogger();
+
+  const priceId = event.data.object.items.data[0]?.price.id;
+
+  const { error: createOrganizationUsageErr } =
+    await createOrganizationUsageByPriceId(client, organizationId, priceId);
+
+  if (createOrganizationUsageErr) {
+    return Promise.reject(
+      `Failed to update organization usage : ${createOrganizationUsageErr}`,
+    );
+  }
+
+  logger.info({ organizationId }, `organization usage updated successfully`);
+};
 
 /**
  * @name getOrganizationUidFromClientReference
