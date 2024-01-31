@@ -14,7 +14,7 @@ async function AppPage() {
     permanentRedirect(configuration.paths.signIn);
   }
 
-  permanentRedirect(configuration.paths.appHome);
+  permanentRedirect(configuration.paths.appPrefix);
 
   return null;
 }

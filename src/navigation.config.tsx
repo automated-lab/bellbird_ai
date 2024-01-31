@@ -38,14 +38,6 @@ const paths = configuration.paths;
 const NAVIGATION_CONFIG = (organization: string): NavigationConfig => ({
   items: [
     {
-      label: 'common:dashboardTabLabel',
-      path: getPath(organization, ''),
-      Icon: ({ className }: { className: string }) => {
-        return <Squares2X2Icon className={className} />;
-      },
-      end: true,
-    },
-    {
       label: 'common:ToolsTabLabel',
       path: getPath(organization, paths.tools),
       Icon: ({ className }: { className: string }) => {
@@ -93,8 +85,16 @@ const NAVIGATION_CONFIG = (organization: string): NavigationConfig => ({
 
 export default NAVIGATION_CONFIG;
 
-export function getPath(organizationUid: string, path: string) {
+export function getPath(organizationUid: string, ...paths: string[]) {
   const appPrefix = configuration.paths.appPrefix;
 
-  return [appPrefix, organizationUid, path].filter(Boolean).join('/');
+  return [appPrefix, organizationUid, ...paths].filter(Boolean).join('/');
+}
+
+export function getAppHomeUrl(organizationUid: string) {
+  return [
+    `${configuration.paths.appPrefix}`,
+    organizationUid,
+    configuration.paths.appHome,
+  ].join('/');
 }

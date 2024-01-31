@@ -22,6 +22,7 @@ import { PageBody, PageHeader } from '~/core/ui/Page';
 import configuration from '~/configuration';
 import I18nProvider from '~/i18n/I18nProvider';
 import { getUserById } from '~/lib/user/database/queries';
+import { getAppHomeUrl } from '~/navigation.config';
 
 async function OrganizationsPage() {
   const client = getSupabaseServerComponentClient();
@@ -146,8 +147,4 @@ function OrganizationsPageHeader() {
       }
     />
   );
-}
-
-function getAppHomeUrl(organizationUid: string) {
-  return [`${configuration.paths.appHome}`, organizationUid].join('/');
 }

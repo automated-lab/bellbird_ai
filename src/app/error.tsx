@@ -4,14 +4,11 @@ import Button from '~/core/ui/Button';
 import Heading from '~/core/ui/Heading';
 import Trans from '~/core/ui/Trans';
 
-import SiteHeader from '~/app/(site)/components/SiteHeader';
 import I18nProvider from '~/i18n/I18nProvider';
 
 const ErrorPage = () => {
   return (
     <I18nProvider>
-      <SiteHeader />
-
       <div
         className={
           'm-auto flex min-h-[50vh] w-full items-center justify-center'

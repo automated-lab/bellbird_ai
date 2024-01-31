@@ -56,7 +56,7 @@ const configuration = {
     onboarding: `/onboarding`,
     subscribe: '/subscribe',
     appPrefix: '/dashboard',
-    appHome: '/dashboard',
+    appHome: 'tools',
     authCallback: '/auth/callback',
     tools: '/tools',
     tool: (id: string) => `/tools/${id}`,
