@@ -17,6 +17,7 @@ import { getKeyIf, queryKeys } from '~/lib/query-keys';
 
 import type { IGenerationCopy } from '~/lib/generations/types';
 import type { ToolFormData } from './types';
+import useCurrentOrganization from '~/lib/organizations/hooks/use-current-organization';
 
 type ToolPageProps = {
   params: {
@@ -31,7 +32,7 @@ function ToolPage({ params }: ToolPageProps) {
 
   const client = useSupabase();
   const upgradeModal = useUpgradeModal();
-  const organizationId = useCurrentOrganizationId();
+  const organization = useCurrentOrganization();
 
   const template_id = params.tool_id;
 
@@ -61,7 +62,7 @@ function ToolPage({ params }: ToolPageProps) {
     const body = {
       values,
       template_id,
-      organization_id: organizationId,
+      organization_uid: organization.uuid,
     };
 
     Array.from({ length: qty }).forEach((_) => {

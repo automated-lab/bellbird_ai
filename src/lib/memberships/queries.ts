@@ -48,6 +48,7 @@ export async function getUserMembershipByOrganization(
     .select<string, Membership>(
       `
       *,
+      organizationId : organization_id,
       organization: organization_id !inner (
         uuid
       )

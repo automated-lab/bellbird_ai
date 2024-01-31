@@ -1,12 +1,7 @@
 import useSWRMutation from 'swr/mutation';
+import { GenerateCopyBody } from '~/app/api/generate/route';
 import useApiRequest from '~/core/hooks/use-api';
 import { IGenerationCopy } from '~/lib/generations/types';
-
-interface GenerateCopyBody {
-  values: Record<string, string | string[]>;
-  template_id: string;
-  organization_id: number;
-}
 
 export const useGenerateCopy = () => {
   const fetcher = useApiRequest<IGenerationCopy, GenerateCopyBody>();

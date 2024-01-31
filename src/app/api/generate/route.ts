@@ -12,6 +12,17 @@ import { IGenerationCopy } from '~/lib/generations/types';
 import { getSubscriptionByOrganizationId } from '~/lib/subscriptions/queries';
 // import { getSubscriptionByUserId } from '~/lib/subscriptions/queries';
 import { isActiveSubscription } from '~/lib/stripe/utils';
+import getCurrentOrganization from '~/lib/server/organizations/get-current-organization';
+import {
+  getUserMembershipByOrganization,
+  getUserRoleByMembershipId,
+} from '~/lib/memberships/queries';
+
+export interface GenerateCopyBody {
+  values: Record<string, string | string[]>;
+  template_id: string;
+  organization_uid: string;
+}
 
 const logger = getLogger();
 
@@ -19,7 +30,7 @@ export async function POST(req: NextRequest) {
   try {
     logger.info('Generate copy request received');
 
-    const body = await req.json();
+    const body: GenerateCopyBody = await req.json();
 
     if (!body) {
       logger.error('Body not found');
@@ -31,14 +42,19 @@ export async function POST(req: NextRequest) {
     const session = await requireSession(client);
     const user = session.user;
 
-    const organizationId = body.organization_id;
+    const userMembership = await getUserMembershipByOrganization(client, {
+      userId: user.id,
+      organizationUid: body.organization_uid,
+    });
+
+    logger.info('User membership retrieved', user.id, userMembership.id);
+
+    const organizationId = userMembership.organizationId;
 
     const {
       data: OrganizationSubscription,
       error: OrganizationSubscriptionErr,
     } = await getSubscriptionByOrganizationId(client, organizationId);
-
-    console.log(OrganizationSubscription);
 
     if (
       !OrganizationSubscription ||
@@ -48,11 +64,14 @@ export async function POST(req: NextRequest) {
         { error: OrganizationSubscriptionErr },
         'User is not subscribed to a plan',
       );
+
       throw NextResponse.json(
         { message: "You've no Active Plan" },
         { status: 402 },
       );
     }
+
+    logger.info('User Organization is subscribed to a plan');
 
     const remainingTokens = await getOrganizationRemainingTokens(
       client,
