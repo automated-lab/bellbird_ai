@@ -1,12 +1,12 @@
 import Trans from '~/core/ui/Trans';
 
-import Plans from './components/Plans';
 import PlansStatusAlertContainer from './components/PlanStatusAlertContainer';
-import { withI18n } from '~/i18n/with-i18n';
-import Heading from '~/core/ui/Heading';
-import { UsageCounter } from '~/components/UsageCounter';
 import UsageProgress from '~/components/UsageProgress';
+import Heading from '~/core/ui/Heading';
+
+import { withI18n } from '~/i18n/with-i18n';
 import { Card } from '~/core/ui/Card';
+import PlansContainer from '~/app/subscribe/components/PlansContainer';
 
 export const metadata = {
   title: 'Subscription',
@@ -28,7 +28,7 @@ const SubscriptionSettingsPage = () => {
       <div className="!mb-4">
         <PlansStatusAlertContainer />
 
-        <Plans />
+        <PlansContainer />
       </div>
 
       <Card className="p-4 space-y-4">

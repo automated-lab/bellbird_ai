@@ -83,7 +83,7 @@ export const POST = async (req: NextRequest) => {
 
   cookies().set(createOrganizationIdCookie({ userId, organizationUid }));
 
-  const returnUrl = [configuration.paths.appHome, organizationUid].join('/');
+  const returnUrl = configuration.paths.subscribe;
 
   return NextResponse.json({
     success: true,

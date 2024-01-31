@@ -4,19 +4,12 @@ import React from 'react';
 
 import Plans from '~/components/Plans';
 
-import CsrfTokenContext from '~/lib/contexts/csrf';
-import useSupabase from '~/core/hooks/use-supabase';
+import useCurrentOrganization from '~/lib/organizations/hooks/use-current-organization';
 
-type Props = { csrfToken: string };
+const PlansContainer = () => {
+  const organization = useCurrentOrganization();
 
-const PlansContainer = ({ csrfToken }: Props) => {
-  const client = useSupabase();
-
-  return (
-    <CsrfTokenContext.Provider value={csrfToken}>
-      <Plans client={client} />
-    </CsrfTokenContext.Provider>
-  );
+  return <Plans organization={organization} />;
 };
 
 export default PlansContainer;

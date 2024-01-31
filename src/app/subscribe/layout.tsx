@@ -1,7 +1,6 @@
 import { headers } from 'next/headers';
 
 import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline';
-import CsrfTokenContainer from '~/components/CsrfTokenContainer';
 import configuration from '~/configuration';
 import Button from '~/core/ui/Button';
 
@@ -20,41 +19,37 @@ async function SubscriptionLayout({ children }: React.PropsWithChildren) {
 
   return (
     <I18nProvider lang={language}>
-      <CsrfTokenContainer csrfToken={csrfToken}>
-        <div
-          className={'flex flex-1 flex-col dark:bg-background py-8 h-screen'}
-        >
-          <div className={'flex justify-between px-4 sm:px-8 pb-8'}>
-            <LogoImage />
-            <div>
-              <Button
-                variant="custom"
-                className="text-red-500 hover:text-red-600 border border-red-100 hover:bg-red-50"
-                href={configuration.paths.signIn}
-              >
-                <ArrowLeftOnRectangleIcon className="mr-2 h-4 w-4" /> Sign out
-              </Button>
-            </div>
-          </div>
-
-          <div
-            className={
-              'flex flex-1 flex-col items-center justify-center' +
-              ' mx-2 md:mx-auto pb-8'
-            }
-          >
-            <div
-              className={
-                'flex flex-col space-y-16 w-full lg:p-16' +
-                ' lg:rounded-md zoom-in-95 animate-in fade-in ease-out' +
-                ' duration-1000 slide-in-from-bottom-24'
-              }
+      <div className={'flex flex-1 flex-col dark:bg-background py-8 h-screen'}>
+        <div className={'flex justify-between px-4 sm:px-8 pb-8'}>
+          <LogoImage />
+          <div>
+            <Button
+              variant="custom"
+              className="text-red-500 hover:text-red-600 border border-red-100 hover:bg-red-50"
+              href={configuration.paths.signIn}
             >
-              {children}
-            </div>
+              <ArrowLeftOnRectangleIcon className="mr-2 h-4 w-4" /> Sign out
+            </Button>
           </div>
         </div>
-      </CsrfTokenContainer>
+
+        <div
+          className={
+            'flex flex-1 flex-col items-center justify-center' +
+            ' mx-2 md:mx-auto pb-8'
+          }
+        >
+          <div
+            className={
+              'flex flex-col space-y-16 w-full lg:p-16' +
+              ' lg:rounded-md zoom-in-95 animate-in fade-in ease-out' +
+              ' duration-1000 slide-in-from-bottom-24'
+            }
+          >
+            {children}
+          </div>
+        </div>
+      </div>
     </I18nProvider>
   );
 }

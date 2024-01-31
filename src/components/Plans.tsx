@@ -6,11 +6,19 @@ import SubscriptionCard from '~/app/dashboard/[organization]/settings/subscripti
 import PlanSelectionForm from '~/app/dashboard/[organization]/settings/subscription/components/PlanSelectionForm';
 import BillingPortalRedirectButton from '~/app/dashboard/[organization]/settings/subscription/components/BillingRedirectButton';
 
-import useCurrentOrganization from '~/lib/organizations/hooks/use-current-organization';
+import type Organization from '~/lib/organizations/types/organization';
+import type { OrganizationSubscription } from '~/lib/organizations/types/organization-subscription';
 
-const Plans = () => {
-  const organization = useCurrentOrganization();
-
+const Plans = ({
+  organization,
+}: {
+  organization: Organization & {
+    subscription: {
+      customerId: Maybe<string>;
+      data: OrganizationSubscription;
+    };
+  };
+}) => {
   if (!organization) {
     return null;
   }
