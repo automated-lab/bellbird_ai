@@ -1,8 +1,8 @@
 'use server';
 
 import getSupabaseServerActionClient from '~/core/supabase/action-client';
-import { IUserCollection } from './types';
-import { createUserCollection, deleteUserCollectionById } from './mutations';
+import { ICopyCollection } from './types';
+import { createCopyCollection, deleteCopyCollectionById } from './mutations';
 import getLogger from '~/core/logger';
 import { z } from 'zod';
 import { withSession } from '~/core/generic/actions-utils';
@@ -12,17 +12,17 @@ import { revalidatePath } from 'next/cache';
 
 const getClient = () => getSupabaseServerActionClient({ admin: true });
 
-export const createUserCollectionAction = withSession(
-  async (params: { collectionData: IUserCollection; csrfToken: string }) => {
+export const createCopyCollectionAction = withSession(
+  async (params: { collectionData: ICopyCollection; csrfToken: string }) => {
     const client = getClient();
     const logger = getLogger();
-    const collectionData = getUserCollectionSchema().parse(
+    const collectionData = getCopyCollectionSchema().parse(
       params.collectionData,
     );
 
     logger.info('Creating user collection...');
 
-    const { data: collectionId, error } = await createUserCollection(
+    const { data: collectionId, error } = await createCopyCollection(
       client,
       collectionData,
     );
@@ -41,8 +41,8 @@ export const createUserCollectionAction = withSession(
   },
 );
 
-export const deleteUserCollectionAction = withSession(
-  async (params: { collectionId: string; csrfToken: string }) => {
+export const deleteCopyCollectionAction = withSession(
+  async (params: { collectionId: number; csrfToken: string }) => {
     const client = getClient();
     const logger = getLogger();
 
@@ -50,7 +50,7 @@ export const deleteUserCollectionAction = withSession(
 
     logger.info({ collectionId }, `User requested to delete a collection`);
 
-    const { error } = await deleteUserCollectionById(client, collectionId);
+    const { error } = await deleteCopyCollectionById(client, collectionId);
 
     if (error) {
       logger.error(error.message, 'Error deleting user collection');
@@ -63,8 +63,9 @@ export const deleteUserCollectionAction = withSession(
   },
 );
 
-const getUserCollectionSchema = () => {
+const getCopyCollectionSchema = () => {
   return z.object({
+    organization_id: z.number(),
     user_id: z.string().min(2),
     name: z.string().min(2),
   });

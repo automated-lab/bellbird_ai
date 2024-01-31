@@ -23,11 +23,11 @@ import { useCurrentOrganizationId } from '~/lib/organizations/hooks/use-current-
 import { getOrganizationCollections } from '~/lib/user_collections/queries';
 import { getKeyIf, queryKeys } from '~/lib/query-keys';
 
-import type { IUserCollection } from '~/lib/user_collections/types';
+import type { ICopyCollection } from '~/lib/user_collections/types';
 
 type CollectionsListProps = {
   className?: string;
-  onSelectCollection: (collection: IUserCollection) => void;
+  onSelectCollection: (collection: ICopyCollection) => void;
 };
 
 const CollectionsList = ({
@@ -35,7 +35,7 @@ const CollectionsList = ({
   onSelectCollection,
 }: CollectionsListProps) => {
   const [selectedCollection, setSelectedCollection] =
-    useState<IUserCollection | null>(null);
+    useState<ICopyCollection | null>(null);
 
   const client = useSupabase();
   const organizationId = useCurrentOrganizationId();

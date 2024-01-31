@@ -62,7 +62,7 @@ export const createNewFieldAction = withAdminSession(
 
 export const updateFieldAction = withAdminSession(
   async (params: {
-    fieldId: string;
+    fieldId: number;
     fieldUpdates: Partial<ITemplateFieldForm>;
     csrfToken: string;
   }) => {
@@ -88,7 +88,7 @@ export const updateFieldAction = withAdminSession(
 );
 
 export const deleteFieldAction = withAdminSession(
-  async ({ fieldId }: { fieldId: string; csrfToken: string }) => {
+  async ({ fieldId }: { fieldId: number; csrfToken: string }) => {
     const client = getClient();
 
     const logger = getLogger();

@@ -60,7 +60,7 @@ const Modal: React.FC<Props> & {
         <DialogTrigger asChild>{Trigger}</DialogTrigger>
       </If>
 
-      <DialogContent>
+      <DialogContent asChild className="min-w-max">
         <div className={'flex flex-col space-y-4'}>
           <div className="flex items-center">
             <DialogTitle className="flex w-full text-xl font-semibold text-current">
@@ -75,11 +75,7 @@ const Modal: React.FC<Props> & {
               <IconButton
                 className={'absolute top-0 right-4 flex items-center'}
                 label={'Close Modal'}
-                onClick={() => {
-                  if (isControlled) {
-                    props.setIsOpen(false);
-                  }
-                }}
+                type="button"
               >
                 <XMarkIcon className={'h-6'} />
                 <span className="sr-only">Close</span>

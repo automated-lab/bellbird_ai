@@ -1,7 +1,7 @@
 import { use } from 'react';
 
 import useSupabase from '~/core/hooks/use-supabase';
-import { getUserCollectionById } from '~/lib/user_collections/queries';
+import { getCopyCollectionById } from '~/lib/user_collections/queries';
 import DeleteCollectionModal from '../components/DeleteCollectionModal';
 
 interface Params {
@@ -14,7 +14,7 @@ function DeleteCollectionModalPage({ params }: Params) {
   const client = useSupabase();
 
   const { data, error } = use(
-    getUserCollectionById(client, params.collection_id),
+    getCopyCollectionById(client, params.collection_id),
   );
 
   console.log(data, error);

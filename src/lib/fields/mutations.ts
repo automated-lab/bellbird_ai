@@ -14,13 +14,13 @@ export function createField(client: Client, field: ITemplateFieldForm) {
 
 export async function updateField(
   client: Client,
-  fieldId: string,
+  fieldId: number,
   fieldUpdates: Partial<ITemplateField>,
 ) {
   return client.from(FIELDS_TABLE).update(fieldUpdates).eq('id', fieldId);
 }
 
-export function deleteFieldById(client: Client, fieldId: string) {
+export function deleteFieldById(client: Client, fieldId: number) {
   return getFieldsTable(client).delete().eq('id', fieldId).maybeSingle();
 }
 

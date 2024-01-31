@@ -1,19 +1,19 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState, useTransition } from 'react';
+import { FormEvent, useEffect, useState, useTransition } from 'react';
 
 import Modal from '~/core/ui/Modal';
 import Button from '~/core/ui/Button';
 import useCsrfToken from '~/core/hooks/use-csrf-token';
 import { TextFieldInput, TextFieldLabel } from '~/core/ui/TextField';
-import { IUserCollection } from '~/lib/user_collections/types';
-import { deleteUserCollectionAction } from '~/lib/user_collections/actions';
+import { ICopyCollection } from '~/lib/user_collections/types';
+import { deleteCopyCollectionAction } from '~/lib/user_collections/actions';
 
 function DeleteCollectionModal({
   collection,
 }: React.PropsWithChildren<{
-  collection: IUserCollection;
+  collection: ICopyCollection;
 }>) {
   const router = useRouter();
 
@@ -23,6 +23,7 @@ function DeleteCollectionModal({
   const displayText = collection.name ?? '';
 
   const onDismiss = () => {
+    console.log('how many times we are called');
     router.back();
 
     setIsOpen(false);
@@ -30,7 +31,7 @@ function DeleteCollectionModal({
 
   const onConfirm = () => {
     startTransition(async () => {
-      await deleteUserCollectionAction({
+      await deleteCopyCollectionAction({
         collectionId: collection.id,
         csrfToken,
       });
@@ -44,6 +45,7 @@ function DeleteCollectionModal({
       heading={'Deleting Collection'}
       isOpen={isOpen}
       setIsOpen={onDismiss}
+      closeButton
     >
       <form action={onConfirm}>
         <div className={'flex flex-col space-y-4'}>

@@ -5,7 +5,7 @@ import { COLLECTIONS_TABLE } from '~/lib/db-tables';
 
 type Client = SupabaseClient<Database>;
 
-export async function getUserCollectionById(
+export async function getCopyCollectionById(
   client: Client,
   collection_id: string,
 ) {

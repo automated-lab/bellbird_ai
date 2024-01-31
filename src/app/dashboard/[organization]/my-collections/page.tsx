@@ -13,7 +13,7 @@ import useSupabase from '~/core/hooks/use-supabase';
 import { getGenerationsByCollectionId } from '~/lib/generations/queries';
 import { getKeyIf, queryKeys } from '~/lib/query-keys';
 
-import type { IUserCollection } from '~/lib/user_collections/types';
+import type { ICopyCollection } from '~/lib/user_collections/types';
 
 interface MyCollectionsPageProps {}
 
@@ -46,7 +46,7 @@ function MyCollectionsPage({}: MyCollectionsPageProps) {
       <section className="flex flex-col md:flex-row gap-4">
         <CollectionsList
           className="flex-1 z-10"
-          onSelectCollection={(collectionData: IUserCollection) =>
+          onSelectCollection={(collectionData: ICopyCollection) =>
             setSelectedCollectionId(collectionData.id)
           }
         />

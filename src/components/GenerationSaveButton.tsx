@@ -21,8 +21,8 @@ import Loading from '~/components/Loading';
 
 import useSupabase from '~/core/hooks/use-supabase';
 import useUserId from '~/core/hooks/use-user-id';
-import { getUserCollections } from '~/lib/user_collections/queries';
-import { createUserCollection } from '~/lib/user_collections/mutations';
+import { getOrganizationCollections } from '~/lib/user_collections/queries';
+import { createCopyCollection } from '~/lib/user_collections/mutations';
 import {
   createGenerationCopy,
   deleteCopyFromCollection,
@@ -30,7 +30,7 @@ import {
 import { getGenerationCollectionsByAiId } from '~/lib/generations/queries';
 
 import type { IGenerationCopy } from '~/lib/generations/types';
-import type { IUserCollection } from '~/lib/user_collections/types';
+import type { ICopyCollection } from '~/lib/user_collections/types';
 import { getKeyIf, queryKeys } from '~/lib/query-keys';
 import { useCurrentOrganizationId } from '~/lib/organizations/hooks/use-current-organization-id';
 
@@ -48,12 +48,12 @@ function GenerationSaveButton({ generationCopy }: GenerationSaveButtonProps) {
     queryKeys.organizationCollectionsRetrieve(organizationId),
     !!organizationId,
   );
-  const userCollections = useSWR<IUserCollection[]>(
+  const userCollections = useSWR<ICopyCollection[]>(
     userCollectionsKey,
     async () =>
-      await getUserCollections(client, userId, organizationId)
+      await getOrganizationCollections(client, organizationId)
         .throwOnError()
-        .then(({ data }) => data as IUserCollection[]),
+        .then(({ data }) => data as ICopyCollection[]),
   );
 
   // Fetch collections copy already saved to
@@ -71,7 +71,7 @@ function GenerationSaveButton({ generationCopy }: GenerationSaveButtonProps) {
 
   // Create new user collection
   const createNewCollection = async (name: string) => {
-    const { data, error } = await createUserCollection(client, {
+    const { data, error } = await createCopyCollection(client, {
       name,
       organization_id: organizationId,
       user_id: userId,

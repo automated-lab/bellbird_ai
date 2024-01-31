@@ -2,13 +2,13 @@ import { SupabaseClient } from '@supabase/supabase-js';
 
 import { Database } from '~/database.types';
 import { COLLECTIONS_TABLE } from '~/lib/db-tables';
-import { IUserCollectionDraft } from './types';
+import { ICopyCollectionDraft } from './types';
 
 type Client = SupabaseClient<Database>;
 
-export async function createUserCollection(
+export async function createCopyCollection(
   client: Client,
-  collectionData: IUserCollectionDraft,
+  collectionData: ICopyCollectionDraft,
 ) {
   return await client
     .from(COLLECTIONS_TABLE)
@@ -17,9 +17,9 @@ export async function createUserCollection(
     .single();
 }
 
-export async function deleteUserCollectionById(
+export async function deleteCopyCollectionById(
   client: Client,
-  collection_id: string,
+  collection_id: number,
 ) {
   return await client.from(COLLECTIONS_TABLE).delete().eq('id', collection_id);
 }
