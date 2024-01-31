@@ -4,7 +4,7 @@ import SettingsTile from '~/app/dashboard/[organization]/settings/components/Set
 import Trans from '~/core/ui/Trans';
 import Button from '~/core/ui/Button';
 import { withI18n } from '~/i18n/with-i18n';
-import InviteMembersFormContainer from '../../components/InviteMembersFormContainer';
+import InviteMembersFormContainer from '../../organization/components/InviteMembersFormContainer';
 
 export const metadata = {
   title: 'Invite Members',

@@ -65,8 +65,8 @@ const NAVIGATION_CONFIG = (organization: string): NavigationConfig => ({
           },
         },
         {
-          label: 'common:organizationSettingsTabLabel',
-          path: getPath(organization, paths.settings.organization),
+          label: 'common:inviteMembersTabLabel',
+          path: getPath(organization, paths.settings.members),
           Icon: ({ className }: { className: string }) => {
             return <UserGroupIcon className={className} />;
           },

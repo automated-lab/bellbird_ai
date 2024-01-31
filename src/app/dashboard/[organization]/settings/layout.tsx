@@ -10,15 +10,15 @@ import configuration from '~/configuration';
 
 const getLinks = (organizationId: string) => [
   {
-    path: getPath(organizationId, 'settings/profile'),
+    path: getPath(organizationId, configuration.paths.settings.profile),
     label: 'common:profileSettingsTabLabel',
   },
   {
-    path: getPath(organizationId, 'settings/organization'),
-    label: 'common:organizationSettingsTabLabel',
+    path: getPath(organizationId, configuration.paths.settings.members),
+    label: 'common:inviteMembersTabLabel',
   },
   {
-    path: getPath(organizationId, 'settings/subscription'),
+    path: getPath(organizationId, configuration.paths.settings.subscription),
     label: 'common:subscriptionSettingsTabLabel',
   },
 ];

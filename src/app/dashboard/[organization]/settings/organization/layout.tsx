@@ -1,3 +1,5 @@
+import { notFound } from 'next/navigation';
+
 import OrganizationSettingsTabs from '~/app/dashboard/[organization]/settings/organization/components/OrganizationSettingsTabs';
 import SettingsContentContainer from '~/app/dashboard/[organization]/settings/components/SettingsContentContainer';
 import { withI18n } from '~/i18n/with-i18n';
@@ -10,6 +12,8 @@ async function OrganizationSettingsLayout({
     organization: string;
   };
 }>) {
+  notFound();
+
   return (
     <>
       <div>

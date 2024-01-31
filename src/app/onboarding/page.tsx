@@ -16,11 +16,11 @@ export const metadata = {
 };
 
 async function OnboardingPage() {
-  const { csrfToken, language } = await loadData();
+  const { csrfToken, language, userData } = await loadData();
 
   return (
     <I18nProvider lang={language}>
-      <OnboardingContainer csrfToken={csrfToken} />
+      <OnboardingContainer userData={userData} csrfToken={csrfToken} />
     </I18nProvider>
   );
 }
@@ -35,7 +35,7 @@ async function loadData() {
   const { language } = await initializeServerI18n(getLanguageCookie());
 
   const userData = await getUserDataById(client, user.id);
-  const payload = { csrfToken, language };
+  const payload = { csrfToken, language, userData };
 
   // if we cannot find the user's Database record
   // the user should go to the onboarding flow

@@ -64,7 +64,7 @@ const configuration = {
     settings: {
       profile: 'settings/profile',
       subscription: 'settings/subscription',
-      organization: 'settings/organization',
+      members: 'settings/members',
       authentication: 'settings/profile/authentication',
       email: 'settings/profile/email',
       password: 'settings/profile/password',

@@ -17,9 +17,9 @@ import type MembershipRole from '~/lib/organizations/types/membership-role';
 import type UserData from '~/core/session/types/user-data';
 
 import requireSession from '~/lib/user/require-session';
-import SettingsTile from '../../components/SettingsTile';
-import OrganizationMembersList from '../components/OrganizationMembersList';
-import OrganizationInvitedMembersList from '../components/OrganizationInvitedMembersList';
+import SettingsTile from '../components/SettingsTile';
+import OrganizationMembersList from '../organization/components/OrganizationMembersList';
+import OrganizationInvitedMembersList from '../organization/components/OrganizationInvitedMembersList';
 import getCurrentOrganization from '~/lib/server/organizations/get-current-organization';
 import { withI18n } from '~/i18n/with-i18n';
 

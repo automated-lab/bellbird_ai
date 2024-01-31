@@ -15,6 +15,8 @@ import CompleteOnboardingStep from './CompleteOnboardingStep';
 import OrganizationInvitesStep from '~/app/onboarding/components/OrganizationInvitesStep';
 import MembershipRole from '~/lib/organizations/types/membership-role';
 
+import type UserData from '~/core/session/types/user-data';
+
 type Invite = {
   email: string;
   role: MembershipRole;
@@ -38,15 +40,18 @@ const STEPS: Array<string> = [
 function OnboardingContainer(
   props: React.PropsWithChildren<{
     csrfToken: string | null;
+    userData: UserData | null;
   }>,
 ) {
+  const organization = props.userData?.displayName || `Organization`;
+
   const form = useForm({
     defaultValues: {
       data: {
-        organization: '',
+        organization: organization,
         invites: [] as Invite[],
       },
-      currentStep: 0,
+      currentStep: 2,
     },
   });
 

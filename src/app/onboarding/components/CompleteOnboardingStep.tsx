@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
+
 import useMutation from 'swr/mutation';
 import { CheckIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
@@ -24,6 +26,8 @@ interface CompleteOnboardingStepData {
 const CompleteOnboardingStep: React.FC<{
   data: CompleteOnboardingStepData;
 }> = ({ data }) => {
+  const router = useRouter();
+
   const mutation = useOnboardingMutation();
   const submitted = useRef(false);
   const { trigger, data: response, error } = mutation;

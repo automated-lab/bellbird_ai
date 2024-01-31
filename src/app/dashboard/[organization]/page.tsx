@@ -12,9 +12,7 @@ interface DashboardPageProps {
 }
 
 function DashboardPage({ params }: DashboardPageProps) {
-  redirect(getAppHomeUrl(params.organization));
-
-  return null;
+  return redirect(getAppHomeUrl(params.organization));
 }
 
 export default DashboardPage;
