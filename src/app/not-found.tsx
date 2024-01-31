@@ -5,7 +5,6 @@ import Trans from '~/core/ui/Trans';
 import configuration from '~/configuration';
 import initializeServerI18n from '~/i18n/i18n.server';
 import getLanguageCookie from '~/i18n/get-language-cookie';
-import SiteHeaderSessionProvider from '~/app/(site)/components/SiteHeaderSessionProvider';
 import loadUserData from '~/lib/server/loaders/load-user-data';
 import Fonts from '~/components/Fonts';
 import I18nProvider from '~/i18n/I18nProvider';
@@ -21,8 +20,6 @@ const NotFoundPage = async () => {
     <I18nProvider lang={i18n.language}>
       <main>
         <Fonts />
-
-        <SiteHeaderSessionProvider data={data.session} />
 
         <div
           className={
