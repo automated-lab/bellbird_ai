@@ -55,7 +55,6 @@ export const createNewFieldAction = withAdminSession(
     logger.info({ name: fieldData.name }, 'Field created successfully.');
 
     revalidatePath(ADMIN_NAVIGATION_CONFIG.fields.path);
-    // redirect(ADMIN_NAVIGATION_CONFIG.fields.path);
     return;
   },
 );

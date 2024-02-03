@@ -18,3 +18,4 @@ export const GENERATIONS_TABLE = `generations_copies`;
 export const COLLECTIONS_TABLE = `copy_collections`;
 export const USER_USAGE_TABLE = `user_usage`;
 export const ORGANIZATIONS_USAGE_TABLE = `organizations_usage`;
+export const EXTERNAL_APPS_TABLE = `external_apps`;

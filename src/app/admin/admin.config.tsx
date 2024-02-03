@@ -1,4 +1,5 @@
 import {
+  GlobeAsiaAustraliaIcon,
   HomeIcon,
   PencilSquareIcon,
   PuzzlePieceIcon,
@@ -45,6 +46,13 @@ const ADMIN_NAVIGATION_CONFIG: IAdminNavigationConfig = {
     path: '/admin/users',
     Icon: ({ className }: { className: string }) => {
       return <UserIcon className={className} />;
+    },
+  },
+  externalApps: {
+    label: 'External Apps',
+    path: '/admin/external-apps',
+    Icon: ({ className }: { className: string }) => {
+      return <GlobeAsiaAustraliaIcon className={className} />;
     },
   },
 } as const;

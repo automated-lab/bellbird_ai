@@ -31,31 +31,38 @@ type Props = React.PropsWithChildren<
   } & (ControlledOpenProps | TriggerProps)
 >;
 
+const DialogWrapper = (wrapperProps: {
+  isOpen?: boolean;
+  setIsOpen?: (isOpen: boolean) => void;
+  useCloseButton: boolean;
+  children: React.ReactNode;
+}) => {
+  const isControlled = ('isOpen' in wrapperProps) as boolean;
+
+  return isControlled ? (
+    <Dialog
+      open={wrapperProps.isOpen}
+      onOpenChange={(open) => {
+        if (wrapperProps.useCloseButton && wrapperProps.setIsOpen && !open) {
+          wrapperProps.setIsOpen(false);
+        }
+      }}
+    >
+      {wrapperProps.children}
+    </Dialog>
+  ) : (
+    <Dialog>{wrapperProps.children}</Dialog>
+  );
+};
+
 const Modal: React.FC<Props> & {
   CancelButton: typeof CancelButton;
 } = ({ closeButton, heading, children, ...props }) => {
-  const isControlled = 'isOpen' in props;
   const useCloseButton = closeButton ?? true;
   const Trigger = ('Trigger' in props && props.Trigger) || null;
 
-  const DialogWrapper = (wrapperProps: React.PropsWithChildren) =>
-    isControlled ? (
-      <Dialog
-        open={props.isOpen}
-        onOpenChange={(open) => {
-          if (useCloseButton && !open) {
-            props.setIsOpen(false);
-          }
-        }}
-      >
-        {wrapperProps.children}
-      </Dialog>
-    ) : (
-      <Dialog>{wrapperProps.children}</Dialog>
-    );
-
   return (
-    <DialogWrapper>
+    <DialogWrapper useCloseButton={useCloseButton} {...props}>
       <If condition={Trigger}>
         <DialogTrigger asChild>{Trigger}</DialogTrigger>
       </If>

@@ -73,6 +73,24 @@ export interface Database {
           }
         ]
       }
+      external_apps: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
       fields: {
         Row: {
           created_at: string
@@ -494,6 +512,19 @@ export interface Database {
         }
         Returns: boolean
       }
+      delete_secret:
+        | {
+            Args: {
+              secret_name: string
+            }
+            Returns: string
+          }
+        | {
+            Args: {
+              v_id: string
+            }
+            Returns: undefined
+          }
       get_organizations_for_authenticated_user: {
         Args: Record<PropertyKey, never>
         Returns: number[]
@@ -509,6 +540,19 @@ export interface Database {
           membership_id: number
         }
         Returns: number
+      }
+      insert_secret: {
+        Args: {
+          name: string
+          secret: string
+        }
+        Returns: string
+      }
+      read_secret: {
+        Args: {
+          v_secret: string
+        }
+        Returns: string
       }
       transfer_organization: {
         Args: {

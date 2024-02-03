@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  GlobeAsiaAustraliaIcon,
   HomeIcon,
   PencilSquareIcon,
   PuzzlePieceIcon,
@@ -53,6 +54,13 @@ function AdminSidebar() {
           Icon={() => <UserGroupIcon className={'h-6'} />}
         >
           Organizations
+        </SidebarItem>
+
+        <SidebarItem
+          path={'/admin/external-apps'}
+          Icon={() => <GlobeAsiaAustraliaIcon className={'h-6'} />}
+        >
+          External Apps
         </SidebarItem>
       </SidebarContent>
     </Sidebar>
