@@ -8,6 +8,10 @@ import { Database } from '~/database.types';
 
 type Client = SupabaseClient<Database>;
 
+export const getApp = (client: Client, appId: string) => {
+  return client.from(EXTERNAL_APPS_TABLE).select(`*`).eq('id', appId);
+};
+
 export const getApps = (client: Client) => {
   return client.from(EXTERNAL_APPS_TABLE).select(`*`, { count: 'exact' });
 };

@@ -70,6 +70,16 @@ export const CreateAppModal = ({
     toast.success('Secret copied to clipboard');
   };
 
+  const handleCopySchema = () => {
+    navigator.clipboard.writeText(`secret: ${secret};
+    email: '';
+    plan: ''; // write the name of the plan here : Ex. Pro
+    duration_in_months: '' // How long the free subscription will stay
+    `);
+
+    toast.success('Secret copied to clipboard');
+  };
+
   return (
     <>
       {React.cloneElement(children, {
@@ -115,6 +125,30 @@ export const CreateAppModal = ({
                 <TooltipTrigger>
                   <Button
                     onClick={handleCopySecret}
+                    variant="outline"
+                    size="icon"
+                  >
+                    <DocumentDuplicateIcon className="w-5 h-5" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>Copy to Clipboard</TooltipContent>
+              </Tooltip>
+            </div>
+
+            <div className="w-full overflow-x-hidden">
+              <p className="mt-2 mb-1">Here is the schema of the payload:</p>
+
+              <pre className="overflow-x-auto">
+                {`secret: HERE IS THE SECRET;
+email: '';
+plan: ''; // write the name of the plan here : Ex. Pro
+duration_in_months: '' // How long the free subscription will stay
+`}
+              </pre>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button
+                    onClick={handleCopySchema}
                     variant="outline"
                     size="icon"
                   >

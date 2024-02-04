@@ -1,12 +1,14 @@
 import AdminHeader from '~/app/admin/components/AdminHeader';
-import getSupabaseServerComponentClient from '~/core/supabase/server-component-client';
 import AdminGuard from '~/app/admin/components/AdminGuard';
 import UsersTable from '~/app/admin/users/components/UsersTable';
 import { getUsers } from '~/app/admin/users/queries';
+
+import getSupabaseServerComponentClient from '~/core/supabase/server-component-client';
 import UserData from '~/core/session/types/user-data';
 import getPageFromQueryParams from '~/app/admin/utils/get-page-from-query-param';
 import { PageBody } from '~/core/ui/Page';
 import configuration from '~/configuration';
+import { DEFAULT_PAGE_SIZE } from '~/app/admin/admin.config';
 
 interface UsersAdminPageProps {
   searchParams: {
@@ -20,7 +22,7 @@ export const metadata = {
 
 async function UsersAdminPage({ searchParams }: UsersAdminPageProps) {
   const page = getPageFromQueryParams(searchParams.page);
-  const perPage = 1;
+  const perPage = DEFAULT_PAGE_SIZE;
   const { users, total } = await loadUsers(page, perPage);
   const pageCount = Math.ceil(total / perPage);
 

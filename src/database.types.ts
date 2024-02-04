@@ -512,19 +512,20 @@ export interface Database {
         }
         Returns: boolean
       }
-      delete_secret:
-        | {
-            Args: {
-              secret_name: string
-            }
-            Returns: string
-          }
-        | {
-            Args: {
-              v_id: string
-            }
-            Returns: undefined
-          }
+      delete_secret: {
+        Args: {
+          v_id: string
+        }
+        Returns: undefined
+      }
+      enroll_user_with_new_org: {
+        Args: {
+          org_name: string
+          user_id: string
+          create_user?: boolean
+        }
+        Returns: string
+      }
       get_organizations_for_authenticated_user: {
         Args: Record<PropertyKey, never>
         Returns: number[]
@@ -548,7 +549,7 @@ export interface Database {
         }
         Returns: string
       }
-      read_secret: {
+      read_id: {
         Args: {
           v_secret: string
         }

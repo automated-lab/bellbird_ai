@@ -8,6 +8,8 @@ enum Themes {
   Dark = 'dark',
 }
 
+export const DEFAULT_ORG_NAME = 'My Workspace';
+
 const configuration = {
   site: {
     name: 'Awesomely - Your SaaS Title',

@@ -258,7 +258,7 @@ async function sendInviteEmail(props: {
     );
   }
 
-  const subject = 'You have been invited to join an organization!';
+  const subject = 'You have been invited to join a workspace!';
   const link = getInvitePageFullUrl(code);
 
   const html = renderInviteEmail({

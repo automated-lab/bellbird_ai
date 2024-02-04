@@ -15,7 +15,7 @@ const CreateFieldModal = ({ isOpen, onChange }: CreateFieldModalProps) => {
       heading="Create New Field"
       closeButton
     >
-      <div className="w-[90vw] max-w-screen-lg">
+      <div className="w-fit max-w-screen-lg">
         <FieldForm defaultData={null} isNew onSuccess={() => onChange(false)} />
       </div>
     </Modal>

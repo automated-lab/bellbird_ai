@@ -61,7 +61,7 @@
     "cmdk": "^0.2.0",
     "contentlayer": "0.3.4",
     "cva": "npm:class-variance-authority@^0.7.0",
-    "date-fns": "^3.2.0",
+    "dayjs": "^1.11.10",
     "edge-csrf": "^1.0.7",
     "heroicons": "^2.1.1",
     "i18next": "23.7.16",

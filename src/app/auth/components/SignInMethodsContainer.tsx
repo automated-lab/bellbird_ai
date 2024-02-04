@@ -20,7 +20,7 @@ function SignInMethodsContainer() {
   const router = useRouter();
 
   const onSignIn = useCallback(() => {
-    router.replace(configuration.paths.appHome);
+    router.replace(configuration.paths.appPrefix);
   }, [router]);
 
   return (

@@ -4,8 +4,8 @@ import { Database } from '~/database.types';
 
 type Client = SupabaseClient<Database>;
 
-export const getSecret = (client: Client, secret: string) => {
-  return client.rpc('read_secret', {
+export const getAppIdBySecret = (client: Client, secret: string) => {
+  return client.rpc('read_id', {
     v_secret: secret,
   });
 };

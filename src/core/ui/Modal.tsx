@@ -67,7 +67,7 @@ const Modal: React.FC<Props> & {
         <DialogTrigger asChild>{Trigger}</DialogTrigger>
       </If>
 
-      <DialogContent asChild className="min-w-max">
+      <DialogContent asChild>
         <div className={'flex flex-col space-y-4'}>
           <div className="flex items-center">
             <DialogTitle className="flex w-full text-xl font-semibold text-current">

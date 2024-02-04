@@ -76,7 +76,17 @@ export async function POST(request: Request) {
 
     const session = event.data.object as Stripe.Checkout.Session;
 
-    const organizationUid = getOrganizationUidFromClientReference(session);
+    const organizationUid =
+      getOrganizationUidFromClientReference(session) ??
+      session.metadata?.organization_uid;
+
+    console.log(organizationUid);
+
+    if (!organizationUid) {
+      return Promise.reject(
+        `Failed to get organization uid from client reference`,
+      );
+    }
 
     const { data: organization, error: organizationErr } =
       await getOrganizationByUid(client, organizationUid);
@@ -92,6 +102,25 @@ export async function POST(request: Request) {
     switch (event.type) {
       case StripeWebhooks.Completed: {
         const subscriptionId = session.subscription as string;
+
+        const subscription =
+          await stripe.subscriptions.retrieve(subscriptionId);
+
+        console.log(event);
+
+        await onCheckoutCompleted(
+          client,
+          session,
+          subscription,
+          organizationId,
+        );
+
+        break;
+      }
+
+      case StripeWebhooks.SubscriptionCreated: {
+        console.log(session);
+        const subscriptionId = session.id;
 
         const subscription =
           await stripe.subscriptions.retrieve(subscriptionId);
@@ -133,6 +162,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
+    console.log(error);
     logger.error(
       {
         error,
@@ -297,5 +327,5 @@ const onSubscriptionRenwed = async (
 function getOrganizationUidFromClientReference(
   session: Stripe.Checkout.Session,
 ) {
-  return session.client_reference_id as string;
+  return session?.client_reference_id;
 }
