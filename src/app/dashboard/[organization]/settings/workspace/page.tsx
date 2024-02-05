@@ -7,7 +7,7 @@ import If from '~/core/ui/If';
 import configuration from '~/configuration';
 
 export const metadata = {
-  title: 'Organization Details',
+  title: 'Workspace Details',
 };
 
 const allowOrganizationDelete =

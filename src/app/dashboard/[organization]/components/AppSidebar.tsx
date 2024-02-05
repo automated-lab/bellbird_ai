@@ -22,7 +22,7 @@ import useCurrentOrganization from '~/lib/organizations/hooks/use-current-organi
 import SubscriptionStatusBadge from './organizations/SubscriptionStatusBadge';
 
 import configuration from '~/configuration';
-// import OrganizationsSelector from './organizations/OrganizationsSelector';
+import WorkspaceSelector from './organizations/WorkspaceSelector';
 import { UsageCounter } from '~/components/UsageCounter';
 import LogoMini from '~/core/ui/Logo/LogoMini';
 
@@ -34,8 +34,8 @@ const AppSidebar: React.FC<{
   return (
     <Sidebar collapsed={ctx.collapsed}>
       <SidebarContent className={'my-4'}>
-        {/* <OrganizationsSelector displayName={!ctx.collapsed} /> */}
-        <LogoMini />
+        <WorkspaceSelector displayName={!ctx.collapsed} />
+        {/* <LogoMini /> */}
       </SidebarContent>
 
       <SidebarContent className={`h-[calc(100%-160px)] overflow-y-auto`}>

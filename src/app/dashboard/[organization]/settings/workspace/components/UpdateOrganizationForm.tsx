@@ -159,9 +159,9 @@ const UpdateOrganizationForm = () => {
 
             <TextField.Input
               {...nameControl}
-              data-cy={'organization-name-input'}
+              data-cy={'workspace-name-input'}
               required
-              placeholder={'Your organization name'}
+              placeholder={'Your workspace name'}
             />
           </TextField.Label>
         </TextField>

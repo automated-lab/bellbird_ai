@@ -87,7 +87,7 @@ async function OrganizationsPage() {
 
                 return (
                   <CardButton
-                    data-cy={'organization-card-button'}
+                    data-cy={'workspace-card-button'}
                     className={'relative'}
                     href={href}
                     key={organization.id}

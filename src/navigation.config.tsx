@@ -5,6 +5,7 @@ import {
   Squares2X2Icon,
   UserGroupIcon,
   UserIcon,
+  UserPlusIcon,
 } from '@heroicons/react/24/outline';
 
 import configuration from '~/configuration';
@@ -65,10 +66,17 @@ const NAVIGATION_CONFIG = (organization: string): NavigationConfig => ({
           },
         },
         {
+          label: 'common:workspaceSettingsTabLabel',
+          path: getPath(organization, paths.settings.workspace),
+          Icon: ({ className }: { className: string }) => {
+            return <UserGroupIcon className={className} />;
+          },
+        },
+        {
           label: 'common:inviteMembersTabLabel',
           path: getPath(organization, paths.settings.members),
           Icon: ({ className }: { className: string }) => {
-            return <UserGroupIcon className={className} />;
+            return <UserPlusIcon className={className} />;
           },
         },
         {

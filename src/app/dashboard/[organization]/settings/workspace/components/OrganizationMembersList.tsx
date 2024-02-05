@@ -112,7 +112,7 @@ function OrganizationMembersList({
           return (
             <div
               key={key}
-              data-cy={'organization-member'}
+              data-cy={'workspace-member'}
               className={
                 'flex flex-col py-2 lg:flex-row lg:items-center lg:space-x-2' +
                 ' justify-between space-y-2 lg:space-y-0'

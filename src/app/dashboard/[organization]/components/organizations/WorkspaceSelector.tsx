@@ -34,9 +34,8 @@ import type MembershipRole from '~/lib/organizations/types/membership-role';
 import useCurrentOrganization from '~/lib/organizations/hooks/use-current-organization';
 import configuration from '~/configuration';
 
-const OrganizationsSelector = ({ displayName = true }) => {
+const WorkspaceSelector = ({ displayName = true }) => {
   const changeOrganization = useChangeOrganization();
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const organization = useCurrentOrganization();
   const { userSession } = useContext(UserSessionContext);
@@ -86,7 +85,7 @@ const OrganizationsSelector = ({ displayName = true }) => {
 
           <SelectGroup>
             <SelectLabel>
-              <Trans i18nKey={'common:yourOrganizations'} />
+              <Trans i18nKey={'common:yourWorkspace'} />
             </SelectLabel>
 
             <SelectSeparator />
@@ -99,31 +98,8 @@ const OrganizationsSelector = ({ displayName = true }) => {
               </SelectItem>
             </If>
           </SelectGroup>
-
-          <SelectSeparator />
-
-          <SelectGroup>
-            <SelectAction
-              data-cy={'create-organization-button'}
-              className={'flex flex-row items-center space-x-2 truncate'}
-              onClick={() => setIsModalOpen(true)}
-            >
-              <PlusCircleIcon className={'h-5'} />
-
-              <span>
-                <Trans
-                  i18nKey={'organization:createOrganizationDropdownLabel'}
-                />
-              </span>
-            </SelectAction>
-          </SelectGroup>
         </SelectContent>
       </Select>
-
-      <CreateOrganizationModal
-        isOpen={isModalOpen}
-        setIsOpen={setIsModalOpen}
-      />
     </>
   );
 };
@@ -200,7 +176,7 @@ function OrganizationItem({
   );
 }
 
-export default OrganizationsSelector;
+export default WorkspaceSelector;
 
 function useChangeOrganization() {
   const path = usePathname();

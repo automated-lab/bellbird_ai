@@ -22,7 +22,7 @@ import Badge from '~/core/ui/Badge';
 import Label from '~/core/ui/Label';
 import { PageBody } from '~/core/ui/Page';
 
-import RoleBadge from '~/app/dashboard/[organization]/settings/organization/components/RoleBadge';
+import RoleBadge from '~/app/dashboard/[organization]/settings/workspace/components/RoleBadge';
 import UserActionsDropdown from '~/app/admin/users/[uid]/components/UserActionsDropdown';
 
 import configuration from '~/configuration';

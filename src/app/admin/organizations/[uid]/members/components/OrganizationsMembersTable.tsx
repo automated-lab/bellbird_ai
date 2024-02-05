@@ -9,7 +9,7 @@ import { EllipsisHorizontalIcon } from '@heroicons/react/24/outline';
 import Membership from '~/lib/organizations/types/membership';
 import UserData from '~/core/session/types/user-data';
 import DataTable from '~/core/ui/DataTable';
-import RoleBadge from '~/app/dashboard/[organization]/settings/organization/components/RoleBadge';
+import RoleBadge from '~/app/dashboard/[organization]/settings/workspace/components/RoleBadge';
 
 import {
   DropdownMenu,

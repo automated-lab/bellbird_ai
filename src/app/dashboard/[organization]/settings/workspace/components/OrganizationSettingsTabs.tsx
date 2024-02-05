@@ -5,11 +5,11 @@ import configuration from '~/configuration';
 
 const getLinks = (organizationId: string) => ({
   General: {
-    path: getPath(organizationId, 'organization'),
+    path: getPath(organizationId, configuration.paths.settings.workspace),
     label: 'organization:generalTabLabel',
   },
   Members: {
-    path: getPath(organizationId, 'organization/members'),
+    path: getPath(organizationId, configuration.paths.settings.members),
     label: 'organization:membersTabLabel',
   },
 });
@@ -46,5 +46,5 @@ export default OrganizationSettingsTabs;
 function getPath(organizationId: string, path: string) {
   const appPrefix = configuration.paths.appPrefix;
 
-  return `${appPrefix}/${organizationId}/settings/${path}`;
+  return `${appPrefix}/${organizationId}/${path}`;
 }

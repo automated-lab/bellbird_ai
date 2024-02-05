@@ -5,7 +5,7 @@ import Button from '~/core/ui/Button';
 import useUserSession from '~/core/hooks/use-user-session';
 import MembershipRole from '~/lib/organizations/types/membership-role';
 
-import InviteMembersForm from '~/app/dashboard/[organization]/settings/organization/components/InviteMembersForm';
+import InviteMembersForm from '~/app/dashboard/[organization]/settings/workspace/components/InviteMembersForm';
 
 type OrganizationInvitesStepData = Array<{
   email: string;

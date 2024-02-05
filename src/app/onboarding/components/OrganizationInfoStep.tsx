@@ -56,7 +56,7 @@ const OrganizationInfoStep: React.FCC<{
             <Trans i18nKey={'onboarding:organizationNameLabel'} />
 
             <TextField.Input
-              data-cy={'organization-name-input'}
+              data-cy={'workspace-name-input'}
               required
               name={'organization'}
               placeholder={t('organizationNamePlaceholder')}

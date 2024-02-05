@@ -111,7 +111,7 @@ const columns: Array<ColumnDef<Organizations[0]>> = [
 
       return (
         <Link
-          data-cy={'organization-members-link'}
+          data-cy={'workspace-members-link'}
           href={`organizations/${uid}/members`}
           className={'hover:underline cursor-pointer'}
         >

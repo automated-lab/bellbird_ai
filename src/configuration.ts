@@ -46,10 +46,7 @@ const configuration = {
       process.env.NEXT_PUBLIC_ENABLE_ACCOUNT_DELETION,
       false,
     ),
-    enableOrganizationDeletion: getBoolean(
-      process.env.NEXT_PUBLIC_ENABLE_ORGANIZATION_DELETION,
-      false,
-    ),
+    enableOrganizationDeletion: false,
   },
   paths: {
     signIn: '/auth/sign-in',
@@ -66,7 +63,8 @@ const configuration = {
     settings: {
       profile: 'settings/profile',
       subscription: 'settings/subscription',
-      members: 'settings/members',
+      workspace: 'settings/workspace',
+      members: 'settings/workspace/members',
       authentication: 'settings/profile/authentication',
       email: 'settings/profile/email',
       password: 'settings/profile/password',

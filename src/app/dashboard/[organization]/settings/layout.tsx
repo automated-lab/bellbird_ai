@@ -14,12 +14,8 @@ const getLinks = (organizationId: string) => [
     label: 'common:profileSettingsTabLabel',
   },
   {
-    path: getPath(organizationId, configuration.paths.settings.members),
-    label: 'common:inviteMembersTabLabel',
-  },
-  {
-    path: getPath(organizationId, configuration.paths.settings.subscription),
-    label: 'common:subscriptionSettingsTabLabel',
+    path: getPath(organizationId, configuration.paths.settings.workspace),
+    label: 'common:workspaceSettingsTabLabel',
   },
 ];
 

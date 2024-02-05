@@ -9,7 +9,7 @@ import OrganizationMemberActionsDropdown from './OrganizationMemberActionsDropdo
 import RemoveOrganizationMemberModal from './RemoveOrganizationMemberModal';
 import UpdateMemberRoleModal from './UpdateMemberRoleModal';
 
-import TransferOrganizationOwnershipModal from '../components/TransferOrganizationOwnershipModal';
+import TransferOrganizationOwnershipModal from './TransferOrganizationOwnershipModal';
 
 const OrganizationMembersActionsContainer: React.FCC<{
   targetMember: {
