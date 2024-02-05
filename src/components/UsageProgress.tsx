@@ -47,7 +47,7 @@ const UsageProgress = (props: Props) => {
   }
 
   return (
-    <div className="text-sm  mb-4 space-y-2">
+    <div className="text-sm space-y-2">
       <p>
         {generatedTokens} / {tokensLimit} Token
       </p>

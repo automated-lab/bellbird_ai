@@ -17,6 +17,10 @@ const getLinks = (organizationId: string) => [
     path: getPath(organizationId, configuration.paths.settings.workspace),
     label: 'common:workspaceSettingsTabLabel',
   },
+  {
+    path: getPath(organizationId, configuration.paths.settings.subscription),
+    label: 'common:subscriptionSettingsTabLabel',
+  },
 ];
 
 async function SettingsLayout({

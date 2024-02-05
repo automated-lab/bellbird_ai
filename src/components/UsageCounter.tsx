@@ -30,9 +30,9 @@ export const UsageCounter = () => {
   };
 
   return (
-    <Card className="bg-white/10 border-0">
+    <Card>
       {!isSidebarCollapsed ? (
-        <CardContent className="py-6">
+        <CardContent className="py-4">
           <UsageProgress />
 
           <If condition={!hasActiveSubscription}>
