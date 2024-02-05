@@ -1,6 +1,7 @@
 import React from 'react';
 
-import AppContainer from '~/app/dashboard/[organization]/components/AppContainer';
+import { PageBody } from '~/core/ui/Page';
+import AdminHeader from '~/app/admin/components/AdminHeader';
 
 function TemplatesLayout(
   props: React.PropsWithChildren<{ modal: React.ReactNode }>,
@@ -11,10 +12,12 @@ function TemplatesLayout(
         'flex flex-col justify-between w-full min-h-screen overflow-auto'
       }
     >
-      <AppContainer className="pb-24">
+      <AdminHeader>Templates Center</AdminHeader>
+
+      <PageBody className="pb-24">
         {props.modal}
         {props.children}
-      </AppContainer>
+      </PageBody>
     </main>
   );
 }

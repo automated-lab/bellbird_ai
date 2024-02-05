@@ -40,13 +40,13 @@ const columns: Array<ColumnDef<AppRow>> = [
       return (
         <div className="flex justify-end">
           <Tooltip>
-            <TooltipTrigger>
-              <DeleteAppModal app={row.original}>
+            <DeleteAppModal app={row.original}>
+              <TooltipTrigger asChild>
                 <IconButton className="text-red-500">
                   <TrashIcon className="w-4 h-4" />
                 </IconButton>
-              </DeleteAppModal>
-            </TooltipTrigger>
+              </TooltipTrigger>
+            </DeleteAppModal>
 
             <TooltipContent>Delete {row.original.name} app</TooltipContent>
           </Tooltip>

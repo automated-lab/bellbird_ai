@@ -22,6 +22,8 @@ type ControlledOpenProps = {
 
 type TriggerProps = {
   Trigger?: React.ReactNode;
+  isOpen?: boolean;
+  setIsOpen?: (isOpen: boolean) => unknown;
 };
 
 type Props = React.PropsWithChildren<
@@ -64,7 +66,9 @@ const Modal: React.FC<Props> & {
   return (
     <DialogWrapper useCloseButton={useCloseButton} {...props}>
       <If condition={Trigger}>
-        <DialogTrigger asChild>{Trigger}</DialogTrigger>
+        <DialogTrigger asChild onClick={() => props.setIsOpen?.(true)}>
+          {Trigger}
+        </DialogTrigger>
       </If>
 
       <DialogContent asChild>

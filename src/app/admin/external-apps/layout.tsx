@@ -1,16 +1,19 @@
 import React from 'react';
 
-import AppContainer from '~/app/dashboard/[organization]/components/AppContainer';
+import { PageBody } from '~/core/ui/Page';
+import AdminHeader from '~/app/admin/components/AdminHeader';
 
 function FieldsLayout(
   props: React.PropsWithChildren<{ modal: React.ReactNode }>,
 ) {
   return (
     <main className={'flex flex-col justify-between w-full'}>
-      <AppContainer>
+      <AdminHeader>External Apps</AdminHeader>
+
+      <PageBody>
         {props.modal}
         {props.children}
-      </AppContainer>
+      </PageBody>
     </main>
   );
 }

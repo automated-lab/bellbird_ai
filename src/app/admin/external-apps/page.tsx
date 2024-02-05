@@ -36,7 +36,6 @@ function ExternalAppsPage({ searchParams }: ExternalAppsAdminPageProps) {
 
   return (
     <div className="space-y-6">
-      <AdminHeader>External Apps</AdminHeader>
       <header>
         <div>
           <Heading type={4}>Welcome to External Apps </Heading>
@@ -52,7 +51,7 @@ function ExternalAppsPage({ searchParams }: ExternalAppsAdminPageProps) {
       <div className="space-y-4">
         <section>
           <CreateAppModal>
-            <Button variant="default" className="ml-auto">
+            <Button variant="outline" className="ml-auto">
               <PlusCircleIcon className="w-5 h-5 mr-2" /> Create New App
             </Button>
           </CreateAppModal>

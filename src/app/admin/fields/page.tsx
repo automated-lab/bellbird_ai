@@ -39,7 +39,6 @@ function FieldsPage({ searchParams }: FieldsAdminPageProps) {
 
   return (
     <div className="space-y-6">
-      <AdminHeader>Fields</AdminHeader>
       <header>
         <div>
           <Heading type={4}>Welcome to Fields Center, </Heading>

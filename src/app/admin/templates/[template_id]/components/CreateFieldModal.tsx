@@ -1,22 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import FieldForm from '~/app/admin/fields/[field_id]/components/FieldForm';
 import Modal from '~/core/ui/Modal';
 
 interface CreateFieldModalProps {
-  isOpen: boolean;
-  onChange: (isOpen: boolean) => void;
+  children: React.ReactNode;
 }
 
-const CreateFieldModal = ({ isOpen, onChange }: CreateFieldModalProps) => {
+const CreateFieldModal = ({ children }: CreateFieldModalProps) => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <Modal
       isOpen={isOpen}
-      setIsOpen={onChange}
+      setIsOpen={setIsOpen}
       heading="Create New Field"
       closeButton
+      Trigger={children}
     >
       <div className="w-fit max-w-screen-lg">
-        <FieldForm defaultData={null} isNew onSuccess={() => onChange(false)} />
+        <FieldForm
+          defaultData={null}
+          isNew
+          onSuccess={() => setIsOpen(false)}
+        />
       </div>
     </Modal>
   );

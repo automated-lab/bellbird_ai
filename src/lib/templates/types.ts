@@ -8,7 +8,7 @@ export interface ITemplate {
   category: string;
   prompt?: string;
   fields?: ITemplateField[] | TField[];
-  isNew?: boolean;
+  isNew: boolean;
 }
 
 export interface ITemplateDraft

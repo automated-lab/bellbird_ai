@@ -190,9 +190,7 @@ function CreateTemplateForm({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
       <div>
-        <Heading className="text-gray-200" type={4}>
-          Template Metadata
-        </Heading>
+        <Heading type={4}>Template metadata</Heading>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -257,7 +255,7 @@ function CreateTemplateForm({
       <SectionSeparator />
 
       <div>
-        <Heading type={4}>Prompt Values</Heading>
+        <Heading type={4}>Prompt details</Heading>
       </div>
 
       <div className="grid grid-cols-1 gap-4 mb-8">

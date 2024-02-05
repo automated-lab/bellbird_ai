@@ -1,45 +1,93 @@
 'use client';
 
 import Link from 'next/link';
-import { Bars3Icon } from '@heroicons/react/24/outline';
+
+import {
+  ArrowLeftOnRectangleIcon,
+  Bars3Icon,
+  BuildingLibraryIcon,
+} from '@heroicons/react/24/outline';
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '~/core/ui/Dropdown';
+
 import Trans from '~/core/ui/Trans';
 
-import { ADMIN_NAVIGATION_CONFIG } from '~/app/admin/admin.config';
+import useSignOut from '~/core/hooks/use-sign-out';
 
-const AdminMobileNavigation = () => {
-  const Links = Object.values(ADMIN_NAVIGATION_CONFIG).map((item) => {
+import { ADMIN_NAVIGATION_CONFIG } from '../admin.config';
+
+const MobileAppNavigation = () => {
+  const Links = Object.values(ADMIN_NAVIGATION_CONFIG).map((item, index) => {
     return (
-      <DropdownMenuItem key={item.path}>
-        <Link
-          href={item.path}
-          className={'flex h-full w-full items-center space-x-4'}
-        >
-          <item.Icon className={'h-6'} />
-
-          <span>
-            <Trans i18nKey={item.label} defaults={item.label} />
-          </span>
-        </Link>
-      </DropdownMenuItem>
+      <DropdownLink
+        key={item.path}
+        Icon={item.Icon}
+        path={item.path}
+        label={item.label}
+      />
     );
   });
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Bars3Icon className={'h-8'} />
+        <Bars3Icon className={'h-9'} />
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent>{Links}</DropdownMenuContent>
+      <DropdownMenuContent sideOffset={10} className={'rounded-none w-screen'}>
+        {Links}
+
+        <DropdownMenuSeparator />
+        <SignOutDropdownItem />
+      </DropdownMenuContent>
     </DropdownMenu>
   );
 };
 
-export default AdminMobileNavigation;
+export default MobileAppNavigation;
+
+function DropdownLink(
+  props: React.PropsWithChildren<{
+    path: string;
+    label: string;
+    Icon: React.ElementType;
+  }>,
+) {
+  return (
+    <DropdownMenuItem asChild key={props.path}>
+      <Link
+        href={props.path}
+        className={'flex w-full items-center space-x-4 h-12'}
+      >
+        <props.Icon className={'h-6'} />
+
+        <span>
+          <Trans i18nKey={props.label} defaults={props.label} />
+        </span>
+      </Link>
+    </DropdownMenuItem>
+  );
+}
+
+function SignOutDropdownItem() {
+  const signOut = useSignOut();
+
+  return (
+    <DropdownMenuItem
+      className={'flex w-full items-center space-x-4 h-12'}
+      onClick={signOut}
+    >
+      <ArrowLeftOnRectangleIcon className={'h-6'} />
+
+      <span>
+        <Trans i18nKey={'common:signOut'} defaults={'Sign out'} />
+      </span>
+    </DropdownMenuItem>
+  );
+}

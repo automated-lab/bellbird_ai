@@ -128,14 +128,16 @@ const FieldsSelect = React.forwardRef(
 
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    type="button"
-                    onClick={() => setShowCreateField(true)}
-                  >
-                    <PlusIcon className="w-4 h-4" />
-                  </Button>
+                  <CreateFieldModal>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      type="button"
+                      onClick={() => setShowCreateField(true)}
+                    >
+                      <PlusIcon className="w-4 h-4" />
+                    </Button>
+                  </CreateFieldModal>
                 </TooltipTrigger>
                 <TooltipContent>Create new field</TooltipContent>
               </Tooltip>
@@ -192,11 +194,6 @@ const FieldsSelect = React.forwardRef(
             ))}
           </div>
         </TextField>
-
-        <CreateFieldModal
-          isOpen={showCreateField}
-          onChange={setShowCreateField}
-        />
       </>
     );
   },

@@ -17,6 +17,7 @@ import configuration from '~/configuration';
 import { getPaginatedTemplates } from '~/lib/templates/queries';
 import getSupabaseServerComponentClient from '~/core/supabase/server-component-client';
 import { ITemplate } from '~/lib/templates/types';
+import { PageBody } from '~/core/ui/Page';
 
 export const metadata: Metadata = {
   title: `Templates Center | ${configuration.site.siteName}`,
@@ -39,7 +40,6 @@ function TemplatesPage({ searchParams }: TemplatePageProps) {
 
   return (
     <div className="space-y-6">
-      <AdminHeader>Templates Center</AdminHeader>
       <header>
         <div>
           <Heading type={4}>Welcome to Templates Center, </Heading>

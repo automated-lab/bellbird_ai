@@ -38,8 +38,8 @@ function CreateTemplatePage({ params }: CreateTemplatePageProps) {
     <div className="space-y-6 w-full h-full">
       <BackButton href={ADMIN_NAVIGATION_CONFIG.templates.path} />
       <FormTile
-        heading="Template metadata"
-        subHeading="Fill out the form with general infos about your template"
+        heading="Template Details"
+        subHeading="Fill out the form below to create a new template"
       >
         <CreateTemplateForm templateId={template_id} defaultData={template} />
       </FormTile>
