@@ -16,7 +16,7 @@ const CreateFieldModal = ({ children }: CreateFieldModalProps) => {
       closeButton
       Trigger={children}
     >
-      <div className="w-fit max-w-screen-lg">
+      <div className="min-w-full w-max">
         <FieldForm
           defaultData={null}
           isNew

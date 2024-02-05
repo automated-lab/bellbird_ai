@@ -158,14 +158,14 @@ export default function FieldForm({
 
   return (
     <form className="space-y-8">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
         <Controller
           control={control}
           name="type"
           rules={typeRules}
           render={({ field: { onChange, ...field } }) => {
             return (
-              <TextField className="w-fit sm:col-span-2">
+              <TextField className="sm:col-span-2">
                 <TextField.Label>
                   <span>Input Type</span>
                   <Tabs {...field} onValueChange={onChange}>

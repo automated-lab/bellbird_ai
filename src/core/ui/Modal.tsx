@@ -72,7 +72,7 @@ const Modal: React.FC<Props> & {
       </If>
 
       <DialogContent asChild>
-        <div className={'flex flex-col space-y-4'}>
+        <div className={'flex flex-col space-y-4 min-w-fit'}>
           <div className="flex items-center">
             <DialogTitle className="flex w-full text-xl font-semibold text-current">
               <span className={'max-w-[90%] truncate'}>{heading}</span>
