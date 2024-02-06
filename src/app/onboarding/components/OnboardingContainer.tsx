@@ -51,7 +51,7 @@ function OnboardingContainer(
         organization: organization,
         invites: [] as Invite[],
       },
-      currentStep: 0,
+      currentStep: 2,
     },
   });
 
