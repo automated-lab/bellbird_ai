@@ -12,12 +12,12 @@ export const DEFAULT_ORG_NAME = 'My Workspace';
 
 const configuration = {
   site: {
-    name: 'Awesomely - Your SaaS Title',
-    description: 'Your SaaS Description',
+    name: 'Charm App',
+    description: 'Your best copywriter',
     themeColor: '#ffffff',
     themeColorDark: '#0a0a0a',
     siteUrl: process.env.NEXT_PUBLIC_SITE_URL,
-    siteName: 'Awesomely',
+    siteName: 'Charm App',
     twitterHandle: '',
     githubHandle: '',
     convertKitFormId: '',
