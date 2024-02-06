@@ -3,7 +3,7 @@ export interface IGenerationCopy {
   openai_id: string;
   user_id: string;
   organization_id: number;
-  template_id: string;
+  template_id: string | null;
   content: string;
   collection_id: number;
   created_at?: string;

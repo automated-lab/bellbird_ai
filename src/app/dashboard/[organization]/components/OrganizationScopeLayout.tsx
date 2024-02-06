@@ -33,9 +33,7 @@ const OrganizationScopeLayout: React.FCC<{
     };
   }, [data]);
 
-  const [organization, setOrganization] = useState<Maybe<Organization>>(
-    data.organization,
-  );
+  const [organization, setOrganization] = useState(data.organization);
 
   const [userSession, setUserSession] =
     useState<Maybe<UserSession>>(userSessionContext);
@@ -63,7 +61,9 @@ const OrganizationScopeLayout: React.FCC<{
   return (
     <SentryBrowserWrapper>
       <UserSessionContext.Provider value={{ userSession, setUserSession }}>
-        <OrganizationContext.Provider value={{ organization, setOrganization }}>
+        <OrganizationContext.Provider
+          value={{ organization: organization, setOrganization }}
+        >
           <CsrfTokenContext.Provider value={data.csrfToken}>
             <I18nProvider lang={data.language}>
               <AuthChangeListener

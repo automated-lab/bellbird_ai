@@ -1,14 +1,14 @@
+'use client';
+
 import Link from 'next/link';
+import SubscriptionStatusBadge from '~/app/dashboard/[organization]/components/organizations/SubscriptionStatusBadge';
 
 import useUserSession from '~/core/hooks/use-user-session';
-
-import SubscriptionStatusBadge from './SubscriptionStatusBadge';
+import useCurrentOrganization from '~/lib/organizations/hooks/use-current-organization';
 
 function HeaderSubscriptionStatusBadge() {
-  const user = useUserSession();
-  const subscription = user?.data?.subscription;
-
-  console.log(user, subscription);
+  const organization = useCurrentOrganization();
+  const subscription = organization.subscription.data;
 
   // if the organization has an active subscription
   // we do not show the subscription status badge
