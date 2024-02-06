@@ -86,7 +86,7 @@ const OrganizationsSelector = ({ displayName = true }) => {
 
           <SelectGroup>
             <SelectLabel>
-              <Trans i18nKey={'common:yourOrganizations'} />
+              <Trans i18nKey={'common:yourWorkspaces'} />
             </SelectLabel>
 
             <SelectSeparator />

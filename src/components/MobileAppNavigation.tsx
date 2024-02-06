@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo } from 'react';
 import Link from 'next/link';
 
 import {
@@ -15,19 +16,28 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '~/core/ui/Dropdown';
-
-import Trans from '~/core/ui/Trans';
-
-import NAVIGATION_CONFIG from '../navigation.config';
-import useCurrentOrganization from '~/lib/organizations/hooks/use-current-organization';
-import useSignOut from '~/core/hooks/use-sign-out';
-
 import Modal from '~/core/ui/Modal';
 import Heading from '~/core/ui/Heading';
 import OrganizationsSelector from '~/app/dashboard/[organization]/components/organizations/OrganizationsSelector';
+import If from '~/core/ui/If';
+import Trans from '~/core/ui/Trans';
+
+import NAVIGATION_CONFIG from '~/navigation.config';
+import useCurrentOrganization from '~/lib/organizations/hooks/use-current-organization';
+import useSignOut from '~/core/hooks/use-sign-out';
+import useUser from '~/core/hooks/use-user';
+import GlobalRole from '~/core/session/types/global-role';
 
 const MobileAppNavigation = () => {
   const currentOrganization = useCurrentOrganization();
+
+  const { data: user } = useUser();
+
+  const isSuperAdmin = useMemo(() => {
+    return user?.app_metadata.role === GlobalRole.SuperAdmin;
+  }, [user]);
+
+  console.log(isSuperAdmin);
 
   if (!currentOrganization?.uuid) {
     return null;
@@ -73,6 +83,16 @@ const MobileAppNavigation = () => {
         <OrganizationsModal />
 
         {Links}
+
+        <If condition={isSuperAdmin}>
+          <DropdownMenuSeparator />
+
+          <DropdownLink
+            Icon={BuildingLibraryIcon}
+            path="/admin"
+            label="Admin"
+          />
+        </If>
 
         <DropdownMenuSeparator />
         <SignOutDropdownItem />
@@ -135,12 +155,12 @@ function OrganizationsModal() {
             <BuildingLibraryIcon className={'h-6'} />
 
             <span>
-              <Trans i18nKey={'common:yourOrganizations'} />
+              <Trans i18nKey={'common:yourWorkspaces'} />
             </span>
           </button>
         </DropdownMenuItem>
       }
-      heading={<Trans i18nKey={'common:yourOrganizations'} />}
+      heading={<Trans i18nKey={'common:yourWorkspaces'} />}
     >
       <div className={'flex flex-col space-y-6 py-4'}>
         <Heading type={6}>Select an organization below to switch to it</Heading>

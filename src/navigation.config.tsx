@@ -2,7 +2,6 @@ import {
   CreditCardIcon,
   FolderIcon,
   Square3Stack3DIcon,
-  Squares2X2Icon,
   UserGroupIcon,
   UserIcon,
   UserPlusIcon,

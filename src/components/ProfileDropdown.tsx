@@ -135,19 +135,6 @@ const ProfileDropdown: React.FCC<{
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem asChild>
-          <Link
-            className={'flex h-full w-full items-center space-x-2'}
-            href={'/docs'}
-          >
-            <QuestionMarkCircleIcon className={'h-5'} />
-
-            <span>
-              <Trans i18nKey={'common:documentation'} />
-            </span>
-          </Link>
-        </DropdownMenuItem>
-
         <If condition={configuration.features.enableThemeSwitcher}>
           <ThemeSelectorSubMenu />
         </If>
