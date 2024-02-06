@@ -25,6 +25,7 @@ export default async function createStripeCheckout(
   // rather than to a user
   // if you wish to change it, use the current user ID instead
   const clientReferenceId = params.organizationUid;
+  console.log(clientReferenceId);
 
   // we pass an optional customer ID, so we do not duplicate the Stripe
   // customers if an organization subscribes multiple times
@@ -47,7 +48,7 @@ export default async function createStripeCheckout(
     {
       trial_period_days: params.trialPeriodDays,
       metadata: {
-        organizationUid: params.organizationUid,
+        organization_uid: params.organizationUid,
       },
     };
 

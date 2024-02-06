@@ -80,6 +80,8 @@ export async function POST(request: Request) {
       getOrganizationUidFromClientReference(session) ??
       session.metadata?.organization_uid;
 
+    console.log(organizationUid, session);
+
     console.log(organizationUid);
 
     if (!organizationUid) {
