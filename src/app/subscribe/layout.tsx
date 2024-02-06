@@ -1,4 +1,5 @@
 import { headers } from 'next/headers';
+import clsx from 'clsx';
 
 import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline';
 import configuration from '~/configuration';
@@ -34,10 +35,9 @@ async function SubscriptionLayout({ children }: React.PropsWithChildren) {
         </div>
 
         <div
-          className={
-            'flex flex-1 flex-col items-center justify-center' +
-            ' mx-2 md:mx-auto pb-8'
-          }
+          className={clsx(
+            'flex flex-1 flex-col items-center justify-center mx-2 pb-8',
+          )}
         >
           <div
             className={

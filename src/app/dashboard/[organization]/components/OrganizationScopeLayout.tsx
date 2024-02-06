@@ -21,6 +21,7 @@ import AuthChangeListener from '~/components/AuthChangeListener';
 import type loadAppData from '~/lib/server/loaders/load-app-data';
 import { Page } from '~/core/ui/Page';
 import { cva } from 'cva';
+import { OrganizationSubscription } from '~/lib/organizations/types/organization-subscription';
 
 const OrganizationScopeLayout: React.FCC<{
   data: Awaited<ReturnType<typeof loadAppData>>;
@@ -33,7 +34,16 @@ const OrganizationScopeLayout: React.FCC<{
     };
   }, [data]);
 
-  const [organization, setOrganization] = useState(data.organization);
+  const [organization, setOrganization] = useState<
+    Maybe<
+      Organization & {
+        subscription: {
+          customerId: Maybe<string>;
+          data: OrganizationSubscription;
+        };
+      }
+    >
+  >(data.organization);
 
   const [userSession, setUserSession] =
     useState<Maybe<UserSession>>(userSessionContext);

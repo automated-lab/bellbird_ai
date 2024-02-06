@@ -166,7 +166,7 @@ async function loadMembers(organizationUid: string) {
   }
 
   const maxUsers =
-    organizationResponse.organization?.subscription.data.max_users!;
+    organizationResponse.organization?.subscription?.data.max_users ?? 1;
 
   const [members, invitedMembers] = await Promise.all([
     fetchOrganizationMembers({ adminClient, client, organizationId }).catch(

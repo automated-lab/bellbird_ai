@@ -21,6 +21,7 @@ import getLogger from '~/core/logger';
 import configuration from '~/configuration';
 import initializeServerI18n from '~/i18n/i18n.server';
 import getLanguageCookie from '~/i18n/get-language-cookie';
+import { isActiveSubscription } from '~/lib/stripe/utils';
 
 /**
  * @name loadAppData
@@ -52,7 +53,16 @@ const loadAppData = cache(async (organizationUid: string) => {
     }
 
     if (!organizationData) {
-      return redirect(configuration.paths.appHome);
+      return redirectToOnboarding();
+    }
+
+    if (
+      !organizationData.organization?.subscription?.data ||
+      !isActiveSubscription(
+        organizationData.organization.subscription?.data?.status,
+      )
+    ) {
+      return redirect(configuration.paths.subscribe);
     }
 
     const csrfToken = getCsrfToken();
@@ -86,7 +96,7 @@ const loadAppData = cache(async (organizationUid: string) => {
 
       return redirect(url);
     }
-
+    console.log(error);
     logger.warn(
       {
         error: JSON.stringify(error),
