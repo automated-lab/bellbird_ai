@@ -121,6 +121,9 @@ export function getOrganizationMembers(client: Client, organizationId: number) {
           displayName: display_name
         )
        `,
+      {
+        count: 'exact',
+      },
     )
     .eq('organization_id', organizationId)
     .is('code', null);
