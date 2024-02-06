@@ -246,8 +246,8 @@ export const inviteMembersToOrganizationAction = withSession(
     }
 
     if (
-      membersCount + invitedMembersCount <
-      organization.subscription.data.max_users
+      membersCount + invitedMembersCount >=
+      organization.subscription?.data.max_users
     ) {
       throw new Error(`Organization has reached the maximum number of users`);
     }
