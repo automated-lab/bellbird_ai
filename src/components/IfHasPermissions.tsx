@@ -1,5 +1,3 @@
-'use client';
-
 import type MembershipRole from '~/lib/organizations/types/membership-role';
 import useCurrentUserRole from '~/lib/organizations/hooks/use-current-user-role';
 
@@ -23,7 +21,7 @@ import useCurrentUserRole from '~/lib/organizations/hooks/use-current-user-role'
  * @param handler
  * @constructor
  */
-function IfHasPermissions({
+async function IfHasPermissions({
   children,
   condition,
   fallback = null,
