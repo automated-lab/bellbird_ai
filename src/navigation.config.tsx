@@ -68,6 +68,7 @@ const NAVIGATION_CONFIG = (organization: string): NavigationConfig => ({
         {
           label: 'common:workspaceSettingsTabLabel',
           path: getPath(organization, paths.settings.workspace),
+          end: true,
           Icon: ({ className }: { className: string }) => {
             return <UserGroupIcon className={className} />;
           },
