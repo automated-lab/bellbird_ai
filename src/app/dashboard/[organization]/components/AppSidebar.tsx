@@ -24,7 +24,6 @@ import SubscriptionStatusBadge from './organizations/SubscriptionStatusBadge';
 import configuration from '~/configuration';
 import WorkspaceSelector from './organizations/WorkspaceSelector';
 import { UsageCounter } from '~/components/UsageCounter';
-import LogoMini from '~/core/ui/Logo/LogoMini';
 
 const AppSidebar: React.FC<{
   organizationUid: string;

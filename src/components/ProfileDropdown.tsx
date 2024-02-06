@@ -124,7 +124,7 @@ const ProfileDropdown: React.FCC<{
         <DropdownMenuItem asChild>
           <Link
             className={'flex h-full w-full items-center space-x-2'}
-            href={configuration.paths.appHome}
+            href={configuration.paths.appPrefix}
           >
             <Squares2X2Icon className={'h-5'} />
             <span>
