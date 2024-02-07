@@ -43,7 +43,7 @@ function OnboardingContainer(
     userData: UserData | null;
   }>,
 ) {
-  const organization = props.userData?.displayName || `Organization`;
+  const organization = props.userData?.displayName || `My Workspace`;
 
   const form = useForm({
     defaultValues: {

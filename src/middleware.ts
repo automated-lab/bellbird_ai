@@ -11,7 +11,7 @@ const NEXT_ACTION_HEADER = 'next-action';
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|locales|assets|api/stripe/webhook).*)',
+    '/((?!_next/static|_next/image|favicon.ico|locales|assets|api/stripe/webhook|api/external-apps/webhook).*)',
   ],
 };
 

@@ -141,9 +141,11 @@ duration_in_months: '', // How long the free subscription will stay`;
               <div className="w-full overflow-x-hidden mt-4">
                 <p className="mt-2 mb-1">
                   send a <b>POST</b> request to this url:
-                  <b className="text-nowrap">
-                    {configuration.site.siteUrl}/api/external-apps/webhook
-                  </b>
+                  <div className="border rounded-md overflow-x-auto p-2">
+                    <pre>
+                      {configuration.site.siteUrl}/api/external-apps/webhook
+                    </pre>
+                  </div>
                 </p>
 
                 <p className="my-1">Here is the body schema of the request:</p>
