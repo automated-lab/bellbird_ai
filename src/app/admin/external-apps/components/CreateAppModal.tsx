@@ -14,6 +14,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '~/core/ui/Tooltip';
 import { createNewAppAction } from '~/lib/external-apps/actions';
 
 import type { IExternalAppDraft } from '~/lib/external-apps/types';
+import configuration from '~/configuration';
 
 export const CreateAppModal = ({
   children,
@@ -70,13 +71,13 @@ export const CreateAppModal = ({
     toast.success('Secret copied to clipboard');
   };
 
-  const Schema = `secret: ${secret.slice(0, 25)}...;
-email: '';
-plan: ''; // write the name of the plan here : Ex. Pro
-duration_in_months: '' // How long the free subscription will stay`;
+  const getSchema = (secret: string) => `secret: '${secret}',
+email: '',
+plan: '', // write the name of the plan here : Ex. Pro
+duration_in_months: '', // How long the free subscription will stay`;
 
   const handleCopySchema = () => {
-    navigator.clipboard.writeText(Schema);
+    navigator.clipboard.writeText(getSchema(secret));
 
     toast.success('Secret copied to clipboard');
   };
@@ -138,10 +139,17 @@ duration_in_months: '' // How long the free subscription will stay`;
               </div>
 
               <div className="w-full overflow-x-hidden mt-4">
-                <p className="mt-2 mb-1">Here is the schema of the payload:</p>
+                <p className="mt-2 mb-1">
+                  send a <b>POST</b> request to this url:
+                  <b className="text-nowrap">
+                    {configuration.site.siteUrl}/api/external-apps/webhook
+                  </b>
+                </p>
+
+                <p className="my-1">Here is the body schema of the request:</p>
 
                 <div className="border rounded-md relative overflow-x-auto p-2">
-                  <pre>{Schema}</pre>
+                  <pre>{getSchema(`${secret.slice(0, 25)}...`)}</pre>
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button
