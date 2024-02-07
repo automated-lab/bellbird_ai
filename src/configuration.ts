@@ -84,7 +84,7 @@ const configuration = {
         plans: [
           {
             name: 'Monthly',
-            price: '$9',
+            price: '$5',
             tokens_limit: 50000,
             max_users: 1,
             stripePriceId: 'price_1OKR3gGWvJkW2hKDp42NylVR',
@@ -100,7 +100,7 @@ const configuration = {
         plans: [
           {
             name: 'Monthly',
-            price: '$29',
+            price: '$9',
             tokens_limit: 100000,
             max_users: 3,
             stripePriceId: 'price_1OKR3gGWvJkW2hKDp42NylVR',
@@ -115,7 +115,7 @@ const configuration = {
         plans: [
           {
             name: '',
-            price: '99$',
+            price: '29$',
             stripePriceId: 'price_1OKR4JGWvJkW2hKDxr9CTE2S',
             tokens_limit: 3000000,
             max_users: 5,
