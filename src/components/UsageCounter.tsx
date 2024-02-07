@@ -16,8 +16,6 @@ import useCurrentOrganization from '~/lib/organizations/hooks/use-current-organi
 export const UsageCounter = () => {
   const { collapsed: isSidebarCollapsed } = useSidebarContext();
 
-  console.log(isSidebarCollapsed);
-
   const router = useRouter();
   const organization = useCurrentOrganization();
 
@@ -29,42 +27,40 @@ export const UsageCounter = () => {
     router.push('/dashboard/upgrade');
   };
 
-  return (
+  return !isSidebarCollapsed ? (
     <Card>
-      {!isSidebarCollapsed ? (
-        <CardContent className="py-4">
-          <UsageProgress />
+      <CardContent className="py-4">
+        <UsageProgress />
 
-          <If condition={!hasActiveSubscription}>
-            <Button
-              onClick={handleUpgrade}
-              variant="premium"
-              color="blue"
-              className="w-full"
-            >
-              Upgrade
-              <BoltIcon className="w-4 h-4 ml-2 fill-white" />
-            </Button>
-          </If>
-        </CardContent>
-      ) : (
         <If condition={!hasActiveSubscription}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                onClick={handleUpgrade}
-                variant="premium"
-                size="icon"
-                color="blue"
-                className="w-full"
-              >
-                <BoltIcon className="w-4 h-4 fill-white" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Upgrade your plan</TooltipContent>
-          </Tooltip>
+          <Button
+            onClick={handleUpgrade}
+            variant="premium"
+            color="blue"
+            className="w-full"
+          >
+            Upgrade
+            <BoltIcon className="w-4 h-4 ml-2 fill-white" />
+          </Button>
         </If>
-      )}
+      </CardContent>
     </Card>
+  ) : (
+    <If condition={!hasActiveSubscription}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            onClick={handleUpgrade}
+            variant="premium"
+            size="icon"
+            color="blue"
+            className="w-full"
+          >
+            <BoltIcon className="w-4 h-4 fill-white" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>Upgrade your plan</TooltipContent>
+      </Tooltip>
+    </If>
   );
 };

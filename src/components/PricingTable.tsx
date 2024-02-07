@@ -2,14 +2,20 @@
 
 import { useState } from 'react';
 import classNames from 'clsx';
-import { CheckCircleIcon, SparklesIcon } from '@heroicons/react/24/outline';
+import {
+  CheckCircleIcon,
+  InformationCircleIcon,
+  SparklesIcon,
+} from '@heroicons/react/24/outline';
 
 import Heading from '~/core/ui/Heading';
 import Button from '~/core/ui/Button';
 import If from '~/core/ui/If';
 import Trans from '~/core/ui/Trans';
 
-import configuration from '~/configuration';
+import configuration, { INFINITY_CONSIDERED_TOKENS } from '~/configuration';
+import { formatNumber } from '~/core/generic/generic-utils';
+import { Tooltip, TooltipContent, TooltipTrigger } from '~/core/ui/Tooltip';
 
 interface CheckoutButtonProps {
   readonly stripePriceId?: string;
@@ -28,6 +34,7 @@ interface PricingItemProps {
   plan: {
     name: string;
     stripePriceId?: string;
+    tokens_limit: number;
     price: string;
     label?: string;
     href?: string;
@@ -163,7 +170,27 @@ function PricingItem(
       </div>
 
       <div className={'text-current'}>
-        <FeaturesList features={props.product.features} />
+        <ul className={'flex flex-col space-y-2'}>
+          {props.plan.tokens_limit >= INFINITY_CONSIDERED_TOKENS ? (
+            <ListItem>
+              <Tooltip>
+                <TooltipTrigger>
+                  <p className="flex items-center gap-2">
+                    Unlimited Tokens
+                    <InformationCircleIcon className="w-4 h-4" />
+                  </p>
+                </TooltipTrigger>
+                <TooltipContent>
+                  Tokens upto {formatNumber(INFINITY_CONSIDERED_TOKENS)} are
+                  considered unlimited
+                </TooltipContent>
+              </Tooltip>
+            </ListItem>
+          ) : (
+            <ListItem>{formatNumber(props.plan.tokens_limit)} token</ListItem>
+          )}
+          <FeaturesList features={props.product.features} />
+        </ul>
       </div>
 
       <If condition={props.selectable}>

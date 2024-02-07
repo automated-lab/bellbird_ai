@@ -103,7 +103,7 @@ const configuration = {
             price: '$29',
             tokens_limit: 100000,
             max_users: 3,
-            stripePriceId: 'price_1OKR4JGWvJkW2hKDxr9CTE2S',
+            stripePriceId: 'price_1OKR3gGWvJkW2hKDp42NylVR',
           },
         ],
       },
@@ -115,18 +115,18 @@ const configuration = {
         plans: [
           {
             name: '',
-            price: 'Contact us',
-            stripePriceId: '',
-            tokens_limit: Infinity,
+            price: '99$',
+            stripePriceId: 'price_1OKR4JGWvJkW2hKDxr9CTE2S',
+            tokens_limit: 3000000,
             max_users: 5,
-            label: `Contact us`,
-            href: `/contact`,
           },
         ],
       },
     ],
   },
 };
+
+export const INFINITY_CONSIDERED_TOKENS = 3000000;
 
 export default configuration;
 

@@ -1,18 +1,20 @@
 'use client';
 
+import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import React from 'react';
 import useSWR from 'swr';
 
 import useSupabase from '~/core/hooks/use-supabase';
+import { Tooltip, TooltipContent, TooltipTrigger } from '~/core/ui/Tooltip';
 import { Progress } from '~/core/ui/progress';
-import { useCurrentOrganizationId } from '~/lib/organizations/hooks/use-current-organization-id';
 
+import { useCurrentOrganizationId } from '~/lib/organizations/hooks/use-current-organization-id';
 import { getKeyIf, queryKeys } from '~/lib/query-keys';
 import { getOrganizationUsageById } from '~/lib/user_usage/queries';
+import { INFINITY_CONSIDERED_TOKENS } from '~/configuration';
+import { formatNumber } from '~/core/generic/generic-utils';
 
-type Props = {};
-
-const UsageProgress = (props: Props) => {
+const UsageProgress = () => {
   const client = useSupabase();
 
   const organizationId = useCurrentOrganizationId();
@@ -29,8 +31,6 @@ const UsageProgress = (props: Props) => {
         .then((res) => res.data),
   );
 
-  console.log(data, error);
-
   if (isLoading || error) {
     return null;
   }
@@ -42,14 +42,28 @@ const UsageProgress = (props: Props) => {
   const generatedTokens = data?.tokens_generated!;
   const tokensLimit = data?.tokens_limit!;
 
-  if (data.tokens_limit === Infinity) {
-    return null;
+  if (data.tokens_limit >= INFINITY_CONSIDERED_TOKENS) {
+    return (
+      <div>
+        <Tooltip>
+          <TooltipTrigger>
+            <p className="flex items-center gap-2 text-sm text-gray-500">
+              Unlimited Tokens <InformationCircleIcon className="w-4 h-4" />
+            </p>
+          </TooltipTrigger>
+          <TooltipContent>
+            Tokens upto {formatNumber(INFINITY_CONSIDERED_TOKENS)} are
+            considered unlimited
+          </TooltipContent>
+        </Tooltip>
+      </div>
+    );
   }
 
   return (
-    <div className="text-sm space-y-2">
+    <div className="text-nowrap text-sm space-y-2">
       <p>
-        {generatedTokens} / {tokensLimit} Token
+        {formatNumber(generatedTokens)} / {formatNumber(tokensLimit)} Token
       </p>
       <Progress className="h-3" value={(generatedTokens / tokensLimit) * 100} />
     </div>

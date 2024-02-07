@@ -34,4 +34,13 @@ const getUnmatchedValues = <T>(obj1: T, obj2: any): Partial<T> => {
   return unmatchedValues;
 };
 
-export { generateTag, getPagination, getUnmatchedValues };
+const formatNumber = (number: number) => {
+  // Convert to string
+  let numStr = number.toString();
+
+  // Insert commas for thousands seperators
+  let withCommas = numStr.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+  return withCommas;
+};
+export { generateTag, getPagination, getUnmatchedValues, formatNumber };
