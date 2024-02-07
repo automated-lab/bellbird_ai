@@ -1,15 +1,15 @@
 'use client';
 
-import { DocumentDuplicateIcon } from '@heroicons/react/24/outline';
-import { Dialog } from '@radix-ui/react-dialog';
 import React, { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import useCsrfToken from '~/core/hooks/use-csrf-token';
+
+import { DocumentDuplicateIcon } from '@heroicons/react/24/outline';
 import Button from '~/core/ui/Button';
-import IconButton from '~/core/ui/IconButton';
 import Modal from '~/core/ui/Modal';
 import TextField from '~/core/ui/TextField';
+
+import useCsrfToken from '~/core/hooks/use-csrf-token';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/core/ui/Tooltip';
 import { createNewAppAction } from '~/lib/external-apps/actions';
 
@@ -70,12 +70,13 @@ export const CreateAppModal = ({
     toast.success('Secret copied to clipboard');
   };
 
+  const Schema = `secret: ${secret.slice(0, 25)}...;
+email: '';
+plan: ''; // write the name of the plan here : Ex. Pro
+duration_in_months: '' // How long the free subscription will stay`;
+
   const handleCopySchema = () => {
-    navigator.clipboard.writeText(`secret: ${secret};
-    email: '';
-    plan: ''; // write the name of the plan here : Ex. Pro
-    duration_in_months: '' // How long the free subscription will stay
-    `);
+    navigator.clipboard.writeText(Schema);
 
     toast.success('Secret copied to clipboard');
   };
@@ -87,83 +88,82 @@ export const CreateAppModal = ({
       })}
 
       <Modal heading="Create New App" isOpen={isOpen} setIsOpen={setIsOpen}>
-        {!secret ? (
-          <form onSubmit={handleSubmit(onConfirm)}>
-            <div className="mb-8">
-              <TextField>
-                <TextField.Label>
-                  <span>App Name</span>
-                  <TextField.Hint>The name of the app</TextField.Hint>
-                  <TextField.Input
-                    placeholder="Ex. Charm"
-                    {...appNameControl}
-                  />
-                  <TextField.Error error={errors.appName?.message} />
-                </TextField.Label>
-              </TextField>
+        <div className="w-[90vw] max-w-[500px]">
+          {!secret ? (
+            <form onSubmit={handleSubmit(onConfirm)}>
+              <div className="mb-8">
+                <TextField>
+                  <TextField.Label>
+                    <span>App Name</span>
+                    <TextField.Hint>The name of the app</TextField.Hint>
+                    <TextField.Input
+                      placeholder="Ex. Charm"
+                      {...appNameControl}
+                    />
+                    <TextField.Error error={errors.appName?.message} />
+                  </TextField.Label>
+                </TextField>
+              </div>
+
+              <div className="flex justify-end gap-2">
+                <Modal.CancelButton onClick={onDismiss}>
+                  Cancel
+                </Modal.CancelButton>
+                <Button type="submit" loading={pending}>
+                  Publish App
+                </Button>
+              </div>
+            </form>
+          ) : (
+            <div>
+              <p className="mb-2">Here your secret key:</p>
+
+              <div className="flex items-center gap-4 truncate border rounded-md p-2">
+                <pre className="w-full text-ellipsis overflow-x-hidden">
+                  {secret}
+                </pre>
+
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Button
+                      onClick={handleCopySecret}
+                      variant="outline"
+                      size="icon"
+                    >
+                      <DocumentDuplicateIcon className="w-5 h-5" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>Copy to Clipboard</TooltipContent>
+                </Tooltip>
+              </div>
+
+              <div className="w-full overflow-x-hidden mt-4">
+                <p className="mt-2 mb-1">Here is the schema of the payload:</p>
+
+                <div className="border rounded-md relative overflow-x-auto p-2">
+                  <pre>{Schema}</pre>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        onClick={handleCopySchema}
+                        variant="outline"
+                        size="icon"
+                        className="absolute top-2 right-2"
+                      >
+                        <DocumentDuplicateIcon className="w-5 h-5" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>Copy to Clipboard</TooltipContent>
+                  </Tooltip>
+                </div>
+              </div>
+
+              <div className="flex justify-end mt-2">
+                <Button onClick={onDismiss}>Okay</Button>
+              </div>
             </div>
-
-            <div className="flex justify-end gap-2">
-              <Modal.CancelButton onClick={onDismiss}>
-                Cancel
-              </Modal.CancelButton>
-              <Button type="submit" loading={pending}>
-                Publish App
-              </Button>
-            </div>
-          </form>
-        ) : (
-          <div>
-            <p className="mb-2">Here your secret key:</p>
-
-            <div className="flex items-center gap-4 truncate border rounded-md p-2">
-              <pre className="max-w-96 text-ellipsis overflow-x-hidden">
-                {secret}
-              </pre>
-
-              <Tooltip>
-                <TooltipTrigger>
-                  <Button
-                    onClick={handleCopySecret}
-                    variant="outline"
-                    size="icon"
-                  >
-                    <DocumentDuplicateIcon className="w-5 h-5" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>Copy to Clipboard</TooltipContent>
-              </Tooltip>
-            </div>
-
-            <div className="w-full overflow-x-hidden">
-              <p className="mt-2 mb-1">Here is the schema of the payload:</p>
-
-              <pre className="overflow-x-auto">
-                {`secret: HERE IS THE SECRET;
-email: '';
-plan: ''; // write the name of the plan here : Ex. Pro
-duration_in_months: '' // How long the free subscription will stay
-`}
-              </pre>
-              <Tooltip>
-                <TooltipTrigger>
-                  <Button
-                    onClick={handleCopySchema}
-                    variant="outline"
-                    size="icon"
-                  >
-                    <DocumentDuplicateIcon className="w-5 h-5" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>Copy to Clipboard</TooltipContent>
-              </Tooltip>
-            </div>
-
-            <div className="flex justify-end mt-2">
-              <Button onClick={onDismiss}>Okay</Button>
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </Modal>
     </>
   );

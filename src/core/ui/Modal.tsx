@@ -14,6 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '~/core/ui/Dialog';
+import { cn } from '../generic/shadcn-utils';
 
 type ControlledOpenProps = {
   isOpen: boolean;
@@ -30,6 +31,7 @@ type Props = React.PropsWithChildren<
   {
     heading: string | React.ReactNode;
     closeButton?: boolean;
+    className?: string;
   } & (ControlledOpenProps | TriggerProps)
 >;
 
@@ -59,7 +61,7 @@ const DialogWrapper = (wrapperProps: {
 
 const Modal: React.FC<Props> & {
   CancelButton: typeof CancelButton;
-} = ({ closeButton, heading, children, ...props }) => {
+} = ({ closeButton, heading, children, className, ...props }) => {
   const useCloseButton = closeButton ?? true;
   const Trigger = ('Trigger' in props && props.Trigger) || null;
 
@@ -72,7 +74,12 @@ const Modal: React.FC<Props> & {
       </If>
 
       <DialogContent asChild>
-        <div className={'flex flex-col space-y-4 min-w-fit'}>
+        <div
+          className={cn(
+            'flex flex-col space-y-4 min-w-fit max-h-[90vh] overflow-auto',
+            className,
+          )}
+        >
           <div className="flex items-center">
             <DialogTitle className="flex w-full text-xl font-semibold text-current">
               <span className={'max-w-[90%] truncate'}>{heading}</span>

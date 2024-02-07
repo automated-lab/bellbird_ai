@@ -44,8 +44,6 @@ export const DeleteAppModal = ({
     onDismiss();
   };
 
-  console.log(isOpen);
-
   return (
     <>
       {React.cloneElement(children, {

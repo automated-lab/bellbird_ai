@@ -127,8 +127,8 @@ const FieldsSelect = React.forwardRef(
               </PopoverTrigger>
 
               <Tooltip>
-                <TooltipTrigger asChild>
-                  <CreateFieldModal>
+                <CreateFieldModal>
+                  <TooltipTrigger asChild>
                     <Button
                       variant="outline"
                       size="icon"
@@ -137,8 +137,8 @@ const FieldsSelect = React.forwardRef(
                     >
                       <PlusIcon className="w-4 h-4" />
                     </Button>
-                  </CreateFieldModal>
-                </TooltipTrigger>
+                  </TooltipTrigger>
+                </CreateFieldModal>
                 <TooltipContent>Create new field</TooltipContent>
               </Tooltip>
             </div>
