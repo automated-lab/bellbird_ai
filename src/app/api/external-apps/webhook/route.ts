@@ -62,13 +62,12 @@ export async function POST(request: Request) {
 
     const password = generatePassword(8);
 
-    const { data: userData, error: createUserErr } =
-      await client.auth.admin.createUser({
-        email: email,
-        password: password,
-      });
+    const { data: userData, error: createUserErr } = await client.auth.signUp({
+      email: email,
+      password: password,
+    });
 
-    if (!userData || createUserErr) {
+    if (!userData.user || createUserErr) {
       logger.error({ email }, 'Failed to create user');
       return throwInternalServerErrorException(
         `Failed to create user, An account with email : ${email} may exist`,
