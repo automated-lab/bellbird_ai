@@ -30,10 +30,10 @@ export default function renderEnrollmentEmail(props: Props) {
 
   return render(
     <Html>
-      <Head />
-      <Preview>{previewText}</Preview>
-
       <Tailwind>
+        <Head />
+        <Preview>{previewText}</Preview>
+
         <Body className="bg-gray-50 my-auto mx-auto font-sans">
           <Container className="border border-solid border-[#eaeaea] rounded-lg my-[40px] mx-auto p-[20px] w-[465px] bg-white">
             <Heading className="text-black text-[24px] font-normal text-center p-0 my-[30px] mx-0">
@@ -55,7 +55,7 @@ export default function renderEnrollmentEmail(props: Props) {
             <Section>
               <Row>
                 <Column align="center">
-                  <img
+                  <Img
                     src="/assets/images/favicon/logo.png"
                     width={105}
                     height={36}

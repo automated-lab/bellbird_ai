@@ -13,6 +13,7 @@ import { getAppIdBySecret } from '~/lib/secrets/queries';
 import enrollUserWithNewOrg from '~/lib/server/user/enroll-user-with-new-org';
 import configuration, { DEFAULT_ORG_NAME } from '~/configuration';
 import sendEmail from '~/core/email/send-email';
+import { NextResponse } from 'next/server';
 
 const logger = getLogger();
 
@@ -45,12 +46,12 @@ export async function POST(request: Request) {
       secret,
     );
 
-    logger.info('App id retrieved', email);
-
     if (!appId || getAppIdErr) {
-      logger.error({ getAppIdErr }, 'Invalid Secret');
+      logger.error({ getAppIdErr, appId }, 'Invalid Secret');
       return throwUnauthorizedException('Invalid secret!');
     }
+
+    logger.info('App id retrieved', appId);
 
     const { data: app, error: getAppErr } = await getApp(client, appId);
 
@@ -136,14 +137,17 @@ export async function POST(request: Request) {
         temporaryPassword: password,
       });
     } catch (error) {
+      console.log(error);
       logger.error({ error }, 'Failed to send enrollment email');
       return throwInternalServerErrorException(
         `Failed to send enrollment email to ${email}`,
       );
     }
 
-    return new Response(
-      `User created with id ${userData.user.id}, email ${email} and a password ${password} and plan ${plan}`,
+    return NextResponse.json(
+      {
+        message: `User created with id ${userData.user.id}, email ${email} and a password ${password} and plan ${plan}`,
+      },
       {
         status: 200,
       },
