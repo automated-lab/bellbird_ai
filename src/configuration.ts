@@ -80,7 +80,7 @@ const configuration = {
       {
         name: 'Basic',
         description: 'Description of your Basic plan',
-        features: ['50,000 token'],
+        features: ['access to all tools'],
         plans: [
           {
             name: 'Monthly',
@@ -96,7 +96,7 @@ const configuration = {
         badge: `Most Popular`,
         recommended: true,
         description: 'Description of your Pro plan',
-        features: ['100,000 token'],
+        features: ['access to all tools', '2 team members'],
         plans: [
           {
             name: 'Monthly',
@@ -111,7 +111,7 @@ const configuration = {
         name: 'Premium',
         description: 'Description of your Premium plan',
         badge: ``,
-        features: ['Unlimited Tokens'],
+        features: ['access to all tools', '4 team members'],
         plans: [
           {
             name: '',
