@@ -18,7 +18,7 @@ function AdminHeader({ children }: React.PropsWithChildren) {
       }
     >
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger asChild>
           <Button variant={'ghost'} href={'/dashboard'}>
             <span className={'flex space-x-2.5 items-center'}>
               <ArrowLeftIcon className={'w-4 h-4'} />
