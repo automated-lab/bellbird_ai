@@ -14,7 +14,7 @@ const configuration = {
   site: {
     name: 'Charm App',
     description: 'Your best copywriter',
-    themeColor: '#ffffff',
+    themeColor: '#00B0DA',
     themeColorDark: '#0a0a0a',
     siteUrl: process.env.NEXT_PUBLIC_SITE_URL,
     siteName: 'Charm App',

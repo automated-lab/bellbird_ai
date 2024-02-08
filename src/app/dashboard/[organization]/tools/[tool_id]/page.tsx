@@ -11,7 +11,6 @@ import Playground from './components/Playground';
 import useSupabase from '~/core/hooks/use-supabase';
 import { useUpgradeModal } from '~/core/hooks/use-upgrade-modal';
 import { getTemplateById } from '~/lib/templates/queries';
-import { useCurrentOrganizationId } from '~/lib/organizations/hooks/use-current-organization-id';
 import { useGenerateCopy } from '~/lib/generations/hooks/use-generate-copy';
 import { getKeyIf, queryKeys } from '~/lib/query-keys';
 
@@ -70,7 +69,7 @@ function ToolPage({ params }: ToolPageProps) {
         .trigger(body)
         .then((res) => {
           console.log(res);
-          mutate(['user-usage']);
+          mutate(['user-usage', organization.id]);
           setCopies((prev) => [res as IGenerationCopy, ...prev]);
         })
         .catch((err) => {
