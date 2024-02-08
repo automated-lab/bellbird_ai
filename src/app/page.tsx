@@ -10,7 +10,7 @@ async function AppPage() {
 
   const user = await client.auth.getUser();
 
-  if (!user) {
+  if (!user.data || user.error) {
     permanentRedirect(configuration.paths.signIn);
   }
 
