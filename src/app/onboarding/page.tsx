@@ -47,7 +47,7 @@ async function loadData() {
   // if the user has already been onboarded
   // we redirect the user to the app home page
   if (userData.onboarded) {
-    redirect(configuration.paths.appHome);
+    redirect(configuration.paths.appPrefix);
   }
 
   return payload;

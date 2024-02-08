@@ -10,7 +10,7 @@ function AuthLinkRedirect() {
   const params = useSearchParams();
 
   const redirectPath =
-    params?.get('redirectPath') || configuration.paths.appHome;
+    params?.get('redirectPath') || configuration.paths.appPrefix;
 
   useRedirectOnSignIn(redirectPath);
 

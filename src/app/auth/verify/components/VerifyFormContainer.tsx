@@ -6,7 +6,7 @@ import MultiFactorChallengeContainer from '~/app/auth/components/MultiFactorChal
 
 function VerifyFormContainer() {
   const onSuccess = useCallback(() => {
-    window.location.assign(configuration.paths.appHome);
+    window.location.assign(configuration.paths.appPrefix);
   }, []);
 
   return <MultiFactorChallengeContainer onSuccess={onSuccess} />;

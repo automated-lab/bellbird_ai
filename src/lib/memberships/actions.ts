@@ -139,7 +139,7 @@ export const acceptInviteAction = async (params: {
       `Redirecting user to app home...`,
     );
 
-    redirect(configuration.paths.appHome);
+    redirect(configuration.paths.appPrefix);
   }
 
   logger.info(

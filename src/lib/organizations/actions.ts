@@ -76,7 +76,7 @@ export const createNewOrganizationAction = withSession(
       }),
     );
 
-    const redirectPath = [configuration.paths.appHome, organizationUid].join(
+    const redirectPath = [configuration.paths.appPrefix, organizationUid].join(
       '/',
     );
 
@@ -313,7 +313,7 @@ export async function leaveOrganizationAction(data: FormData) {
   logger.info(params, `User successfully left organization`);
 
   // redirect to the app home page
-  const redirectPath = configuration.paths.appHome;
+  const redirectPath = configuration.paths.appPrefix;
 
   revalidatePath('/', 'layout');
 
@@ -369,7 +369,7 @@ export async function deleteOrganizationAction(data: FormData) {
   revalidatePath('/', 'layout');
 
   // redirect to the app home page
-  return redirect(configuration.paths.appHome, RedirectType.replace);
+  return redirect(configuration.paths.appPrefix, RedirectType.replace);
 }
 
 function getInviteMembersBodySchema() {

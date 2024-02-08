@@ -83,7 +83,7 @@ function VerifyOtpForm({
         if (onSuccess) {
           onSuccess();
         } else {
-          router.replace(configuration.paths.appHome);
+          router.replace(configuration.paths.appPrefix);
         }
       }}
     >

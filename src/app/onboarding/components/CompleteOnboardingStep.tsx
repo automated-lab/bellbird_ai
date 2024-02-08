@@ -79,7 +79,7 @@ function ErrorState() {
 }
 
 function SuccessState(props: { returnUrl: string }) {
-  const href = props.returnUrl || configuration.paths.appHome;
+  const href = props.returnUrl || configuration.paths.appPrefix;
 
   return (
     <section

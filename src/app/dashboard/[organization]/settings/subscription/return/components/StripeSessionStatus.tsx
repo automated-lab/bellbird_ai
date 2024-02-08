@@ -74,7 +74,7 @@ function SuccessSessionStatus({
 
         <Button
           data-cy={'checkout-success-back-button'}
-          href={configuration.paths.appHome}
+          href={configuration.paths.appPrefix}
           variant={'outline'}
         >
           <span className={'flex space-x-2.5 items-center'}>

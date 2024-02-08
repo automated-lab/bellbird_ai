@@ -224,7 +224,7 @@ export const createBillingPortalSessionAction = withSession(
 
     const referer = headers().get('referer');
     const origin = headers().get('origin');
-    const returnUrl = referer || origin || configuration.paths.appHome;
+    const returnUrl = referer || origin || configuration.paths.appPrefix;
 
     // get the Stripe Billing Portal session
     const { url } = await createBillingPortalSession({

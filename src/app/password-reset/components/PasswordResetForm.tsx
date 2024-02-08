@@ -39,7 +39,7 @@ function PasswordResetForm() {
           <Trans i18nKey={'profile:updatePasswordSuccessMessage'} />
         </Alert>
 
-        <Button href={configuration.paths.appHome} variant={'outline'}>
+        <Button href={configuration.paths.appPrefix} variant={'outline'}>
           <Trans i18nKey={'common:backToHomePage'} />
         </Button>
       </div>
@@ -69,7 +69,7 @@ function PasswordResetForm() {
 
           const redirectTo = [
             window.location.origin,
-            configuration.paths.appHome,
+            configuration.paths.appPrefix,
           ].join('/');
 
           await updateUser.trigger({ password, redirectTo });

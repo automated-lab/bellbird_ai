@@ -50,7 +50,7 @@ const PhoneNumberSignInContainer: React.FC<{
     async (e) => {
       e.preventDefault();
 
-      const redirectTo = `${window.location.origin}${configuration.paths.appHome}`;
+      const redirectTo = `${window.location.origin}${configuration.paths.appPrefix}`;
 
       await verifyOtp.trigger({
         token: verificationCode,

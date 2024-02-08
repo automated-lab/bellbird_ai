@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
   const authCode = searchParams.get('code');
   const inviteCode = searchParams.get('inviteCode');
   const error = searchParams.get('error');
-  const nextUrl = searchParams.get('next') ?? configuration.paths.appHome;
+  const nextUrl = searchParams.get('next') ?? configuration.paths.appPrefix;
 
   let userId: Maybe<string> = undefined;
 

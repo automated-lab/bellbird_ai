@@ -162,7 +162,7 @@ async function loadMembers(organizationUid: string) {
   const organizationId = organizationResponse.organization?.id;
 
   if (!organizationId) {
-    return redirect(configuration.paths.appHome);
+    return redirect(configuration.paths.appPrefix);
   }
 
   const maxUsers =
