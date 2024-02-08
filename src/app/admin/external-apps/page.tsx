@@ -7,7 +7,6 @@ import Heading from '~/core/ui/Heading';
 
 import getPageFromQueryParams from '~/app/admin/utils/get-page-from-query-param';
 import { DEFAULT_PAGE_SIZE } from '~/app/admin/admin.config';
-import AdminHeader from '~/app/admin/components/AdminHeader';
 import AdminGuard from '~/app/admin/components/AdminGuard';
 import AppsTable from './components/AppsTable';
 import { CreateAppModal } from './components/CreateAppModal';

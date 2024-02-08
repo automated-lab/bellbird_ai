@@ -131,11 +131,12 @@ export async function POST(request: Request) {
 
     // send email
     try {
-      await sendEnrollmentEmail({
+      const response = await sendEnrollmentEmail({
         invitedUserEmail: email,
         plan: plan,
         temporaryPassword: password,
       });
+      console.log(response);
     } catch (error) {
       console.log(error);
       logger.error({ error }, 'Failed to send enrollment email');

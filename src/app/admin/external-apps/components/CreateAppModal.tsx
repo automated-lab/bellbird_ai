@@ -125,7 +125,7 @@ duration_in_months: '', // How long the free subscription will stay`;
                 </pre>
 
                 <Tooltip>
-                  <TooltipTrigger>
+                  <TooltipTrigger asChild>
                     <Button
                       onClick={handleCopySecret}
                       variant="outline"
