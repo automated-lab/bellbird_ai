@@ -12,11 +12,11 @@ import useSupabase from '~/core/hooks/use-supabase';
 import { useUpgradeModal } from '~/core/hooks/use-upgrade-modal';
 import { getTemplateById } from '~/lib/templates/queries';
 import { useGenerateCopy } from '~/lib/generations/hooks/use-generate-copy';
+import useCurrentOrganization from '~/lib/organizations/hooks/use-current-organization';
 import { getKeyIf, queryKeys } from '~/lib/query-keys';
 
 import type { IGenerationCopy } from '~/lib/generations/types';
 import type { ToolFormData } from './types';
-import useCurrentOrganization from '~/lib/organizations/hooks/use-current-organization';
 
 type ToolPageProps = {
   params: {
@@ -69,7 +69,7 @@ function ToolPage({ params }: ToolPageProps) {
         .trigger(body)
         .then((res) => {
           console.log(res);
-          mutate(['user-usage', organization.id]);
+          mutate(queryKeys.organizationUsageRetrieve(organization.id));
           setCopies((prev) => [res as IGenerationCopy, ...prev]);
         })
         .catch((err) => {
