@@ -44,6 +44,8 @@ const InviteMembersFormContainer = () => {
           toast.success(t('organization:inviteMembersSuccess'), {
             id,
           });
+
+          return;
         } catch (e) {
           toast.error(t('organization:inviteMembersError'), {
             id,
@@ -53,6 +55,8 @@ const InviteMembersFormContainer = () => {
     },
     [organization, t],
   );
+
+  console.log(isSubmitting);
 
   const SubmitButton = (
     <div>

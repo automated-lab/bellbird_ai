@@ -1,15 +1,12 @@
 import { headers } from 'next/headers';
 import clsx from 'clsx';
 
-import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline';
-import configuration from '~/configuration';
-import Button from '~/core/ui/Button';
-
 import LogoImage from '~/core/ui/Logo/LogoImage';
 import I18nProvider from '~/i18n/I18nProvider';
 import getLanguageCookie from '~/i18n/get-language-cookie';
 import initializeServerI18n from '~/i18n/i18n.server';
 import { withI18n } from '~/i18n/with-i18n';
+import SignOutButton from '~/components/SignOutButton';
 
 async function SubscriptionLayout({ children }: React.PropsWithChildren) {
   const { csrfToken, language } = await loadData();
@@ -24,13 +21,7 @@ async function SubscriptionLayout({ children }: React.PropsWithChildren) {
         <div className={'flex justify-between px-4 sm:px-8 pb-8'}>
           <LogoImage />
           <div>
-            <Button
-              variant="custom"
-              className="text-red-500 hover:text-red-600 border border-red-100 hover:bg-red-50"
-              href={configuration.paths.signIn}
-            >
-              <ArrowLeftOnRectangleIcon className="mr-2 h-4 w-4" /> Sign out
-            </Button>
+            <SignOutButton />
           </div>
         </div>
 

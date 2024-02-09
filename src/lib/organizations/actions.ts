@@ -290,8 +290,7 @@ export const inviteMembersToOrganizationAction = withSession(
     const redirectPath = [appPrefix, organizationUid, path].join('/');
 
     revalidatePath(redirectPath, 'page');
-
-    redirect(redirectPath);
+    return redirect(redirectPath);
   },
 );
 
