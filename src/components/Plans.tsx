@@ -8,6 +8,8 @@ import BillingPortalRedirectButton from '~/app/dashboard/[organization]/settings
 
 import type Organization from '~/lib/organizations/types/organization';
 import type { OrganizationSubscription } from '~/lib/organizations/types/organization-subscription';
+import IfHasPermissions from './IfHasPermissions';
+import { canChangeBilling } from '~/lib/organizations/permissions';
 
 const Plans = ({
   organization,
@@ -36,17 +38,19 @@ const Plans = ({
     <div className={'flex flex-col space-y-4'}>
       <SubscriptionCard subscription={subscription} />
 
-      <If condition={customerId}>
-        <div className={'flex flex-col space-y-2'}>
-          <BillingPortalRedirectButton customerId={customerId as string}>
-            <Trans i18nKey={'subscription:manageBilling'} />
-          </BillingPortalRedirectButton>
+      <IfHasPermissions condition={canChangeBilling}>
+        <If condition={customerId}>
+          <div className={'flex flex-col space-y-2'}>
+            <BillingPortalRedirectButton customerId={customerId as string}>
+              <Trans i18nKey={'subscription:manageBilling'} />
+            </BillingPortalRedirectButton>
 
-          <span className={'text-xs text-gray-500 dark:text-gray-400'}>
-            <Trans i18nKey={'subscription:manageBillingDescription'} />
-          </span>
-        </div>
-      </If>
+            <span className={'text-xs text-gray-500 dark:text-gray-400'}>
+              <Trans i18nKey={'subscription:manageBillingDescription'} />
+            </span>
+          </div>
+        </If>
+      </IfHasPermissions>
     </div>
   );
 };

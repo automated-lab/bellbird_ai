@@ -56,8 +56,6 @@ const InviteMembersFormContainer = () => {
     [organization, t],
   );
 
-  console.log(isSubmitting);
-
   const SubmitButton = (
     <div>
       <Button
