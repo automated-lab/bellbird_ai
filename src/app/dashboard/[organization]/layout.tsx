@@ -11,8 +11,6 @@ async function AppLayout({
 }>) {
   const data = await loadAppData(params.organization);
 
-  console.log('is there something wrong on the main app layout');
-
   return <AppRouteShell data={data}>{children}</AppRouteShell>;
 }
 

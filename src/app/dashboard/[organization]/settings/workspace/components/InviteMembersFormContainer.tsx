@@ -13,9 +13,11 @@ import InviteMembersForm from './InviteMembersForm';
 import Button from '~/core/ui/Button';
 import If from '~/core/ui/If';
 import Trans from '~/core/ui/Trans';
+import { useRouter } from 'next/navigation';
 
 const InviteMembersFormContainer = () => {
   const { t } = useTranslation('organization');
+  const router = useRouter();
   const user = useUserSession();
   const organization = useCurrentOrganization();
 
@@ -36,10 +38,11 @@ const InviteMembersFormContainer = () => {
         const id = toast.loading(t('organization:inviteMembersLoading'));
 
         try {
-          await inviteMembersToOrganizationAction({
+          const returnUrl = await inviteMembersToOrganizationAction({
             invites,
             organizationUid: organization.uuid,
           });
+          router.replace(returnUrl);
 
           toast.success(t('organization:inviteMembersSuccess'), {
             id,
@@ -53,7 +56,7 @@ const InviteMembersFormContainer = () => {
         }
       });
     },
-    [organization, t],
+    [organization, router, t],
   );
 
   const SubmitButton = (

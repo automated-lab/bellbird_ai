@@ -48,9 +48,7 @@ const OrganizationScopeLayout: React.FCC<{
   const [userSession, setUserSession] =
     useState<Maybe<UserSession>>(userSessionContext);
 
-  console.log('does it update');
   const updateCurrentOrganization = useCallback(() => {
-    console.log('does it update');
     setOrganization(data.organization);
 
     const organizationId = data.organization?.uuid;
