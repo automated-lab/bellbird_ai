@@ -31,13 +31,14 @@ import GlobalRole from '~/core/session/types/global-role';
 const MobileAppNavigation = () => {
   const currentOrganization = useCurrentOrganization();
 
-  const { data: user } = useUser();
+  const user = useUser();
 
   const isSuperAdmin = useMemo(() => {
-    return user?.app_metadata.role === GlobalRole.SuperAdmin;
-  }, [user]);
+    console.log(user);
+    return user.data?.app_metadata.role === GlobalRole.SuperAdmin;
+  }, [user.data]);
 
-  console.log(isSuperAdmin);
+  console.log(currentOrganization);
 
   if (!currentOrganization?.uuid) {
     return null;

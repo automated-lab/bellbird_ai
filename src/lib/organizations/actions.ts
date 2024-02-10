@@ -289,8 +289,8 @@ export const inviteMembersToOrganizationAction = withSession(
     const path = configuration.paths.settings.members;
     const redirectPath = [appPrefix, organizationUid, path].join('/');
 
-    revalidatePath(redirectPath, 'page');
-    return redirect(redirectPath);
+    revalidatePath(redirectPath);
+    redirect(redirectPath);
   },
 );
 

@@ -1,6 +1,9 @@
+'use client';
+
 import useSWR from 'swr';
 import { useRouter } from 'next/navigation';
 import useSupabase from '~/core/hooks/use-supabase';
+import { queryKeys } from '~/lib/query-keys';
 
 /**
  * @name useUser
@@ -8,9 +11,9 @@ import useSupabase from '~/core/hooks/use-supabase';
 function useUser() {
   const router = useRouter();
   const client = useSupabase();
-  const key = 'user';
+  const key = queryKeys.userMe;
 
-  return useSWR([key], async () => {
+  return useSWR(key, async () => {
     return client.auth
       .getUser()
       .then((result) => {
