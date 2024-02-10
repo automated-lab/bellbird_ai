@@ -41,7 +41,7 @@ import {
 
 import { OrganizationSubscription } from '~/lib/organizations/types/organization-subscription';
 import { getUserById } from '~/lib/user/database/queries';
-import { getMembershipsByOrganizationUid } from '~/app/admin/organizations/queries';
+import { getMembershipsByOrganizationUid } from '~/app/admin/workspaces/queries';
 
 type Client = SupabaseClient<Database>;
 

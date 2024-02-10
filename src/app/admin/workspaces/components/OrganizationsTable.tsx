@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { getI18n } from 'react-i18next';
 
 import DataTable from '~/core/ui/DataTable';
-import { getOrganizations } from '~/app/admin/organizations/queries';
+import { getOrganizations } from '~/app/admin/workspaces/queries';
 import SubscriptionStatusBadge from '~/app/dashboard/[organization]/components/organizations/SubscriptionStatusBadge';
 
 import {
@@ -147,7 +147,7 @@ const columns: Array<ColumnDef<Organizations[0]>> = [
               </DropdownMenuItem>
 
               <DropdownMenuItem asChild>
-                <Link href={`/admin/organizations/${uid}/members`}>
+                <Link href={`/admin/workspaces/${uid}/members`}>
                   View Members
                 </Link>
               </DropdownMenuItem>
@@ -155,7 +155,7 @@ const columns: Array<ColumnDef<Organizations[0]>> = [
               <DropdownMenuItem asChild>
                 <Link
                   className={'text-red-500'}
-                  href={`/admin/organizations/${uid}/delete`}
+                  href={`/admin/workspaces/${uid}/delete`}
                 >
                   Delete
                 </Link>

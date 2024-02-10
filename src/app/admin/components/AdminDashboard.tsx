@@ -30,7 +30,7 @@ function AdminDashboard({
       </Tile>
 
       <Tile>
-        <Tile.Heading>Organizations</Tile.Heading>
+        <Tile.Heading>Workspaces</Tile.Heading>
 
         <Tile.Body>
           <div className={'flex justify-between'}>

@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 
 import AdminHeader from '~/app/admin/components/AdminHeader';
-import { getMembershipsByOrganizationUid } from '~/app/admin/organizations/queries';
+import { getMembershipsByOrganizationUid } from '~/app/admin/workspaces/queries';
 import getSupabaseServerComponentClient from '~/core/supabase/server-component-client';
-import OrganizationsMembersTable from '~/app/admin/organizations/[uid]/members/components/OrganizationsMembersTable';
+import OrganizationsMembersTable from '~/app/admin/workspaces/[uid]/members/components/OrganizationsMembersTable';
 import getPageFromQueryParams from '~/app/admin/utils/get-page-from-query-param';
 
 import configuration from '~/configuration';
@@ -68,7 +68,7 @@ function Breadcrumbs() {
 
       <ChevronRightIcon className={'w-3'} />
 
-      <Link href={'/admin/organizations'}>Organizations</Link>
+      <Link href={'/admin/workspaces'}>Workspaces</Link>
 
       <ChevronRightIcon className={'w-3'} />
 

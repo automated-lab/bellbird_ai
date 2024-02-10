@@ -18,7 +18,7 @@ interface IAdminNavigationConfig {
 
 const DEFAULT_PAGE_SIZE = 10;
 
-const ADMIN_NAVIGATION_CONFIG: IAdminNavigationConfig = {
+const ADMIN_NAVIGATION_CONFIG = {
   admin: {
     label: 'Admin',
     path: '/admin',
@@ -46,6 +46,13 @@ const ADMIN_NAVIGATION_CONFIG: IAdminNavigationConfig = {
     path: '/admin/users',
     Icon: ({ className }: { className: string }) => {
       return <UserIcon className={className} />;
+    },
+  },
+  workspaces: {
+    label: 'Workspaces',
+    path: '/admin/workspaces',
+    Icon: ({ className }: { className: string }) => {
+      return <UserGroupIcon className={className} />;
     },
   },
   externalApps: {

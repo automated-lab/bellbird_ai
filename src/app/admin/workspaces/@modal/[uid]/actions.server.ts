@@ -22,10 +22,10 @@ export const deleteOrganizationAction = withAdminSession(
       organizationId: id,
     });
 
-    revalidatePath('/admin/organizations', 'page');
+    revalidatePath('/admin/workspaces', 'page');
 
     logger.info({ id }, `Organization account deleted`);
 
-    redirect('/admin/organizations');
+    redirect('/admin/workspaces');
   },
 );

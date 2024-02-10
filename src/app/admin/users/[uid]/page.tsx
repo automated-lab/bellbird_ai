@@ -117,22 +117,24 @@ async function AdminUserPage({ params }: Params) {
           </Tile>
 
           <Tile>
-            <Heading type={4}>Organizations</Heading>
+            <Heading type={4}>Workspaces</Heading>
 
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Organization ID</TableHead>
+                  <TableHead>Workspace ID</TableHead>
                   <TableHead>UUID</TableHead>
-                  <TableHead>Organization</TableHead>
+                  <TableHead>Workspace</TableHead>
                   <TableHead>Role</TableHead>
                 </TableRow>
               </TableHeader>
 
               <TableBody>
                 {organizations.map((membership) => {
+                  console.log(membership);
+
                   const organization = membership.organization;
-                  const href = `/admin/organizations/${organization.uuid}/members`;
+                  const href = `/admin/workspaces/${organization.uuid}/members`;
 
                   return (
                     <TableRow key={membership.id}>

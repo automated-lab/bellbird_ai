@@ -8,7 +8,7 @@ import Button from '~/core/ui/Button';
 import useCsrfToken from '~/core/hooks/use-csrf-token';
 import { TextFieldInput, TextFieldLabel } from '~/core/ui/TextField';
 import Organization from '~/lib/organizations/types/organization';
-import { deleteOrganizationAction } from '~/app/admin/organizations/@modal/[uid]/actions.server';
+import { deleteOrganizationAction } from '~/app/admin/workspaces/@modal/[uid]/actions.server';
 
 function DeleteOrganizationModal({
   organization,

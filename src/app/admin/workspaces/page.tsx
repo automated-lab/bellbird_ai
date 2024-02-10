@@ -1,7 +1,7 @@
 import AdminHeader from '~/app/admin/components/AdminHeader';
 import AdminGuard from '~/app/admin/components/AdminGuard';
-import OrganizationsTable from '~/app/admin/organizations/components/OrganizationsTable';
-import { getOrganizations } from '~/app/admin/organizations/queries';
+import OrganizationsTable from '~/app/admin/workspaces/components/OrganizationsTable';
+import { getOrganizations } from '~/app/admin/workspaces/queries';
 import getPageFromQueryParams from '~/app/admin/utils/get-page-from-query-param';
 
 import { TextFieldInput } from '~/core/ui/TextField';
