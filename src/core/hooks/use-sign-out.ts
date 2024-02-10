@@ -1,3 +1,5 @@
+'use client';
+
 import { useCallback } from 'react';
 import useSupabase from '~/core/hooks/use-supabase';
 

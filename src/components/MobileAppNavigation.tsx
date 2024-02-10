@@ -38,8 +38,6 @@ const MobileAppNavigation = () => {
     return user.data?.app_metadata.role === GlobalRole.SuperAdmin;
   }, [user.data]);
 
-  console.log(currentOrganization);
-
   if (!currentOrganization?.uuid) {
     return null;
   }
