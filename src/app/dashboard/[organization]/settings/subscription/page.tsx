@@ -1,12 +1,12 @@
 import Trans from '~/core/ui/Trans';
 
 import PlansStatusAlertContainer from './components/PlanStatusAlertContainer';
+import PlansContainer from '~/app/dashboard/subscribe/[organization]/components/PlansContainer';
 import UsageProgress from '~/components/UsageProgress';
 import Heading from '~/core/ui/Heading';
 
 import { withI18n } from '~/i18n/with-i18n';
 import { Card } from '~/core/ui/Card';
-import PlansContainer from '~/app/subscribe/components/PlansContainer';
 
 export const metadata = {
   title: 'Subscription',

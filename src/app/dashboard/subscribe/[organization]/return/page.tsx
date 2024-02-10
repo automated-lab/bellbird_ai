@@ -1,10 +1,11 @@
 import { notFound, redirect } from 'next/navigation';
 
+import { StripeSessionStatus } from '~/components/subscription/StripeSessionStatus';
+import RecoverStripeCheckout from '~/components/subscription/RecoverStripeCheckout';
+
 import requireSession from '~/lib/user/require-session';
 import getSupabaseServerComponentClient from '~/core/supabase/server-component-client';
 import getStripeInstance from '~/core/stripe/get-stripe';
-import { StripeSessionStatus } from './components/StripeSessionStatus';
-import RecoverStripeCheckout from './components/RecoverStripeCheckout';
 import { withI18n } from '~/i18n/with-i18n';
 
 interface SessionPageProps {

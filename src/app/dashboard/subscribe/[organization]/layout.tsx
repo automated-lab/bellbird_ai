@@ -1,12 +1,15 @@
 import { headers } from 'next/headers';
 import clsx from 'clsx';
 
+import SignOutButton from '~/components/SignOutButton';
+import Button from '~/core/ui/Button';
 import LogoImage from '~/core/ui/Logo/LogoImage';
+
 import I18nProvider from '~/i18n/I18nProvider';
 import getLanguageCookie from '~/i18n/get-language-cookie';
 import initializeServerI18n from '~/i18n/i18n.server';
 import { withI18n } from '~/i18n/with-i18n';
-import SignOutButton from '~/components/SignOutButton';
+import configuration from '~/configuration';
 
 async function SubscriptionLayout({ children }: React.PropsWithChildren) {
   const { csrfToken, language } = await loadData();
@@ -18,9 +21,18 @@ async function SubscriptionLayout({ children }: React.PropsWithChildren) {
   return (
     <I18nProvider lang={language}>
       <div className={'flex flex-1 flex-col dark:bg-background py-8 h-screen'}>
-        <div className={'flex justify-between px-4 sm:px-8 pb-8'}>
+        <div
+          className={
+            'flex flex-col sm:flex-row justify-between items-center gap-4 px-4 sm:px-8 pb-8'
+          }
+        >
           <LogoImage />
-          <div>
+
+          <div className="flex justify-center gap-2 flex-wrap">
+            <Button variant="flat" href={configuration.paths.appPrefix}>
+              Select another workspace
+            </Button>
+
             <SignOutButton />
           </div>
         </div>

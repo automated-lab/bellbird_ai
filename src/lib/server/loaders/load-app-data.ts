@@ -52,8 +52,10 @@ const loadAppData = cache(async (organizationUid: string) => {
       return redirectToOnboarding();
     }
 
+    // when there is no data for the current organization
+    // we simply redirect them to choose another organization
     if (!organizationData) {
-      return redirectToOnboarding();
+      return redirect(configuration.paths.appPrefix);
     }
 
     if (
@@ -62,7 +64,7 @@ const loadAppData = cache(async (organizationUid: string) => {
         organizationData.organization.subscription?.data?.status,
       )
     ) {
-      return redirect(configuration.paths.subscribe);
+      return redirect(`${configuration.paths.subscribe}/${organizationUid}`);
     }
 
     const csrfToken = getCsrfToken();

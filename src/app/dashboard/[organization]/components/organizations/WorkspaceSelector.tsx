@@ -35,6 +35,7 @@ import useCurrentOrganization from '~/lib/organizations/hooks/use-current-organi
 import configuration from '~/configuration';
 
 const WorkspaceSelector = ({ displayName = true }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const changeOrganization = useChangeOrganization();
 
   const organization = useCurrentOrganization();
@@ -92,6 +93,23 @@ const WorkspaceSelector = ({ displayName = true }) => {
 
             <OrganizationsOptions organizations={data ?? []} />
 
+            <SelectSeparator />
+
+            <SelectGroup>
+              <SelectAction
+                data-cy={'create-organization-button'}
+                className={'flex flex-row items-center space-x-2 truncate'}
+                onClick={() => setIsModalOpen(true)}
+              >
+                <PlusCircleIcon className={'h-5'} />
+
+                <span>
+                  <Trans
+                    i18nKey={'organization:createOrganizationDropdownLabel'}
+                  />
+                </span>
+              </SelectAction>
+            </SelectGroup>
             <If condition={isLoading}>
               <SelectItem value={selectedOrganizationId ?? ''}>
                 <OrganizationItem organization={organization} />
@@ -100,6 +118,11 @@ const WorkspaceSelector = ({ displayName = true }) => {
           </SelectGroup>
         </SelectContent>
       </Select>
+
+      <CreateOrganizationModal
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+      />
     </>
   );
 };

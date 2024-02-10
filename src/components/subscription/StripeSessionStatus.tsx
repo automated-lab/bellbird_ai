@@ -7,6 +7,8 @@ import Heading from '~/core/ui/Heading';
 import Button from '~/core/ui/Button';
 import Trans from '~/core/ui/Trans';
 import configuration from '~/configuration';
+import { useParams } from 'next/navigation';
+import { getAppHomeUrl } from '~/navigation.config';
 
 /**
  * Retrieves the session status for a Stripe checkout session.
@@ -32,6 +34,9 @@ function SuccessSessionStatus({
 }: React.PropsWithChildren<{
   customerEmail: string;
 }>) {
+  const params = useParams();
+  const organizationUid = params.organization as string;
+
   return (
     <section
       data-cy={'payment-return-success'}
@@ -74,7 +79,11 @@ function SuccessSessionStatus({
 
         <Button
           data-cy={'checkout-success-back-button'}
-          href={configuration.paths.appPrefix}
+          href={
+            organizationUid
+              ? getAppHomeUrl(organizationUid)
+              : configuration.paths.appPrefix
+          }
           variant={'outline'}
         >
           <span className={'flex space-x-2.5 items-center'}>

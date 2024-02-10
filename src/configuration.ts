@@ -53,7 +53,7 @@ const configuration = {
     signUp: '/auth/sign-up',
     signInMfa: '/auth/verify',
     onboarding: `/onboarding`,
-    subscribe: '/subscribe',
+    subscribe: '/dashboard/subscribe',
     appPrefix: '/dashboard',
     appHome: 'tools',
     authCallback: '/auth/callback',

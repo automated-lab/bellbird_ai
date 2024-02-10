@@ -51,8 +51,10 @@ const loadSubscribeData = cache(async (organizationUid: string) => {
       return redirectToOnboarding();
     }
 
+    // when there is no data for the current organization
+    // we simply redirect them to choose another organization
     if (!organizationData) {
-      return redirectToOnboarding();
+      return redirect(configuration.paths.appPrefix);
     }
 
     const csrfToken = getCsrfToken();
@@ -74,7 +76,6 @@ const loadSubscribeData = cache(async (organizationUid: string) => {
       user: userRecord,
       organization: organizationData?.organization,
       role: organizationData?.role,
-      ui: getUIStateCookies(),
     };
   } catch (error) {
     const logger = getLogger();

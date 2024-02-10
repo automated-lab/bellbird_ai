@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 const EmbeddedStripeCheckout = dynamic(
   () => {
     return import(
-      '~/app/dashboard/[organization]/settings/subscription/components/EmbeddedStripeCheckout'
+      '../../app/dashboard/[organization]/settings/subscription/components/EmbeddedStripeCheckout'
     );
   },
   {

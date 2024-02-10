@@ -1,8 +1,6 @@
 import { permanentRedirect } from 'next/navigation';
 
 import getSupabaseServerComponentClient from '~/core/supabase/server-component-client';
-import { getUserById } from '~/lib/user/database/queries';
-import requireSession from '~/lib/user/require-session';
 import configuration from '~/configuration';
 
 async function AppPage() {

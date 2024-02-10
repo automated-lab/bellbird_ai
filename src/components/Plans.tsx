@@ -5,11 +5,12 @@ import Trans from '~/core/ui/Trans';
 import SubscriptionCard from '~/app/dashboard/[organization]/settings/subscription/components/SubscriptionCard';
 import PlanSelectionForm from '~/app/dashboard/[organization]/settings/subscription/components/PlanSelectionForm';
 import BillingPortalRedirectButton from '~/app/dashboard/[organization]/settings/subscription/components/BillingRedirectButton';
+import IfHasPermissions from '~/components/IfHasPermissions';
+
+import { canChangeBilling } from '~/lib/organizations/permissions';
 
 import type Organization from '~/lib/organizations/types/organization';
 import type { OrganizationSubscription } from '~/lib/organizations/types/organization-subscription';
-import IfHasPermissions from './IfHasPermissions';
-import { canChangeBilling } from '~/lib/organizations/permissions';
 
 const Plans = ({
   organization,
