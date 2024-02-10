@@ -5,6 +5,7 @@ import HttpStatusCode from '~/core/generic/http-status-code.enum';
 import configuration from '~/configuration';
 import createMiddlewareClient from '~/core/supabase/middleware-client';
 import GlobalRole from '~/core/session/types/global-role';
+import getSupabaseClientKeys from './core/supabase/get-supabase-client-keys';
 
 const CSRF_SECRET_COOKIE = 'csrfSecret';
 const NEXT_ACTION_HEADER = 'next-action';
@@ -26,7 +27,24 @@ export async function middleware(request: NextRequest) {
 async function sessionMiddleware(req: NextRequest, res: NextResponse) {
   const supabase = createMiddlewareClient(req, res);
 
-  await supabase.auth.getSession();
+  const {
+    data: { session },
+    error,
+  } = await supabase.auth.getSession();
+
+  if (error) {
+    const keys = getSupabaseClientKeys();
+    const appId = getSupabaseAppId(keys.url);
+
+    console.log(keys.url);
+    const sessionCookies = {
+      name: `sb-${appId}-auth-token`,
+      value: JSON.stringify(session),
+      path: '/',
+    };
+
+    res.cookies.set(sessionCookies);
+  }
 
   return res;
 }
@@ -92,4 +110,13 @@ async function adminMiddleware(request: NextRequest, response: NextResponse) {
 
   // in all other cases, return the response
   return response;
+}
+
+function getSupabaseAppId(url: string) {
+  const match = url.match(/https:\/\/(.+)\.supabase\.co/);
+  if (match) {
+    return match[1];
+  } else {
+    return null;
+  }
 }
