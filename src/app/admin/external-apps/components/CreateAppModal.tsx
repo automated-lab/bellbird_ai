@@ -4,17 +4,16 @@ import React, { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-import { DocumentDuplicateIcon } from '@heroicons/react/24/outline';
 import Button from '~/core/ui/Button';
 import Modal from '~/core/ui/Modal';
 import TextField from '~/core/ui/TextField';
+import CopyButton from '~/components/CopyButton';
 
 import useCsrfToken from '~/core/hooks/use-csrf-token';
-import { Tooltip, TooltipContent, TooltipTrigger } from '~/core/ui/Tooltip';
 import { createNewAppAction } from '~/lib/external-apps/actions';
+import configuration from '~/configuration';
 
 import type { IExternalAppDraft } from '~/lib/external-apps/types';
-import configuration from '~/configuration';
 
 export const CreateAppModal = ({
   children,
@@ -65,22 +64,14 @@ export const CreateAppModal = ({
     });
   };
 
-  const handleCopySecret = () => {
-    navigator.clipboard.writeText(secret);
+  const webhookUrl = `${configuration.site.siteUrl}/api/external-apps/webhook`;
 
-    toast.success('Secret copied to clipboard');
-  };
+  const getSchema = (secret: string) => `"secret": "${secret}",
+"email": "",
+"plan": "", // write the name of the plan here : Ex. Pro
+"duration_in_months": "" // How long the free subscription will stay`;
 
-  const getSchema = (secret: string) => `secret: '${secret}',
-email: '',
-plan: '', // write the name of the plan here : Ex. Pro
-duration_in_months: '', // How long the free subscription will stay`;
-
-  const handleCopySchema = () => {
-    navigator.clipboard.writeText(getSchema(secret));
-
-    toast.success('Secret copied to clipboard');
-  };
+  const schemaWithSecret = getSchema(secret);
 
   return (
     <>
@@ -124,47 +115,30 @@ duration_in_months: '', // How long the free subscription will stay`;
                   {secret}
                 </pre>
 
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      onClick={handleCopySecret}
-                      variant="outline"
-                      size="icon"
-                    >
-                      <DocumentDuplicateIcon className="w-5 h-5" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Copy to Clipboard</TooltipContent>
-                </Tooltip>
+                <CopyButton content={secret} />
               </div>
 
-              <div className="w-full overflow-x-hidden mt-4">
+              <div className="w-full mt-4">
                 <p className="mt-2 mb-1">
                   send a <b>POST</b> request to this url:
-                  <div className="border rounded-md overflow-x-auto p-2">
-                    <pre>
-                      {configuration.site.siteUrl}/api/external-apps/webhook
+                  <div className="flex items-center gap-4 truncate border rounded-md p-2">
+                    <pre className="flex-1 w-full overflow-x-auto">
+                      {webhookUrl}
                     </pre>
+                    <CopyButton content={webhookUrl} />
                   </div>
                 </p>
 
                 <p className="my-1">Here is the body schema of the request:</p>
 
-                <div className="border rounded-md relative overflow-x-auto p-2">
-                  <pre>{getSchema(`${secret.slice(0, 25)}...`)}</pre>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        onClick={handleCopySchema}
-                        variant="outline"
-                        size="icon"
-                        className="absolute top-2 right-2"
-                      >
-                        <DocumentDuplicateIcon className="w-5 h-5" />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>Copy to Clipboard</TooltipContent>
-                  </Tooltip>
+                <div className="border rounded-md relative overflow-x-hidden ">
+                  <pre className="overflow-x-auto p-2">
+                    {getSchema(`${secret.slice(0, 25)}...`)}
+                  </pre>
+                  <CopyButton
+                    content={schemaWithSecret}
+                    className="absolute top-2 right-2"
+                  />
                 </div>
               </div>
 
