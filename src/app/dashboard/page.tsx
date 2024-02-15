@@ -23,6 +23,7 @@ import configuration from '~/configuration';
 import I18nProvider from '~/i18n/I18nProvider';
 import { getUserById } from '~/lib/user/database/queries';
 import { getAppHomeUrl } from '~/navigation.config';
+import MembershipRole from '~/lib/organizations/types/membership-role';
 
 async function OrganizationsPage() {
   const client = getSupabaseServerComponentClient();
@@ -61,6 +62,8 @@ async function OrganizationsPage() {
 
   const organizations = data.map((item) => item.organization);
 
+  const hasOrganization = !!data.find((o) => o.role === MembershipRole.Owner);
+
   if (organizations.length === 1) {
     const organization = organizations[0];
     const href = getAppHomeUrl(organization.uuid);
@@ -80,7 +83,9 @@ async function OrganizationsPage() {
                 'lg:grid-col-3 grid grid-cols-1 gap-4 xl:grid-cols-4 xl:gap-6'
               }
             >
-              <NewOrganizationButtonContainer csrfToken={csrfToken} />
+              <If condition={!hasOrganization}>
+                <NewOrganizationButtonContainer csrfToken={csrfToken} />
+              </If>
 
               {organizations.map((organization) => {
                 const href = getAppHomeUrl(organization.uuid);

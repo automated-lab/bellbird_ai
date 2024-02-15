@@ -30,7 +30,7 @@ import { Avatar, AvatarFallback } from '~/core/ui/Avatar';
 
 import UserSessionContext from '~/core/session/contexts/user-session';
 import CreateOrganizationModal from './CreateOrganizationModal';
-import type MembershipRole from '~/lib/organizations/types/membership-role';
+import MembershipRole from '~/lib/organizations/types/membership-role';
 import useCurrentOrganization from '~/lib/organizations/hooks/use-current-organization';
 import configuration from '~/configuration';
 
@@ -45,6 +45,8 @@ const OrganizationsSelector = ({ displayName = true }) => {
   const selectedOrganizationId = organization?.uuid;
 
   const { data, isLoading } = useUserOrganizationsQuery(userId);
+
+  const hasOrganization = !!data?.find((o) => o.role === MembershipRole.Owner);
 
   return (
     <>
@@ -100,23 +102,25 @@ const OrganizationsSelector = ({ displayName = true }) => {
             </If>
           </SelectGroup>
 
-          <SelectSeparator />
+          <If condition={!hasOrganization}>
+            <SelectSeparator />
 
-          <SelectGroup>
-            <SelectAction
-              data-cy={'create-organization-button'}
-              className={'flex flex-row items-center space-x-2 truncate'}
-              onClick={() => setIsModalOpen(true)}
-            >
-              <PlusCircleIcon className={'h-5'} />
+            <SelectGroup>
+              <SelectAction
+                data-cy={'create-organization-button'}
+                className={'flex flex-row items-center space-x-2 truncate'}
+                onClick={() => setIsModalOpen(true)}
+              >
+                <PlusCircleIcon className={'h-5'} />
 
-              <span>
-                <Trans
-                  i18nKey={'organization:createOrganizationDropdownLabel'}
-                />
-              </span>
-            </SelectAction>
-          </SelectGroup>
+                <span>
+                  <Trans
+                    i18nKey={'organization:createOrganizationDropdownLabel'}
+                  />
+                </span>
+              </SelectAction>
+            </SelectGroup>
+          </If>
         </SelectContent>
       </Select>
 
