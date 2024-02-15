@@ -43,4 +43,18 @@ const formatNumber = (number: number) => {
 
   return withCommas;
 };
-export { generateTag, getPagination, getUnmatchedValues, formatNumber };
+
+/**
+ * Checks if a child component is null.
+ */
+const isChildNull = (children: JSX.Element) => {
+  return Boolean(children.type() === null);
+};
+
+export {
+  generateTag,
+  getPagination,
+  getUnmatchedValues,
+  formatNumber,
+  isChildNull,
+};
