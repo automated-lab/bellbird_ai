@@ -128,8 +128,6 @@ export async function POST(request: Request) {
 
     logger.info('Subscription created successfully', email);
 
-    console.log(subscription);
-
     // send email
     try {
       const response = await sendEnrollmentEmail({
@@ -137,9 +135,7 @@ export async function POST(request: Request) {
         plan: plan,
         temporaryPassword: password,
       });
-      console.log(response);
     } catch (error) {
-      console.log(error);
       logger.error({ error }, 'Failed to send enrollment email');
       return throwInternalServerErrorException(
         `Failed to send enrollment email to ${email}`,

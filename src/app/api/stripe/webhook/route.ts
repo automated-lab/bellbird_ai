@@ -80,10 +80,6 @@ export async function POST(request: Request) {
       getOrganizationUidFromClientReference(session) ??
       session.metadata?.organization_uid;
 
-    console.log(organizationUid, session);
-
-    console.log(organizationUid);
-
     if (!organizationUid) {
       return Promise.reject(
         `Failed to get organization uid from client reference`,
@@ -108,8 +104,6 @@ export async function POST(request: Request) {
         const subscription =
           await stripe.subscriptions.retrieve(subscriptionId);
 
-        console.log(event);
-
         await onCheckoutCompleted(
           client,
           session,
@@ -121,13 +115,10 @@ export async function POST(request: Request) {
       }
 
       case StripeWebhooks.SubscriptionCreated: {
-        console.log(session);
         const subscriptionId = session.id;
 
         const subscription =
           await stripe.subscriptions.retrieve(subscriptionId);
-
-        console.log(event);
 
         await onCheckoutCompleted(
           client,

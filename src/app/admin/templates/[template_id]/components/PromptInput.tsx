@@ -32,14 +32,12 @@ const PromptInput = React.forwardRef(
 
         const removed = [...prevFields].filter((f) => !nextFields.includes(f));
 
-        console.log(removed);
 
         const filtered = value.replace(
           new RegExp(`{{(${removed.join('|')})}\\s*}`, 'g'),
           '',
         );
 
-        console.log(filtered);
 
         setValue(filtered);
       }

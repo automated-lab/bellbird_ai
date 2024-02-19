@@ -17,8 +17,6 @@ function DeleteTemplateModalPage({ params }: Params) {
 
   const { data, error } = use(getTemplateById(client, params.template_id));
 
-  console.log(data, error);
-
   if (!data || error) {
     throw new Error(`Template not found`);
   }

@@ -11,8 +11,6 @@ type PlaygroundProps = {
 };
 
 function Playground({ data }: PlaygroundProps) {
-  console.log(data);
-
   return (
     <Card className="h-full bg-orange-50/50 dark:bg-gray-950">
       <CardHeader>Playground - {data.length}</CardHeader>

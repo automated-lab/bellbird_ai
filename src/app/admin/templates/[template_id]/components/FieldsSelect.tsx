@@ -66,7 +66,6 @@ const FieldsSelect = React.forwardRef(
     const [selectedValues, setSelectedValues] = React.useState<TField[]>(
       defaultValues || [],
     );
-    console.log(defaultValues, selectedValues);
 
     const { data, isLoading } = useSWR(
       queryKeys.fieldList,

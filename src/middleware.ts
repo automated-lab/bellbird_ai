@@ -36,7 +36,6 @@ async function sessionMiddleware(req: NextRequest, res: NextResponse) {
     const keys = getSupabaseClientKeys();
     const appId = getSupabaseAppId(keys.url);
 
-    console.log(keys.url);
     const sessionCookies = {
       name: `sb-${appId}-auth-token`,
       value: JSON.stringify(session),

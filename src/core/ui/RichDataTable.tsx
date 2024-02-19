@@ -108,7 +108,6 @@ function RichDataTable<T extends object>({
   });
 
   React.useEffect(() => {
-    console.log(pagination.pageIndex);
     if (pagination.pageIndex === pageIndex) return;
 
     onPaginationChange?.(pagination);

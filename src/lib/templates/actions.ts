@@ -63,8 +63,6 @@ export const updateTemplateAction = withAdminSession(
       .partial()
       .parse(params.templateUpdates);
 
-    console.log(templateUpdates, params.templateId);
-
     logger.info({ title: templateUpdates.title }, 'Updating template...');
 
     const { error } = await updateTemplate(

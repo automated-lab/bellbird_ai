@@ -17,8 +17,6 @@ function DeleteCollectionModalPage({ params }: Params) {
     getCopyCollectionById(client, params.collection_id),
   );
 
-  console.log(data, error);
-
   if (!data || error) {
     throw new Error(`Collection not found`);
   }

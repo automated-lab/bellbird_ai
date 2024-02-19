@@ -34,7 +34,6 @@ const MobileAppNavigation = () => {
   const user = useUser();
 
   const isSuperAdmin = useMemo(() => {
-    console.log(user);
     return user.data?.app_metadata.role === GlobalRole.SuperAdmin;
   }, [user.data]);
 

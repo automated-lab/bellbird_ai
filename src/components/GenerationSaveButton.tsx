@@ -99,7 +99,6 @@ function GenerationSaveButton({ generationCopy }: GenerationSaveButtonProps) {
       collection_id: collectionId,
       user_id: userId,
     });
-    console.log(collectionId, userId, generationCopy);
 
     if (error) {
       console.error(error.message);

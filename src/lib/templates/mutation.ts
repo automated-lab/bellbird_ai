@@ -69,8 +69,6 @@ export async function updateTemplate(
     return { error, data: null };
   }
 
-  console.log(updates);
-
   if (fields) {
     const fieldsData = fields.map((fieldId: number) => ({
       template_id: templateId,
@@ -105,7 +103,6 @@ export async function uploadTemplateImage(
   const bucket = client.storage.from('templates/cards');
   const extension = imageFile.name.split('.').pop();
   const name = `${id}.${extension}`;
-  console.log(name);
 
   const { error } = await bucket.upload(name, bytes, {
     upsert: true,

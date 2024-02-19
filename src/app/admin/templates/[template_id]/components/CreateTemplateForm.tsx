@@ -159,8 +159,6 @@ function CreateTemplateForm({
               return;
             }
 
-            console.log('updates : ', templateUpdates, fieldsUpdates);
-
             await updateTemplateAction({
               templateId,
               templateUpdates: {
@@ -185,7 +183,6 @@ function CreateTemplateForm({
     [csrfToken, defaultData, getValues, id, isNew],
   );
 
-  console.log(getValues());
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">

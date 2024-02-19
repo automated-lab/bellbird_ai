@@ -6,7 +6,5 @@ export const renderPromptWithVariables = (
 ) => {
   const template = Handlebars.compile(templatePrompt);
 
-  console.log(values, template, template(values));
-
   return template(values);
 };

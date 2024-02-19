@@ -29,8 +29,6 @@ type ToolBarProps = {
 function ToolBar({ data, onSubmit, isSubmitting, className }: ToolBarProps) {
   const { id, title, category, image, description, isNew, fields } = data;
 
-  console.log(fields);
-
   return (
     <Card className={cn('h-full', className)}>
       <CardHeader>

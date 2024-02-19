@@ -18,8 +18,6 @@ function GenerationCard({ data }: GenerationCardProps) {
     toast.success('content copied successfully!');
   };
 
-  console.log(data);
-
   return (
     <Tile className="group relative rounded-md">
       <Tile.Body>

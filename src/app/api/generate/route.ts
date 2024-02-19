@@ -131,12 +131,6 @@ export async function POST(req: NextRequest) {
       template_id: body.template_id,
     } as IGenerationCopy;
 
-    console.log(
-      generation.content,
-      generation.content.split(' ').length,
-      aiResponse.usage?.completion_tokens,
-    );
-
     return NextResponse.json(generation, { status: 200 });
   } catch (error) {
     logger.error({ error }, 'Error generating copy');

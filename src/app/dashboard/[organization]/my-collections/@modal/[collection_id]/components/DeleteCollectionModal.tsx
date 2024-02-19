@@ -23,7 +23,6 @@ function DeleteCollectionModal({
   const displayText = collection.name ?? '';
 
   const onDismiss = () => {
-    console.log('how many times we are called');
     router.back();
 
     setIsOpen(false);

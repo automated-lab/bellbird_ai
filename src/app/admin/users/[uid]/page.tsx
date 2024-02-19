@@ -131,7 +131,6 @@ async function AdminUserPage({ params }: Params) {
 
               <TableBody>
                 {organizations.map((membership) => {
-                  console.log(membership);
 
                   const organization = membership.organization;
                   const href = `/admin/workspaces/${organization.uuid}/members`;
