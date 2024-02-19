@@ -118,7 +118,7 @@ export async function POST(req: NextRequest) {
     await incrementOrganizationGeneratedTokens(
       client,
       organizationId,
-      aiResponse.usage?.completion_tokens ?? 0,
+      aiResponse.usage?.total_tokens ?? 0,
     );
 
     logger.info('User tokens incremented successfully', user.id);

@@ -63,6 +63,7 @@
     "cva": "npm:class-variance-authority@^0.7.0",
     "dayjs": "^1.11.10",
     "edge-csrf": "^1.0.7",
+    "handlebars": "^4.7.8",
     "heroicons": "^2.1.1",
     "i18next": "23.7.16",
     "i18next-browser-languagedetector": "^7.2.0",

@@ -9,8 +9,8 @@ export const useGenerateCopy = () => {
   const path = '/api/generate';
   const generateCopy = useSWRMutation(
     path,
-    async (_, data: { arg: GenerateCopyBody }) =>
-      await fetcher({ path: '/api/generate', body: data.arg, method: 'POST' }),
+    (_, data: { arg: GenerateCopyBody }) =>
+      fetcher({ path: '/api/generate', body: data.arg, method: 'POST' }),
   );
 
   return generateCopy;

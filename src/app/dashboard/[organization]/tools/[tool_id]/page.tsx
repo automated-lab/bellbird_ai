@@ -9,7 +9,6 @@ import ToolBar from './components/ToolBar';
 import Playground from './components/Playground';
 
 import useSupabase from '~/core/hooks/use-supabase';
-import { useUpgradeModal } from '~/core/hooks/use-upgrade-modal';
 import { getTemplateById } from '~/lib/templates/queries';
 import { useGenerateCopy } from '~/lib/generations/hooks/use-generate-copy';
 import useCurrentOrganization from '~/lib/organizations/hooks/use-current-organization';
@@ -30,7 +29,6 @@ function ToolPage({ params }: ToolPageProps) {
   const { mutate } = useSWRConfig();
 
   const client = useSupabase();
-  const upgradeModal = useUpgradeModal();
   const organization = useCurrentOrganization();
 
   const template_id = params.tool_id;
@@ -55,7 +53,6 @@ function ToolPage({ params }: ToolPageProps) {
   }
 
   const onSumbitGenerate = async (formValues: ToolFormData) => {
-    console.log(formValues);
     const { qty, ...values } = formValues;
 
     const body = {
@@ -68,16 +65,16 @@ function ToolPage({ params }: ToolPageProps) {
       generateCopy
         .trigger(body)
         .then((res) => {
-          console.log(res);
+          if (!res) {
+            toast.error('Something went wrong!');
+          }
+
           mutate(queryKeys.organizationUsageRetrieve(organization.id));
           setCopies((prev) => [res as IGenerationCopy, ...prev]);
         })
         .catch((err) => {
           console.log(err);
           toast.error(err.message);
-          if (err.message === 'No tokens left') {
-            upgradeModal.open();
-          }
         });
     });
   };

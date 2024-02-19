@@ -1,18 +1,12 @@
+import Handlebars from 'handlebars';
+
 export const renderPromptWithVariables = (
   templatePrompt: string,
   values: Record<string, string | string[]>,
 ) => {
-  let prompt = templatePrompt;
+  const template = Handlebars.compile(templatePrompt);
 
-  Object.entries(values).forEach(([key, value]) => {
-    console.log(key, value);
-    prompt = templatePrompt.replaceAll(
-      `{{${key}}}`,
-      Array.isArray(value) ? value.join(', ') : value,
-    );
-  });
+  console.log(values, template, template(values));
 
-  console.log(prompt, values);
-
-  return prompt;
+  return template(values);
 };

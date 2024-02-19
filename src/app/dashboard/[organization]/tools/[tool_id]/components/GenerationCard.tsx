@@ -14,12 +14,14 @@ type GenerationCardProps = {
 };
 
 function GenerationCard({ data }: GenerationCardProps) {
+  if (!data?.content) {
+    return null;
+  }
+
   const onCopy = () => {
     navigator.clipboard.writeText(data.content);
     toast.success('content copied successfully!');
   };
-
-  console.log(data.content);
 
   return (
     <Tile className="group relative dark:bg-gray-800 rounded-md p-4 pb-8">
