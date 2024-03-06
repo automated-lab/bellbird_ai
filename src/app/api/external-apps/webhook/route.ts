@@ -14,6 +14,7 @@ import enrollUserWithNewOrg from '~/lib/server/user/enroll-user-with-new-org';
 import configuration, { DEFAULT_ORG_NAME } from '~/configuration';
 import sendEmail from '~/core/email/send-email';
 import { NextResponse } from 'next/server';
+import { getUserIdByEmail } from '~/lib/server/queries';
 
 const logger = getLogger();
 
@@ -62,26 +63,40 @@ export async function POST(request: Request) {
 
     const password = generatePassword(8);
 
-    const { data: userData, error: createUserErr } =
-      await client.auth.admin.createUser({
-        email: email,
-        password: password,
-        email_confirm: true,
-      });
+    const { data: existingUserId, error: getUserIdErr } =
+      await getUserIdByEmail(client, email);
 
-    if (!userData.user || createUserErr) {
-      logger.error({ email }, 'Failed to create user');
-      return throwInternalServerErrorException(
-        `Failed to create user, An account with email : ${email} may exist`,
-      );
+    if (getUserIdErr) {
+      logger.info("User doesn't exist");
     }
 
-    logger.info('User created successfully', email);
+    let userId = existingUserId;
+
+    if (!userId) {
+      const { data: userData, error: createUserErr } =
+        await client.auth.admin.createUser({
+          email: email,
+          password: password,
+          email_confirm: true,
+        });
+
+      if (!userData.user || createUserErr) {
+        logger.error({ email }, 'Failed to create user');
+        return throwInternalServerErrorException(
+          `Failed to create user, An account with email : ${email} may exist`,
+        );
+      }
+
+      logger.info('User created successfully', email);
+
+      userId = userData.user.id;
+    }
 
     const payload = {
       client,
       organizationName: DEFAULT_ORG_NAME,
-      userId: userData.user.id,
+      userId,
+      create_user: !existingUserId,
     };
 
     const { data: organizationUid, error: enrollUserErr } =
@@ -89,7 +104,7 @@ export async function POST(request: Request) {
 
     if (!organizationUid || enrollUserErr) {
       logger.error({ email, enrollUserErr }, 'Failed to enroll user');
-      await client.auth.admin.deleteUser(userData.user.id);
+      await client.auth.admin.deleteUser(userId);
       logger.info({ email }, 'User deleted');
       return throwInternalServerErrorException('Failed to onboard user');
     }
@@ -116,7 +131,7 @@ export async function POST(request: Request) {
 
     logger.info('Customer created successfully', email);
 
-    const subscription = await stripe.subscriptions.create({
+    await stripe.subscriptions.create({
       customer: customer.id,
       items: [{ price: priceId }],
       coupon: stripeCoupon.id,
@@ -144,7 +159,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       {
-        message: `User created with id ${userData.user.id}, email ${email} and a password ${password} and plan ${plan}`,
+        message: `User created with id ${userId}, email ${email} and a password ${password} and plan ${plan}`,
       },
       {
         status: 200,

@@ -5,6 +5,7 @@ interface Params {
   client: SupabaseClient<Database>;
   organizationName: string;
   userId: string;
+  create_user?: boolean;
 }
 
 /**
@@ -19,12 +20,13 @@ async function enrollUserWithNewOrg({
   client,
   organizationName,
   userId,
+  create_user = false,
 }: Params) {
   return client
     .rpc('enroll_user_with_new_org', {
       org_name: organizationName,
       user_id: userId,
-      create_user: true,
+      create_user,
     })
     .single<string>();
 }
