@@ -411,7 +411,7 @@ export type Database = {
           description: string
           id: string
           image: string
-          isNew: boolean | null
+          isNew: boolean
           prompt: string
           title: string
         }
@@ -421,7 +421,7 @@ export type Database = {
           description?: string
           id?: string
           image?: string
-          isNew?: boolean | null
+          isNew?: boolean
           prompt?: string
           title: string
         }
@@ -431,7 +431,7 @@ export type Database = {
           description?: string
           id?: string
           image?: string
-          isNew?: boolean | null
+          isNew?: boolean
           prompt?: string
           title?: string
         }

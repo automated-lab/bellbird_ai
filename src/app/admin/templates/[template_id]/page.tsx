@@ -35,7 +35,7 @@ function CreateTemplatePage({ params }: CreateTemplatePageProps) {
   }
 
   return (
-    <div className="space-y-6 w-full h-full">
+    <div className="w-full h-full space-y-6">
       <BackButton href={ADMIN_NAVIGATION_CONFIG.templates.path} />
       <FormTile
         heading="Template Details"
