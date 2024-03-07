@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-
 import {
   throwBadRequestException,
   throwInternalServerErrorException,
@@ -16,6 +15,8 @@ import sendEmail from '~/core/email/send-email';
 import { NextResponse } from 'next/server';
 import { getUserIdByEmail } from '~/lib/server/queries';
 
+import crypto from 'crypto';
+
 const logger = getLogger();
 
 interface Body {
@@ -27,161 +28,29 @@ interface Body {
 
 const getAdminClient = () => getSupabaseRouteHandlerClient({ admin: true });
 
-export async function POST(request: Request) {
-  try {
-    logger.info('External App request received');
+function generatePassword(length: number): string {
+  const chars =
+    '0123456789abcdefghijklmnopqrstuvwxyz@ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let password = '';
 
-    const body: Body = await request.json();
-    const { secret, email, plan, duration_in_months } = body;
-
-    if (!secret) {
-      return throwBadRequestException('Missing secret');
-    }
-
-    logger.info('Secret retrieved', email);
-
-    const client = getAdminClient();
-
-    const { data: appId, error: getAppIdErr } = await getAppIdBySecret(
-      client,
-      secret,
-    );
-
-    if (!appId || getAppIdErr) {
-      logger.error({ getAppIdErr, appId }, 'Invalid Secret');
-      return throwUnauthorizedException('Invalid secret!');
-    }
-
-    logger.info('App id retrieved', appId);
-
-    const { data: app, error: getAppErr } = await getApp(client, appId);
-
-    if (!app || getAppErr) {
-      logger.error({ appId, getAppErr }, 'App not found');
-      return throwUnauthorizedException();
-    }
-
-    const password = generatePassword(8);
-
-    const { data: existingUserId, error: getUserIdErr } =
-      await getUserIdByEmail(client, email);
-
-    if (getUserIdErr) {
-      logger.info("User doesn't exist");
-    }
-
-    let userId = existingUserId;
-
-    if (!userId) {
-      const { data: userData, error: createUserErr } =
-        await client.auth.admin.createUser({
-          email: email,
-          password: password,
-          email_confirm: true,
-        });
-
-      if (!userData.user || createUserErr) {
-        logger.error({ email }, 'Failed to create user');
-        return throwInternalServerErrorException(
-          `Failed to create user, An account with email : ${email} may exist`,
-        );
-      }
-
-      logger.info('User created successfully', email);
-
-      userId = userData.user.id;
-    }
-
-    const payload = {
-      client,
-      organizationName: DEFAULT_ORG_NAME,
-      userId,
-      create_user: !existingUserId,
-    };
-
-    const { data: organizationUid, error: enrollUserErr } =
-      await enrollUserWithNewOrg(payload);
-
-    if (!organizationUid || enrollUserErr) {
-      logger.error({ email, enrollUserErr }, 'Failed to enroll user');
-      await client.auth.admin.deleteUser(userId);
-      logger.info({ email }, 'User deleted');
-      return throwInternalServerErrorException('Failed to onboard user');
-    }
-
-    logger.info('User onboarded successfully', email);
-
-    const stripe = await getStripeInstance();
-
-    const priceId = configuration.stripe.products
-      .find((product) => product.name.toLowerCase() === plan.toLowerCase())
-      ?.plans.find((p) => p.name === 'Monthly')?.stripePriceId;
-
-    const stripeCoupon = await stripe.coupons.create({
-      percent_off: 100,
-      duration: 'repeating',
-      duration_in_months: Number(duration_in_months),
-    });
-
-    logger.info('Coupon created successfully', email);
-
-    const customer = await stripe.customers.create({
-      email: email,
-    });
-
-    logger.info('Customer created successfully', email);
-
-    await stripe.subscriptions.create({
-      customer: customer.id,
-      items: [{ price: priceId }],
-      coupon: stripeCoupon.id,
-      metadata: {
-        organization_uid: organizationUid,
-      },
-      cancel_at: dayjs().add(Number(duration_in_months), 'month').unix(),
-    });
-
-    logger.info('Subscription created successfully', email);
-
-    // send email
-    try {
-      const response = await sendEnrollmentEmail({
-        invitedUserEmail: email,
-        plan: plan,
-        temporaryPassword: password,
-      });
-    } catch (error) {
-      logger.error({ error }, 'Failed to send enrollment email');
-      return throwInternalServerErrorException(
-        `Failed to send enrollment email to ${email}`,
-      );
-    }
-
-    return NextResponse.json(
-      {
-        message: `User created with id ${userId}, email ${email} and a password ${password} and plan ${plan}`,
-      },
-      {
-        status: 200,
-      },
-    );
-  } catch (error) {
-    console.log(error);
-    return throwInternalServerErrorException();
+  for (let i = 0; i < length; i++) {
+    const randomIndex = crypto.randomInt(0, chars.length);
+    password += chars[randomIndex];
   }
+
+  return password;
 }
 
 async function sendEnrollmentEmail(props: {
   plan: string;
-  temporaryPassword: string;
+  temporaryPassword: string | null;
   invitedUserEmail: string;
+  isNewUser: boolean;
 }) {
-  const { invitedUserEmail, plan, temporaryPassword } = props;
-
+  const { invitedUserEmail, plan, temporaryPassword, isNewUser } = props;
   const { default: renderEnrollmentEmail } = await import(
-    '~/lib/emails/enrolled-user'
+    `~/lib/emails/${isNewUser ? 'enrolled-user' : 'enrolled-existing-user'}`
   );
-
   const sender = process.env.EMAIL_SENDER;
   const productName = configuration.site.siteName;
 
@@ -206,7 +75,7 @@ async function sendEnrollmentEmail(props: {
     appUrl,
     invitedUserEmail,
     plan,
-    temporaryPassword,
+    temporaryPassword: isNewUser ? temporaryPassword : undefined,
   });
 
   return sendEmail({
@@ -225,20 +94,169 @@ function assertSiteUrl(siteUrl: Maybe<string>): asserts siteUrl is string {
   }
 }
 
-/** 
- Function to generate a random password
-*/
-function generatePassword(length: number) {
-  var chars =
-    '0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+async function createSubscription(props: {
+  email: string;
+  plan: string;
+  duration_in_months: string | number;
+  organizationUid: string;
+}) {
+  const { email, plan, duration_in_months, organizationUid } = props;
+  const durationInMonths = Number(duration_in_months);
 
-  var passwordLength = length || 8;
-  var password = '';
+  const stripe = await getStripeInstance();
 
-  for (var i = 0; i <= passwordLength; i++) {
-    var randomNumber = Math.floor(Math.random() * chars.length);
-    password += chars.substring(randomNumber, randomNumber + 1);
+  const priceId = configuration.stripe.products
+    .find((product) => product.name.toLowerCase() === plan.toLowerCase())
+    ?.plans.find((p) => p.name === 'Monthly')?.stripePriceId;
+
+  if (!priceId) {
+    throw new Error(`Invalid plan: ${plan}`);
   }
 
-  return password;
+  const coupon = await stripe.coupons.create({
+    percent_off: 100,
+    duration: 'repeating',
+    duration_in_months: durationInMonths,
+  });
+
+  const customer = await stripe.customers.create({ email });
+  const cancelAt = dayjs().add(durationInMonths, 'month').unix();
+
+  await stripe.subscriptions.create({
+    customer: customer.id,
+    items: [{ price: priceId }],
+    coupon: coupon.id,
+    metadata: { organization_uid: organizationUid },
+    cancel_at: cancelAt,
+  });
+}
+
+export async function POST(request: Request) {
+  try {
+    logger.info('External App request received');
+
+    const body: Body = await request.json();
+    const { secret, email, plan, duration_in_months } = body;
+
+    if (!secret) {
+      return throwBadRequestException('Missing secret');
+    }
+
+    logger.info('Secret retrieved', email);
+
+    const client = getAdminClient();
+
+    const { data: appId, error: getAppIdErr } = await getAppIdBySecret(
+      client,
+      secret,
+    );
+
+    if (!appId || getAppIdErr) {
+      logger.error('Invalid Secret');
+      return throwUnauthorizedException('Invalid secret!');
+    }
+
+    logger.info('App id retrieved', appId);
+
+    const { data: app, error: getAppErr } = await getApp(client, appId);
+
+    if (!app || getAppErr) {
+      logger.error('App not found');
+      return throwUnauthorizedException();
+    }
+
+    const { data: existingUserId, error: getUserIdErr } =
+      await getUserIdByEmail(client, email);
+
+    if (getUserIdErr) {
+      logger.error('Failed to check if user exists', getUserIdErr);
+      return throwInternalServerErrorException(
+        'Failed to check if user exists',
+      );
+    }
+
+    console.log(existingUserId);
+
+    let userId = existingUserId;
+    const isNewUser = !existingUserId;
+
+    let password = null;
+
+    if (isNewUser) {
+      password = generatePassword(8);
+
+      const { data: userData, error } = await client.auth.admin.createUser({
+        email,
+        password,
+        email_confirm: true,
+      });
+
+      if (!userData || error) {
+        logger.error('Failed to create userData');
+        return throwInternalServerErrorException(
+          `Failed to create user, An account with email : ${email} may exist`,
+        );
+      }
+
+      logger.info('User created successfully', email);
+
+      userId = userData.user.id;
+    }
+
+    const payload = {
+      client,
+      organizationName: DEFAULT_ORG_NAME,
+      userId,
+      create_user: isNewUser,
+    };
+
+    const { data: organizationUid, error: enrollUserErr } =
+      await enrollUserWithNewOrg(payload);
+
+    if (!organizationUid || enrollUserErr) {
+      logger.error('Failed to enroll user', enrollUserErr);
+      if (isNewUser) await client.auth.admin.deleteUser(userId);
+      logger.info('User deleted');
+      return throwInternalServerErrorException('Failed to onboard user');
+    }
+
+    logger.info('User onboarded successfully', email);
+
+    await createSubscription({
+      email,
+      plan,
+      duration_in_months,
+      organizationUid,
+    });
+
+    logger.info('Subscription created successfully', email);
+
+    try {
+      await sendEnrollmentEmail({
+        invitedUserEmail: email,
+        plan,
+        temporaryPassword: password,
+        isNewUser,
+      });
+    } catch (error) {
+      logger.error('Failed to send enrollment email', error);
+      return throwInternalServerErrorException(
+        `Failed to send enrollment email to ${email}`,
+      );
+    }
+
+    return NextResponse.json(
+      {
+        message: isNewUser
+          ? `User created with id ${userId}, email ${email} and a password ${password} and plan ${plan}`
+          : `User with id ${userId} has been enrolled successfully with a ${plan} plan`,
+      },
+      {
+        status: 200,
+      },
+    );
+  } catch (error) {
+    logger.error({ error }, 'Unhandled error');
+    return throwInternalServerErrorException();
+  }
 }
