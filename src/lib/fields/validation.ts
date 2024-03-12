@@ -15,7 +15,7 @@ export const getFieldSchema = () => {
         invalid_type_error: 'Invalid Name type',
         required_error: 'Name is required',
       })
-      .min(1),
+      .min(3),
     field_tag: z
       .string()
       .regex(/^[a-z][a-z0-9_-]*$/i)

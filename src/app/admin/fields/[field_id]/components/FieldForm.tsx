@@ -158,7 +158,7 @@ export default function FieldForm({
 
   return (
     <form className="space-y-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
+      <div className="grid grid-cols-1 gap-4 mb-12 md:grid-cols-2">
         <Controller
           control={control}
           name="type"

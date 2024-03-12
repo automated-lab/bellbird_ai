@@ -67,6 +67,10 @@ function CreateTemplateForm({
 
   const titleControl = register('title', {
     required: 'Title is required',
+    min: {
+      value: 3,
+      message: 'Title must be at least 3 characters',
+    },
   });
 
   const descriptionControl = register('description', {
@@ -183,14 +187,13 @@ function CreateTemplateForm({
     [csrfToken, defaultData, getValues, id, isNew],
   );
 
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
       <div>
         <Heading type={4}>Template metadata</Heading>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <TextField>
           <TextField.Label>
             <span>Title</span>
