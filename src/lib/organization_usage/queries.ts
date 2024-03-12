@@ -1,7 +1,7 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 
 import { Database } from '~/database.types';
-import { ORGANIZATIONS_USAGE_TABLE } from '~/lib/db-tables';
+import { ORGANIZATION_USAGE_TABLE } from '~/lib/db-tables';
 
 type Client = SupabaseClient<Database>;
 
@@ -10,7 +10,7 @@ export function getOrganizationUsageById(
   organizationId: number,
 ) {
   return client
-    .from(ORGANIZATIONS_USAGE_TABLE)
+    .from(ORGANIZATION_USAGE_TABLE)
     .select(`*`)
     .eq('organization_id', organizationId)
     .maybeSingle();

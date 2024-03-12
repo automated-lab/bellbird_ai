@@ -10,7 +10,7 @@ import { Progress } from '~/core/ui/progress';
 
 import { useCurrentOrganizationId } from '~/lib/organizations/hooks/use-current-organization-id';
 import { getKeyIf, queryKeys } from '~/lib/query-keys';
-import { getOrganizationUsageById } from '~/lib/user_usage/queries';
+import { getOrganizationUsageById } from '~/lib/organization_usage/queries';
 import { INFINITY_CONSIDERED_TOKENS } from '~/configuration';
 import { formatNumber } from '~/core/generic/generic-utils';
 

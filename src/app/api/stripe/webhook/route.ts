@@ -21,10 +21,10 @@ import {
 
 import getSupabaseRouteHandlerClient from '~/core/supabase/route-handler-client';
 import { setOrganizationSubscriptionData } from '~/lib/organizations/database/mutations';
-import { createOrganizationUsageByPriceId } from '~/lib/user_usage/utils';
+import { createOrganizationUsageByPriceId } from '~/lib/organization_usage/utils';
 import { getOrganizationByUid } from '~/lib/organizations/database/queries';
 import { getPlanByPriceId, isRenewal } from '~/lib/stripe/utils';
-import { deleteOrganizationUsage } from '~/lib/user_usage/mutations';
+import { deleteOrganizationUsage } from '~/lib/organization_usage/mutations';
 
 const STRIPE_SIGNATURE_HEADER = 'stripe-signature';
 

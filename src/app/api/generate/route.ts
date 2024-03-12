@@ -3,9 +3,9 @@ import getLogger from '~/core/logger';
 
 import { renderPromptWithVariables } from '~/lib/generations/utils';
 import { sendPrompt } from '~/lib/openai';
-import { incrementOrganizationGeneratedTokens } from '~/lib/user_usage/mutations';
+import { incrementOrganizationGeneratedTokens } from '~/lib/organization_usage/mutations';
 import { getTemplatePrompt } from '~/lib/templates/queries';
-import { getOrganizationRemainingTokens } from '~/lib/user_usage/queries';
+import { getOrganizationRemainingTokens } from '~/lib/organization_usage/queries';
 import requireSession from '~/lib/user/require-session';
 import getSupabaseRouteHandlerClient from '~/core/supabase/route-handler-client';
 import { IGenerationCopy } from '~/lib/generations/types';

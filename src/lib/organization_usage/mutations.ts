@@ -1,7 +1,7 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 
 import { Database } from '~/database.types';
-import { ORGANIZATIONS_USAGE_TABLE } from '~/lib/db-tables';
+import { ORGANIZATION_USAGE_TABLE } from '~/lib/db-tables';
 import { IOrganizationUsage } from './types';
 import { getOrganizationUsageById } from './queries';
 
@@ -11,7 +11,7 @@ export function createOrganizationUsage(
   client: Client,
   organizationUsage: IOrganizationUsage,
 ) {
-  return client.from(ORGANIZATIONS_USAGE_TABLE).upsert(organizationUsage, {
+  return client.from(ORGANIZATION_USAGE_TABLE).upsert(organizationUsage, {
     onConflict: `organization_id`,
   });
 }
@@ -20,11 +20,9 @@ export async function updateOrganizationUsage(
   client: Client,
   organizationUsage: IOrganizationUsage,
 ) {
-  return await client
-    .from(ORGANIZATIONS_USAGE_TABLE)
-    .upsert(organizationUsage, {
-      onConflict: `organization_id`,
-    });
+  return await client.from(ORGANIZATION_USAGE_TABLE).upsert(organizationUsage, {
+    onConflict: `organization_id`,
+  });
 }
 
 export async function incrementOrganizationGeneratedTokens(
@@ -38,7 +36,7 @@ export async function incrementOrganizationGeneratedTokens(
   ).throwOnError();
 
   const { data, error } = await client
-    .from(ORGANIZATIONS_USAGE_TABLE)
+    .from(ORGANIZATION_USAGE_TABLE)
     .update({
       tokens_generated: userUsageData!.tokens_generated + newGeneratedTokens,
     })
@@ -56,7 +54,7 @@ export async function deleteOrganizationUsage(
   organizationId: number,
 ) {
   return await client
-    .from(ORGANIZATIONS_USAGE_TABLE)
+    .from(ORGANIZATION_USAGE_TABLE)
     .delete()
     .eq('organization_id', organizationId);
 }

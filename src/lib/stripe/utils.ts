@@ -1,4 +1,4 @@
-import { PLANS_LIST } from '../user_usage/utils';
+import { PLANS_LIST } from '../organization_usage/utils';
 
 enum StripeSubscriptionStatus {
   Active = 'active',
