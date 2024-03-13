@@ -39,7 +39,7 @@ async function SubscriptionPage({
     return redirect(configuration.paths.appPrefix);
   }
 
-  if (isActiveSubscription(organization.subscription?.data.status)) {
+  if (isActiveSubscription(organization.subscription?.data?.status)) {
     return redirect(getAppHomeUrl(organizationUid));
   }
 
