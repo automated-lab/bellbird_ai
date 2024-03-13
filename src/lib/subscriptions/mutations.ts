@@ -27,7 +27,6 @@ export async function addSubscription(
       },
     )
     .select('id')
-    .throwOnError()
     .single();
 }
 
