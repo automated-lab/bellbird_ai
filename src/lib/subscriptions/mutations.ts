@@ -16,11 +16,16 @@ export async function addSubscription(
   const data = subscriptionMapper(subscription);
 
   return getSubscriptionsTable(client)
-    .insert({
-      ...data,
-      id: subscription.id,
-      max_users: maxUsers ?? 1,
-    })
+    .upsert(
+      {
+        ...data,
+        id: subscription.id,
+        max_users: maxUsers ?? 1,
+      },
+      {
+        onConflict: 'id',
+      },
+    )
     .select('id')
     .throwOnError()
     .single();
