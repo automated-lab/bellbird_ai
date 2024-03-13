@@ -8,7 +8,7 @@ const ACTIVE_STATUSES: Stripe.Subscription.Status[] = ['active', 'trialing'];
  */
 function useIsSubscriptionActive() {
   const organization = useCurrentOrganization();
-  const status = organization?.subscription?.data.status;
+  const status = organization?.subscription?.data?.status;
 
   if (!status) {
     return false;

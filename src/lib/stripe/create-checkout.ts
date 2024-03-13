@@ -66,7 +66,7 @@ export default async function createStripeCheckout(
     line_items: [lineItem],
     client_reference_id: clientReferenceId.toString(),
     subscription_data: subscriptionData,
-    customer_email: params.customerEmail,
+    customer_email: !customer ? params.customerEmail : undefined,
     ...urls,
   });
 }

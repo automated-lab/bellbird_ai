@@ -5,6 +5,7 @@ enum StripeWebhooks {
   SubscriptionCreated = 'customer.subscription.created',
   SubscriptionUpdated = 'customer.subscription.updated',
   SubscriptionDeleted = 'customer.subscription.deleted',
+  InvoicePaymentSucceeded = 'invoice.payment_succeeded',
 }
 
 export default StripeWebhooks;

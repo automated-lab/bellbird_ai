@@ -22,7 +22,7 @@ export const UsageCounter = () => {
   const organization = useCurrentOrganization();
 
   const hasActiveSubscription = isActiveSubscription(
-    organization.subscription?.data.status,
+    organization.subscription?.data?.status,
   );
 
   const handleUpgrade = () => {
