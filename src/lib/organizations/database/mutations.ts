@@ -70,9 +70,9 @@ export function setOrganizationSubscriptionData(
         organization_id: organizationId,
       },
       {
-        onConflict: 'customer_id',
+        onConflict: 'subscription_id, organization_id',
       },
     )
-    .match({ customer_id: customerId })
+    .match({ organization_id: organizationId })
     .throwOnError();
 }
