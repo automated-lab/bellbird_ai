@@ -88,7 +88,7 @@ const configuration = {
             price: '$37',
             tokens_limit: 10_000_000,
             max_users: 4,
-            stripePriceId: 'price_1OKR3gGWvJkW2hKDp42NylVR',
+            stripePriceId: process.env.NEXT_PUBLIC_PRO_PRICE_ID,
           },
         ],
       },
