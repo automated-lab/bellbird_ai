@@ -78,47 +78,17 @@ const configuration = {
     displayMode: StripeCheckoutDisplayMode.Popup,
     products: [
       {
-        name: 'Basic',
-        description: 'Description of your Basic plan',
-        features: ['access to all tools'],
-        plans: [
-          {
-            name: 'Monthly',
-            price: '$5',
-            tokens_limit: 50000,
-            max_users: 1,
-            stripePriceId: 'price_1OKR3gGWvJkW2hKDp42NylVR',
-          },
-        ],
-      },
-      {
         name: 'Pro',
-        badge: `Most Popular`,
-        recommended: true,
-        description: 'Description of your Pro plan',
-        features: ['access to all tools', '2 team members'],
+        badge: 'recommended',
+        description: 'Write captivating content like a pro.',
+        features: ['Access to all tools', '4 team members'],
         plans: [
           {
             name: 'Monthly',
-            price: '$9',
-            tokens_limit: 100000,
-            max_users: 3,
+            price: '$37',
+            tokens_limit: 10_000_000,
+            max_users: 4,
             stripePriceId: 'price_1OKR3gGWvJkW2hKDp42NylVR',
-          },
-        ],
-      },
-      {
-        name: 'Premium',
-        description: 'Description of your Premium plan',
-        badge: ``,
-        features: ['access to all tools', '4 team members'],
-        plans: [
-          {
-            name: '',
-            price: '29$',
-            stripePriceId: 'price_1OKR4JGWvJkW2hKDxr9CTE2S',
-            tokens_limit: 3000000,
-            max_users: 5,
           },
         ],
       },
@@ -126,7 +96,7 @@ const configuration = {
   },
 };
 
-export const INFINITY_CONSIDERED_TOKENS = 3000000;
+export const INFINITY_CONSIDERED_TOKENS = 10_000_000;
 
 export default configuration;
 
