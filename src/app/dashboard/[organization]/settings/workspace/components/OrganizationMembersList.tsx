@@ -23,10 +23,12 @@ import useUserId from '~/core/hooks/use-user-id';
 import useUserCanInviteUsers from '~/lib/organizations/hooks/use-user-can-invite-users';
 import { useTranslation } from 'react-i18next';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/core/ui/Tooltip';
+import useCurrentOrganization from '~/lib/organizations/hooks/use-current-organization';
 
 function OrganizationMembersList({
   members,
-  canInviteMore,
+  maxInvites,
+  invitedMembers,
 }: React.PropsWithChildren<{
   members: Array<{
     role: MembershipRole;
@@ -34,7 +36,8 @@ function OrganizationMembersList({
     auth: User;
     data: UserData;
   }>;
-  canInviteMore: boolean;
+  invitedMembers: number;
+  maxInvites: number;
 }>) {
   const currentUserId = useUserId();
   const [search, setSearch] = useState('');
@@ -50,38 +53,47 @@ function OrganizationMembersList({
     return null;
   }
 
+  const canInviteMore = invitedMembers + members.length < maxInvites;
+
   const userRole = currentUser.role;
 
   return (
     <div className={'w-full space-y-8'}>
-      <div
-        className={
-          'flex flex-col space-y-4 lg:space-y-0 lg:flex-row justify-between' +
-          ' lg:space-x-4 w-full'
-        }
-      >
-        <TextFieldInput
-          value={search}
-          placeholder={t('organization:searchMembersPlaceholder')}
-          className={'w-full'}
-          onInput={(event: React.FormEvent<HTMLInputElement>) =>
-            setSearch(event.currentTarget.value)
-          }
-        />
+      <div>
+        <p className="mb-2 text-sm text-card-foreground">
+          You can invite up to {maxInvites} members to your workspace.
+        </p>
 
-        <div className={'w-full flex justify-end lg:w-auto lg:min-w-[200px]'}>
-          {canInviteMore ? (
-            <InviteMembersLinkButton href={'members/invite'} />
-          ) : (
-            <Tooltip>
-              <TooltipTrigger className="mr-auto">
-                <InformationCircleIcon className="w-6 h-6" />
-              </TooltipTrigger>
-              <TooltipContent>
-                You&apos;ve reached your invitations limit
-              </TooltipContent>
-            </Tooltip>
-          )}
+        <div
+          className={
+            'flex flex-col space-y-4 lg:space-y-0 lg:flex-row justify-between' +
+            ' lg:space-x-4 w-full'
+          }
+        >
+          <TextFieldInput
+            value={search}
+            placeholder={t('organization:searchMembersPlaceholder')}
+            className={'w-full'}
+            onInput={(event: React.FormEvent<HTMLInputElement>) =>
+              setSearch(event.currentTarget.value)
+            }
+          />
+
+          <div className={'w-full flex justify-end lg:w-auto lg:min-w-[200px]'}>
+            {canInviteMore ? (
+              <InviteMembersLinkButton href={'members/invite'} />
+            ) : (
+              <Tooltip>
+                <TooltipTrigger className="flex items-center mr-auto">
+                  {invitedMembers + members.length}/{maxInvites}
+                  <InformationCircleIcon className="w-4 h-4 ml-2" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  You&apos;ve reached your invitations limit
+                </TooltipContent>
+              </Tooltip>
+            )}
+          </div>
         </div>
       </div>
 

@@ -34,19 +34,19 @@ const OrganizationMembersPage: React.FC<{
 }> = ({ params }) => {
   const data = use(loadMembers(params.organization));
 
-  const canInviteMore =
-    (data?.invitedMembers?.length ?? 0) + data.members.length < data.maxUsers;
+  const maxInvites = data.maxUsers;
 
   return (
     <>
-      <div className="flex flex-1 flex-col space-y-6">
+      <div className="flex flex-col flex-1 space-y-6">
         <SettingsTile
           heading={<Trans i18nKey={'organization:membersTabLabel'} />}
           subHeading={<Trans i18nKey={'organization:membersTabSubheading'} />}
         >
           <OrganizationMembersList
             members={data.members}
-            canInviteMore={canInviteMore}
+            maxInvites={maxInvites}
+            invitedMembers={data?.invitedMembers?.length ?? 0}
           />
         </SettingsTile>
 

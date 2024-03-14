@@ -80,6 +80,7 @@ const configuration = {
       {
         name: 'Pro',
         badge: 'recommended',
+        recommended: true,
         description: 'Write captivating content like a pro.',
         features: ['Access to all tools', '4 team members'],
         plans: [
