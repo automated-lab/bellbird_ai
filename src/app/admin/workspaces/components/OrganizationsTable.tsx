@@ -19,6 +19,7 @@ import {
 
 import IconButton from '~/core/ui/IconButton';
 import configuration from '~/configuration';
+import { ADMIN_NAVIGATION_CONFIG } from '~/app/admin/admin.config';
 
 type Response = Awaited<ReturnType<typeof getOrganizations>>;
 type Organizations = Response['organizations'];
@@ -112,7 +113,7 @@ const columns: Array<ColumnDef<Organizations[0]>> = [
       return (
         <Link
           data-cy={'workspace-members-link'}
-          href={`organizations/${uid}/members`}
+          href={`${ADMIN_NAVIGATION_CONFIG.workspaces.path}/${uid}/members`}
           className={'hover:underline cursor-pointer'}
         >
           {length} member{length === 1 ? '' : 's'}{' '}
@@ -134,7 +135,7 @@ const columns: Array<ColumnDef<Organizations[0]>> = [
             <DropdownMenuTrigger asChild>
               <IconButton>
                 <span className="sr-only">Open menu</span>
-                <EllipsisHorizontalIcon className="h-4 w-4" />
+                <EllipsisHorizontalIcon className="w-4 h-4" />
               </IconButton>
             </DropdownMenuTrigger>
 

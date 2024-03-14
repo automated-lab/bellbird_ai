@@ -19,7 +19,7 @@ interface OrganizationsAdminPageProps {
 }
 
 export const metadata = {
-  title: `Organizations | ${configuration.site.siteName}`,
+  title: `Workspaces | ${configuration.site.siteName}`,
 };
 
 async function OrganizationsAdminPage({
@@ -41,7 +41,7 @@ async function OrganizationsAdminPage({
 
   return (
     <div className={'flex flex-1 flex-col'}>
-      <AdminHeader>Manage Organizations</AdminHeader>
+      <AdminHeader>Manage Workspaces</AdminHeader>
 
       <PageBody>
         <div className={'flex flex-col space-y-4'}>
@@ -49,7 +49,7 @@ async function OrganizationsAdminPage({
             <TextFieldInput
               name={'search'}
               defaultValue={search}
-              placeholder={'Search Organization...'}
+              placeholder={'Search Workspaces...'}
             />
           </form>
 
