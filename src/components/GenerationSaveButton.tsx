@@ -132,7 +132,7 @@ function GenerationSaveButton({ generationCopy }: GenerationSaveButtonProps) {
       <Popover>
         <PopoverTrigger asChild>
           <Button variant="outline" size="icon" className="h-full">
-            <HeartIcon className="h-4 w-4" />
+            <HeartIcon className="w-4 h-4" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="p-0" side="right" align="start">
@@ -148,8 +148,8 @@ function GenerationSaveButton({ generationCopy }: GenerationSaveButtonProps) {
                   let isSelected = copyCollections.data?.includes(id);
 
                   return (
-                    <CommandItem key={id} disabled={isSelected}>
-                      {isSelected && <CheckIcon className="mr-2 h-4 w-4" />}
+                    <CommandItem key={id}>
+                      {isSelected && <CheckIcon className="w-4 h-4 mr-2" />}
                       {name}
                       {isSelected ? (
                         <Button
