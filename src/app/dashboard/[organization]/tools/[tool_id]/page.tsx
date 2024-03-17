@@ -13,6 +13,7 @@ import { getTemplateById } from '~/lib/templates/queries';
 import { useGenerateCopy } from '~/lib/generations/hooks/use-generate-copy';
 import useCurrentOrganization from '~/lib/organizations/hooks/use-current-organization';
 import { getKeyIf, queryKeys } from '~/lib/query-keys';
+import { useBeforeUnload } from '~/core/hooks/use-before-unload';
 
 import type { IGenerationCopy } from '~/lib/generations/types';
 import type { ToolFormData } from './types';
@@ -24,6 +25,8 @@ type ToolPageProps = {
 };
 
 function ToolPage({ params }: ToolPageProps) {
+  const wrapperRef = React.useRef<HTMLDivElement>(null);
+
   const [copies, setCopies] = useState<IGenerationCopy[]>([]);
 
   const { mutate } = useSWRConfig();
@@ -43,6 +46,8 @@ function ToolPage({ params }: ToolPageProps) {
   );
 
   const generateCopy = useGenerateCopy();
+
+  useBeforeUnload();
 
   if (isLoading) {
     return <GlobalLoadingIndicator />;
@@ -80,7 +85,7 @@ function ToolPage({ params }: ToolPageProps) {
   };
 
   return (
-    <div className="flex flex-col md:flex-row gap-4">
+    <div className="flex flex-col gap-4 md:flex-row" ref={wrapperRef}>
       <ToolBar
         className="md:sticky top-0 flex-1 w-full min-w-[350px] md:max-w-xl"
         data={data}

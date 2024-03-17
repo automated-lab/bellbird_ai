@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 
 import Button from '~/core/ui/Button';
 import If from '~/core/ui/If';
@@ -16,14 +16,32 @@ const PromptInput = React.forwardRef(
     { fields = [], onChange, ...rest }: PromptInputProps,
     ref: React.ForwardedRef<HTMLTextAreaElement>,
   ) => {
-    const [value, setValue] = useState(rest.value as string);
+    const [value, setValue] = useState<string>(rest.value as string);
+    const [currentPosition, setCurrentPosition] = useState(0);
 
     const prevFieldsRef = useRef<TField[]>(fields || []);
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+    const handleAttachField = (field: TField) => {
+      setValue((prev) => {
+        const content = [
+          prev.substring(0, currentPosition),
+          '',
+          prev.substring(currentPosition),
+        ];
+
+        content[1] = `{{${field.field_tag}}}`;
+
+        return content.join('');
+      });
+
+      textareaRef.current?.focus();
+      textareaRef.current?.setSelectionRange(0, currentPosition);
+    };
 
     useEffect(() => {
-      prevFieldsRef.current = fields;
       onChange(value);
-    }, [value, setValue, fields, onChange]);
+    }, [value, setValue, onChange]);
 
     useEffect(() => {
       if (prevFieldsRef.current.length > fields.length) {
@@ -32,16 +50,20 @@ const PromptInput = React.forwardRef(
 
         const removed = [...prevFields].filter((f) => !nextFields.includes(f));
 
-
         const filtered = value.replace(
           new RegExp(`{{(${removed.join('|')})}\\s*}`, 'g'),
           '',
         );
 
-
         setValue(filtered);
       }
     }, [fields, value]);
+
+    useEffect(() => {
+      prevFieldsRef.current = fields;
+    }, [fields]);
+
+    useImperativeHandle(ref, () => textareaRef.current!, []);
 
     return (
       <div className="w-full space-y-2">
@@ -56,11 +78,7 @@ const PromptInput = React.forwardRef(
               type="button"
               round
               key={field.id}
-              onClick={() => {
-                setValue((prev: string) =>
-                  prev.concat(`{{${field.field_tag}}} `),
-                );
-              }}
+              onClick={() => handleAttachField(field)}
             >
               {field.name}
             </Button>
@@ -71,10 +89,17 @@ const PromptInput = React.forwardRef(
             {...rest}
             value={value}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+              setCurrentPosition(e.target.selectionStart);
               setValue(e.target.value);
             }}
+            onMouseUp={(e: React.MouseEvent<HTMLTextAreaElement>) => {
+              setCurrentPosition(e.currentTarget.selectionEnd);
+            }}
+            onKeyUp={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+              setCurrentPosition(e.currentTarget.selectionEnd);
+            }}
             className="h-max"
-            ref={ref}
+            ref={textareaRef}
           />
         </div>
       </div>
