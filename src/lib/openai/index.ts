@@ -20,7 +20,7 @@ export function sendPrompt(prompt: string, max_tokens: number = MAX_TOKENS) {
         {
           role: 'system',
           content:
-            'RULES: use less than 100 words, follow copywriting and SEO principles and avoid plagiarism',
+            'RULES: follow copywriting and SEO principles and avoid plagiarism',
         },
         {
           role: 'system',
