@@ -1,8 +1,10 @@
+'use client';
 import { use } from 'react';
+
+import DeleteCollectionModal from '../components/DeleteCollectionModal';
 
 import useSupabase from '~/core/hooks/use-supabase';
 import { getCopyCollectionById } from '~/lib/user_collections/queries';
-import DeleteCollectionModal from '../components/DeleteCollectionModal';
 
 interface Params {
   params: {
