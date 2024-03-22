@@ -13,7 +13,7 @@ export const DEFAULT_ORG_NAME = 'My Workspace';
 const configuration = {
   site: {
     name: 'Charm App',
-    description: 'Your best copywriter',
+    description: 'Charm is an AI powered marketing companion.',
     themeColor: '#00B0DA',
     themeColorDark: '#0a0a0a',
     siteUrl: process.env.NEXT_PUBLIC_SITE_URL,

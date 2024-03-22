@@ -27,7 +27,7 @@ const ToolCard = ({ data }: ToolCardProps) => {
 
   return (
     <Link href={getPath(organization.uuid, `tools/${id}`)}>
-      <Tile className="group h-full p-4 rounded-md hover:border-primary-300 hover:shadow-sm dark:shadow-gray-900 duration-75 cursor-pointer">
+      <Tile className="h-full p-4 duration-75 rounded-md cursor-pointer group hover:border-primary-600/50 hover:shadow-sm dark:shadow-gray-900">
         <Tile.Header>
           <div className="flex justify-between w-full">
             <div className="space-y-2">
@@ -36,14 +36,14 @@ const ToolCard = ({ data }: ToolCardProps) => {
                   src={image}
                   width={40}
                   height={40}
-                  className="w-11 h-11 object-contain bg-blue-50"
+                  className="object-contain w-11 h-11 bg-blue-50"
                 />
               </Avatar>
               <div>
                 <Tile.Heading className="text-base text-gray-800 dark:text-white ">
                   {title}
                 </Tile.Heading>
-                <p className="text-xs text-gray-400 dark:text-gray-600 capitalize">
+                <p className="text-xs text-gray-400 capitalize dark:text-gray-600">
                   {category}
                 </p>
               </div>
@@ -53,7 +53,7 @@ const ToolCard = ({ data }: ToolCardProps) => {
             </div>
           </div>
         </Tile.Header>
-        <Tile.Body space="2" className="h-full justify-between">
+        <Tile.Body space="2" className="justify-between h-full">
           <p className="text-sm text-gray-400 dark:text-gray-500">
             {description}
           </p>
@@ -63,9 +63,9 @@ const ToolCard = ({ data }: ToolCardProps) => {
                 Best
               </Tile.Badge>
             </div>
-            <div className="flex justify-end items-center">
+            <div className="flex items-center justify-end">
               <Button
-                className="group-hover:rotate-45 text-gray-300 group-hover:text-primary-600 group-hover:translate-x-1 transition-all ease-out duration-100"
+                className="text-gray-300 transition-all duration-100 ease-out group-hover:rotate-45 group-hover:text-primary-600 group-hover:translate-x-1"
                 size="small"
                 variant="ghost"
                 round
