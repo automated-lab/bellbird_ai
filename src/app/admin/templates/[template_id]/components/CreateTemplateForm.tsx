@@ -265,6 +265,21 @@ function CreateTemplateForm({
             </TextField>
           )}
         />
+
+        <TextField>
+          <TextField.Label>
+            <span>Concurrent Generations Limit</span>
+            <TextField.Hint>
+              The maximum number of generations to process simultaneously
+            </TextField.Hint>
+            <TextField.Input
+              type="number"
+              placeholder="Max Concurrent Generations"
+              {...maxConcurrentGenerationsControl}
+            />
+            <TextField.Error error={errors.maxConcurrentGenerations?.message} />
+          </TextField.Label>
+        </TextField>
       </div>
 
       <SectionSeparator />
@@ -291,21 +306,6 @@ function CreateTemplateForm({
             />
           )}
         />
-
-        <TextField className="w-full md:w-1/2">
-          <TextField.Label>
-            <span>Concurrent Generations Limit</span>
-            <TextField.Hint>
-              The maximum number of generations to process simultaneously
-            </TextField.Hint>
-            <TextField.Input
-              type="number"
-              placeholder="Max Concurrent Generations"
-              {...maxConcurrentGenerationsControl}
-            />
-            <TextField.Error error={errors.maxConcurrentGenerations?.message} />
-          </TextField.Label>
-        </TextField>
 
         <Controller
           control={control}

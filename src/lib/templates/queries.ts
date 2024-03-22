@@ -50,7 +50,7 @@ export function getTemplateWithPrompt(client: Client, templateId: string) {
   return client
     .from(TEMPLATES_TABLE)
     .select(
-      'id, title, category, image, description, prompt, isNew, fields(id, field_tag, name)',
+      'id, title, category, image, description, prompt, maxConcurrentGenerations, isNew, fields(id, field_tag, name)',
     )
     .eq('id', templateId)
     .single();
