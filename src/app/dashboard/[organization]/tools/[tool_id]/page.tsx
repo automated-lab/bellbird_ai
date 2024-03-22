@@ -54,7 +54,7 @@ function ToolPage({ params }: ToolPageProps) {
   }
 
   if (error || !data) {
-    throw new Error('Template not found!');
+    throw new Error('Tool not found!');
   }
 
   const onSumbitGenerate = async (formValues: ToolFormData) => {
