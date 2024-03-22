@@ -76,8 +76,8 @@ function ToolFormBuilder({
             />
           </TooltipTrigger>
           <TooltipContent>
-            This template is limited to {maxConcurrentGenerations} generations
-            at a time.
+            This tool is limited to {maxConcurrentGenerations} generations at a
+            time.
           </TooltipContent>
         </Tooltip>
         <Button variant="default" loading={isSubmitting} className="w-full">
