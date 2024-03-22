@@ -61,6 +61,9 @@ function CreateTemplateForm({
       image: isNew ? '' : defaultData?.image,
       prompt: isNew ? '' : defaultData?.prompt,
       fields: isNew ? [] : defaultData?.fields,
+      maxConcurrentGenerations: isNew
+        ? 5
+        : defaultData?.maxConcurrentGenerations,
       isNew: isNew ? true : defaultData?.isNew,
     },
   });
@@ -90,6 +93,18 @@ function CreateTemplateForm({
     min: {
       value: 3,
       message: 'Category must be at least 3 characters',
+    },
+  });
+
+  const maxConcurrentGenerationsControl = register('maxConcurrentGenerations', {
+    required: 'Max concurrent generations is required',
+    min: {
+      value: 1,
+      message: 'Max concurrent generations must be at least 1',
+    },
+    max: {
+      value: 10,
+      message: 'Max concurrent generations must be at most 10',
     },
   });
 
@@ -276,6 +291,21 @@ function CreateTemplateForm({
             />
           )}
         />
+
+        <TextField className="w-full md:w-1/2">
+          <TextField.Label>
+            <span>Concurrent Generations Limit</span>
+            <TextField.Hint>
+              The maximum number of generations to process simultaneously
+            </TextField.Hint>
+            <TextField.Input
+              type="number"
+              placeholder="Max Concurrent Generations"
+              {...maxConcurrentGenerationsControl}
+            />
+            <TextField.Error error={errors.maxConcurrentGenerations?.message} />
+          </TextField.Label>
+        </TextField>
 
         <Controller
           control={control}

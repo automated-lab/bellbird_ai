@@ -98,7 +98,7 @@ const PromptInput = React.forwardRef(
             onKeyUp={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
               setCurrentPosition(e.currentTarget.selectionEnd);
             }}
-            className="h-max"
+            className="h-max min-h-44"
             ref={textareaRef}
           />
         </div>

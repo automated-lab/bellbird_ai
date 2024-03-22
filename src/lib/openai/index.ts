@@ -4,7 +4,7 @@ const openai = new OpenAi({
   apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
 });
 
-const MAX_TOKENS = 1000;
+const MAX_TOKENS = 4096;
 
 export function sendPrompt(prompt: string, max_tokens: number = MAX_TOKENS) {
   return openai.chat.completions

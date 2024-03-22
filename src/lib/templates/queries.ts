@@ -30,7 +30,9 @@ export function getPaginatedTemplates(
 export function getTemplateById(client: Client, templateId: string) {
   return client
     .from(TEMPLATES_TABLE)
-    .select('id, title, category, image, description, fields(*)')
+    .select(
+      'id, title, category, image, description, maxConcurrentGenerations, fields(*)',
+    )
     .eq('id', templateId)
     .returns<ITemplate[]>()
     .single();

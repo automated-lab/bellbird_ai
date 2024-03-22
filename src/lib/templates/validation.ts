@@ -10,5 +10,6 @@ export const getTemplateSchema = () => {
     isNew: z.boolean().default(true),
     prompt: z.string().min(20),
     fields: z.array(z.number()),
+    maxConcurrentGenerations: z.number().min(1).max(10).default(5),
   });
 };

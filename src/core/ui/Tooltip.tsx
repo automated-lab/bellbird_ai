@@ -4,9 +4,9 @@ import React from 'react';
 import classNames from 'clsx';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 
-const Tooltip = ({ delayDuration = 0, ...props }) => (
+const Tooltip = ({ disabled = false, delayDuration = 0, ...props }) => (
   <TooltipPrimitive.Provider delayDuration={delayDuration}>
-    <TooltipPrimitive.Root {...props} />
+    <TooltipPrimitive.Root {...props} open={disabled ? false : undefined} />
   </TooltipPrimitive.Provider>
 );
 

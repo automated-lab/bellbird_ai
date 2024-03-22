@@ -8,6 +8,7 @@ export interface ITemplate {
   category: string;
   prompt?: string;
   fields?: ITemplateField[] | TField[];
+  maxConcurrentGenerations?: number;
   isNew: boolean;
 }
 

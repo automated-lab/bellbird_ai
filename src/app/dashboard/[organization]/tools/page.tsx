@@ -47,10 +47,10 @@ function ToolsPage({ searchParams }: ToolsPageProps) {
   return (
     <div className="space-y-6">
       <header>
-        <Heading type={4}>Welcome to Our Best Collection of tools</Heading>
+        <Heading type={4}>Welcome to Charm&apos;s AI marketing tools!</Heading>
 
         <p className="text-gray-500 dark:text-gray-400">
-          <span>Let&apos;s make something cool today!</span>
+          <span>What will you create today?</span>
         </p>
       </header>
 
