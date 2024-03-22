@@ -98,6 +98,7 @@ function CreateTemplateForm({
 
   const maxConcurrentGenerationsControl = register('maxConcurrentGenerations', {
     required: 'Max concurrent generations is required',
+    valueAsNumber: true,
     min: {
       value: 1,
       message: 'Max concurrent generations must be at least 1',
@@ -274,6 +275,8 @@ function CreateTemplateForm({
             </TextField.Hint>
             <TextField.Input
               type="number"
+              min={1}
+              max={10}
               placeholder="Max Concurrent Generations"
               {...maxConcurrentGenerationsControl}
             />
