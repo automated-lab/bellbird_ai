@@ -4,8 +4,10 @@ import { Database } from '~/database.types';
 import { ORGANIZATION_USAGE_TABLE } from '~/lib/db-tables';
 import { IOrganizationUsage } from './types';
 import { getOrganizationUsageById } from './queries';
+import getLogger from '~/core/logger';
 
 type Client = SupabaseClient<Database>;
+const logger = getLogger();
 
 export function createOrganizationUsage(
   client: Client,
@@ -30,20 +32,29 @@ export async function incrementOrganizationGeneratedTokens(
   organizationId: number,
   newGeneratedTokens: number,
 ) {
-  const { data: userUsageData } = await getOrganizationUsageById(
-    client,
-    organizationId,
-  ).throwOnError();
+  const { data: organizationUsageData, error: organizationUsageDataErr } =
+    await getOrganizationUsageById(client, organizationId).throwOnError();
+
+  if (
+    organizationUsageDataErr ||
+    organizationUsageData?.tokens_generated === undefined
+  ) {
+    throw organizationUsageDataErr;
+  }
 
   const { data, error } = await client
     .from(ORGANIZATION_USAGE_TABLE)
     .update({
-      tokens_generated: userUsageData!.tokens_generated + newGeneratedTokens,
+      tokens_generated:
+        organizationUsageData.tokens_generated + newGeneratedTokens,
     })
     .eq('organization_id', organizationId);
 
   if (error) {
-    console.error(error);
+    logger.error(
+      { error },
+      'Failed to increment organization generated tokens',
+    );
   }
 
   return data;
