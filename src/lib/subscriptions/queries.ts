@@ -10,7 +10,9 @@ export async function getSubscriptionByOrganizationId(
 ) {
   return client
     .from(SUBSCRIPTIONS_TABLE)
-    .select('*, organizations_subscriptions (organization_id)')
+    .select('*, organizations_subscriptions!inner (organization_id)')
     .eq('organizations_subscriptions.organization_id', organizationId)
+    .order('created_at', { ascending: false })
+    .limit(1)
     .maybeSingle();
 }

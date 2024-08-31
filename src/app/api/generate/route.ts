@@ -47,7 +47,13 @@ export async function POST(req: NextRequest) {
       organizationUid: body.organization_uid,
     });
 
-    logger.info('User membership retrieved', user.id, userMembership.id);
+    logger.info(
+      {
+        userId: user.id,
+        membershipId: userMembership.id,
+      },
+      'User membership retrieved',
+    );
 
     const organizationId = userMembership.organizationId;
 
