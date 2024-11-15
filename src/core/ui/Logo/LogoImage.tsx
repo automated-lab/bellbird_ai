@@ -9,7 +9,7 @@ const LogoImage: React.FCC<{
       src="/assets/images/favicon/logo.png"
       width={105}
       height={36}
-      alt="charm app"
+      alt="Bellbird app"
       className={classNames(`w-[95px] sm:w-[105px]`)}
     />
   );

@@ -7,7 +7,7 @@ const LogoImageMini = () => {
       src="/assets/images/favicon/logo.png"
       width={105}
       height={36}
-      alt="charm app"
+      alt="Bellbird app"
       className={classNames(`w-[70px] sm:w-[85px]`)}
     />
   );

@@ -89,7 +89,7 @@ export const CreateAppModal = ({
                     <span>App Name</span>
                     <TextField.Hint>The name of the app</TextField.Hint>
                     <TextField.Input
-                      placeholder="Ex. Charm"
+                      placeholder="Ex. Bellbird"
                       {...appNameControl}
                     />
                     <TextField.Error error={errors.appName?.message} />

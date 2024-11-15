@@ -12,12 +12,12 @@ export const DEFAULT_ORG_NAME = 'My Workspace';
 
 const configuration = {
   site: {
-    name: 'Charm App',
-    description: 'Charm is an AI powered marketing companion.',
+    name: 'Bellbird Ai',
+    description: 'Bellbird is an AI powered marketing companion.',
     themeColor: '#00B0DA',
     themeColorDark: '#0a0a0a',
     siteUrl: process.env.NEXT_PUBLIC_SITE_URL,
-    siteName: 'Charm App',
+    siteName: 'Bellbird Ai',
     twitterHandle: '',
     githubHandle: '',
     convertKitFormId: '',

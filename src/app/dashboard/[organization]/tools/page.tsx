@@ -47,7 +47,7 @@ function ToolsPage({ searchParams }: ToolsPageProps) {
   return (
     <div className="space-y-6">
       <header>
-        <Heading type={4}>Welcome to Charm&apos;s AI marketing tools!</Heading>
+        <Heading type={4}>Welcome to Bellbird&apos;s AI marketing tools!</Heading>
 
         <p className="text-gray-500 dark:text-gray-400">
           <span>What will you create today?</span>
