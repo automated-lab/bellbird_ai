@@ -86,7 +86,7 @@ const configuration = {
         plans: [
           {
             name: 'Monthly',
-            price: '$37',
+            price: '$19',
             tokens_limit: 10_000_000,
             max_users: 4,
             stripePriceId: process.env.NEXT_PUBLIC_PRO_PRICE_ID,
